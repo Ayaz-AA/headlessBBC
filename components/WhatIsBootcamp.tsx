@@ -1,6 +1,6 @@
 'use client'
 
-import bootcampImage from '../src/assets/whatisbootcamp.png'
+import Image from 'next/image'
 import { HomepageFields } from '@/lib/wordpress'
 
 interface WhatIsBootcampProps {
@@ -59,10 +59,12 @@ export default function WhatIsBootcamp({ data }: WhatIsBootcampProps) {
           </div>
         </div>
         <div className="what-is-bootcamp__image scroll-animate scroll-animate--slide-up scroll-animate--delay-1">
-          <img 
-            src={typeof bootcampImage === 'string' ? bootcampImage : bootcampImage.src} 
+          <Image 
+            src="/assets/whatisbootcamp.png" 
             alt="Bootcamp illustration" 
             className="what-is-bootcamp__image-placeholder"
+            width={600}
+            height={400}
           />
         </div>
       </div>
