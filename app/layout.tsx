@@ -1,0 +1,28 @@
+import type { Metadata } from 'next'
+import '@/styles/main.css'
+
+export const metadata: Metadata = {
+  title: 'Headless BBC | Home',
+  description: 'Start Your Career and Maximize Your Earnings Potential With Bootcamps & Certifications',
+}
+
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode
+}) {
+  return (
+    <html lang="en">
+      <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Arimo:wght@400;700&family=Inter:wght@400;600;700&display=swap"
+          rel="stylesheet"
+        />
+      </head>
+      <body>{children}</body>
+    </html>
+  )
+}
+

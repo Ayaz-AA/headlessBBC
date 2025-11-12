@@ -1,0 +1,30 @@
+{
+  "name": "headless-bbc",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Headless WordPress site with Next.js, React, and TypeScript",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "fetch": "tsx src/fetchWordPress.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^17.2.3",
+    "graphql-request": "^7.3.3",
+    "next": "^16.0.1",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.0",
+    "@types/react": "^19.2.3",
+    "@types/react-dom": "^19.2.3",
+    "tsx": "^4.7.0",
+    "typescript": "^5.3.0"
+  }
+}
