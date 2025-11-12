@@ -8,7 +8,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "fetch": "tsx src/fetchWordPress.ts"
+    "fetch": "tsx src/fetchWordPress.ts",
+    "test-graphql": "tsx src/testGraphQL.ts"
   },
   "keywords": [],
   "author": "",

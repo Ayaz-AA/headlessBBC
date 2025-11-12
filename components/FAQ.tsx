@@ -1,8 +1,13 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import { HomepageFields } from '@/lib/wordpress'
 
-export default function FAQ() {
+interface FAQProps {
+  data?: HomepageFields | null
+}
+
+export default function FAQ({ data }: FAQProps) {
   const [activeIndex, setActiveIndex] = useState<number | null>(null)
 
   const faqs = [

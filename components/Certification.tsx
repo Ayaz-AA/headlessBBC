@@ -1,8 +1,13 @@
 'use client'
 
 import Link from 'next/link'
+import { HomepageFields } from '@/lib/wordpress'
 
-export default function Certification() {
+interface CertificationProps {
+  data?: HomepageFields | null
+}
+
+export default function Certification({ data }: CertificationProps) {
   return (
     <section className="certification">
       <div className="certification__container">

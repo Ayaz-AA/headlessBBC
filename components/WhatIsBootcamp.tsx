@@ -1,8 +1,13 @@
 'use client'
 
 import bootcampImage from '../src/assets/whatisbootcamp.png'
+import { HomepageFields } from '@/lib/wordpress'
 
-export default function WhatIsBootcamp() {
+interface WhatIsBootcampProps {
+  data?: HomepageFields | null
+}
+
+export default function WhatIsBootcamp({ data }: WhatIsBootcampProps) {
   return (
     <section className="what-is-bootcamp">
       <div className="what-is-bootcamp__container">

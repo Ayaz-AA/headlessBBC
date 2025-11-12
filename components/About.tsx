@@ -1,8 +1,13 @@
 'use client'
 
 import Image from 'next/image'
+import { HomepageFields } from '@/lib/wordpress'
 
-export default function About() {
+interface AboutProps {
+  data?: HomepageFields | null
+}
+
+export default function About({ data }: AboutProps) {
   return (
     <section className="about">
       <div className="about__container">

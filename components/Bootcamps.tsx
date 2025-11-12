@@ -2,8 +2,13 @@
 
 import Image from 'next/image'
 import Link from 'next/link'
+import { HomepageFields } from '@/lib/wordpress'
 
-export default function Bootcamps() {
+interface BootcampsProps {
+  data?: HomepageFields | null
+}
+
+export default function Bootcamps({ data }: BootcampsProps) {
   return (
     <section className="bootcamps">
       <div className="bootcamps__container">

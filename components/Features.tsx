@@ -1,6 +1,12 @@
 'use client'
 
-export default function Features() {
+import { HomepageFields } from '@/lib/wordpress'
+
+interface FeaturesProps {
+  data?: HomepageFields | null
+}
+
+export default function Features({ data }: FeaturesProps) {
   return (
     <section className="features">
       <div className="features__container">

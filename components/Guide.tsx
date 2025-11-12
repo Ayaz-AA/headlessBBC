@@ -1,8 +1,13 @@
 'use client'
 
 import Link from 'next/link'
+import { HomepageFields } from '@/lib/wordpress'
 
-export default function Guide() {
+interface GuideProps {
+  data?: HomepageFields | null
+}
+
+export default function Guide({ data }: GuideProps) {
   return (
     <section className="guide">
       <div className="guide__container">
