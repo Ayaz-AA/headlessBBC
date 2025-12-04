@@ -7,6 +7,7 @@
   --header-gray: #364153;
   --header-orange: #f8770c;
   --header-orange-dark: #d96200;
+  --badge-bg: #F3F4F6;
 }
 
 *,
@@ -26,11 +27,14 @@ body {
   font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
   line-height: 1.6;
   color: var(--text-primary);
-  background-color: var(--bg-page);
   padding-top: 135px;
   overflow-x: hidden;
   width: 100%;
   max-width: 100%;
+}
+
+.orange-clr {
+  color: var(--header-orange);
 }
 
 a {
@@ -1468,6 +1472,7 @@ img {
 }
 
 @media (max-width: 1200px) {
+
   .header__announcement-container,
   .header__main-container {
     padding: 0 2rem;
@@ -1765,3 +1770,391 @@ img {
   }
 }
 
+/* ..................fazila............*/
+.badge {
+  font-size: 14px;
+  padding: 10px 20px;
+  box-shadow: 0px 1px 2px -1px rgba(0, 0, 0, 0.1);
+  box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.1);
+  width: fit-content;
+  border-radius: 999px;
+  color: var(--text-secondary);
+}
+
+/* ..........teams.............. */
+.team-badge {
+  background-color: var(--badge-bg);
+
+  border: 1px solid #F3F4F6;
+  font-weight: 400;
+}
+
+.team-card-badge {
+  background-color: rgba(253, 242, 233, 1);
+}
+
+.team-hero__titles {
+  margin-bottom: 1.5rem;
+  font-size: 68px;
+}
+
+.team-hero__title-line1 {
+  color: var(--header-blue);
+}
+
+.team-hero__title-line2 {
+  color: var(--header-orange);
+}
+
+.team-hero__intro {
+  color: var(--text-secondary);
+  width: 70%;
+}
+
+.team-section {
+  background-color: rgba(249, 249, 249, 1);
+  border-radius: 8px;
+}
+
+.team-intro-heading {
+  color: var(--header-blue);
+  font-size: 48px;
+  font-weight: 400;
+}
+
+.team-intro {
+  color: var(--text-secondary);
+  font-weight: 400;
+  width: 80%;
+  margin: auto;
+}
+
+.hero-bg {
+  background: url(../public/assets/bg.png);
+  background-position: center right;
+  background-size: cover;
+}
+
+/* .......team card....... */
+/* ---- TEAM CARD ---- */
+
+.team-card {
+
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+  transition: transform 0.25s ease;
+}
+
+.team-card:hover {
+  transform: translateY(-4px);
+}
+
+/* IMAGE AREA */
+.team-card__image-wrapper {
+  position: relative;
+}
+
+.team-card__image {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+}
+
+/* SMALL ROUND BADGE IN CORNER */
+.team-card__social-badge {
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+
+  width: 32px;
+  height: 32px;
+
+  background: #0a66c2;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.25);
+}
+
+.team-card__social-badge img {
+  width: 18px;
+  height: 18px;
+}
+
+/* TEXT CONTENT */
+
+.team-card__name {
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 2px;
+  color: #111;
+}
+
+.team-card__role {
+  font-size: 0.85rem;
+  color: #555;
+  margin: 0;
+}
+
+/* COMPANY LOGO */
+.team-card__company-logo {
+  max-height: 18px;
+  width: auto;
+  object-fit: contain;
+}
+
+.what-we-do {
+  background: url(../public/assets/what-we-do-gradient.png);
+  background-position: center center;
+  background-size: cover;
+}
+
+.regular-para {
+  font-size: 16px;
+  color: var(--text-secondary);
+}
+
+.what-we-do-card-heading {
+  font-size: 24px;
+  color: var(--header-blue);
+}
+
+.commitment-wrapper {
+  background: url(../public/assets/our-commitment-bg.png);
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+
+}
+
+.editorial-sec {
+  background: linear-gradient(90deg, #A1C4FD 0%, #C2E9FB 50%, #E0EAFC 100%);
+  border: 14px solid rgba(245, 245, 246, 1);
+  border-radius: 8px;
+}
+
+.editorial-img-side {
+  background: url(../public/assets/bottom-section-circle-shadow.png);
+  background-position: right;
+  background-repeat: no-repeat;
+}
+
+.orange-sec-heading {
+  font-size: 48px;
+  color: var(--header-orange);
+}
+
+.finacne-options {
+  background-color: rgba(249, 250, 251, 1);
+}
+
+.finance-card {
+  background: #ffffff;
+  border: 0.89px solid rgba(229, 231, 235, 0.6);
+}
+
+.finance-card--note {
+  background: #fff8e5;
+  /* light yellow-ish note */
+  box-shadow: none;
+  border: 1px solid #ffe0a8;
+}
+
+.finance-card__inline-link {
+  text-decoration: underline;
+}
+
+.finance-card__note {
+  background-color: rgba(255, 243, 233, 1);
+  border-radius: 7px;
+}
+
+.editorial-hero {
+  background: rgba(241, 246, 255, 1);
+  border-radius: 8px;
+}
+
+.crucial-wrapper {
+  background: url(../public/assets/crucial-wrapper.png);
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  border-radius: 27px;
+  border: 7px solid white;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.crucial-heading {
+  font-size: 32px;
+  width: 75%;
+}
+
+.crucial-section-desktop {
+  border-radius: 20px;
+  background: linear-gradient(90deg, rgba(255, 81, 47, 0.81) 0%, rgba(240, 152, 25, 0.81) 100%);
+  width: 704px;
+  height: 267px;
+}
+
+.reviewer-network-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 0.75rem 1rem;
+  margin: 1.5rem 0;
+}
+
+.reviewer-network-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1rem;
+  border-radius: 999px;
+  background: #f7f3f2;
+  color: #2a2a2a;
+  font-weight: 400;
+  font-size: 14px;
+}
+
+.reviewer-network-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: #2563eb;
+  flex-shrink: 0;
+}
+
+.highlighted-para {
+  background: linear-gradient(135deg, #EFF6FF 0%, #FFFFFF 100%);
+  border: 0.89px solid rgba(219, 234, 254, 1);
+  border-radius: 20px;
+}
+
+.finance-faq-item {
+  border: 1px solid rgba(149, 138, 138, 1);
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0px 0px 5.5px 0px rgba(217, 217, 217, 1);
+  margin-top: 15px;
+}
+
+.finance-faq-button {
+  background-color: #ffffff;
+  color: #111827;
+  font-size: 14px;
+  padding: 0.85rem 1.25rem;
+  box-shadow: none;
+  outline: none;
+  border: none;
+}
+
+.finance-faq-button:not(.collapsed) {
+  background-color: #ffffff;
+  color: #111827;
+  box-shadow: none;
+}
+
+.finance-faq-button:focus {
+  box-shadow: none;
+  outline: none;
+}
+
+.finance-faq-button::after {
+  background-image: none;
+  content: "";
+  width: 8px;
+  height: 8px;
+  border: solid #f97316;
+  border-width: 0 2px 2px 0;
+  display: inline-block;
+  padding: 2px;
+  transform: rotate(45deg);
+  margin-left: auto;
+}
+
+.finance-faq-button:not(.collapsed)::after {
+  transform: rotate(-135deg);
+}
+
+
+
+.connect-strip {
+  margin-top: 3rem;
+  padding: 2.5rem 0;
+  background: linear-gradient(90deg, #ff512f 0%, #f09819 100%);
+}
+
+.connect-strip__inner {
+  border-radius: 8px;
+  padding: 1.75rem 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+}
+
+.connect-strip__heading {
+  margin: 0;
+  color: #ffffff;
+  font-size: 40px;
+  font-weight: 700;
+}
+
+.connect-strip__divider {
+  width: 1px;
+  height: 48px;
+  background-color: rgba(255, 255, 255, 0.6);
+}
+
+.connect-strip__icons {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.connect-strip__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background-color: #023659;
+  transition: transform 0.15s ease-out, box-shadow 0.15s ease-out, background-color 0.15s ease-out;
+}
+
+.connect-strip__icon img {
+  width: 20px;
+  height: 20px;
+}
+
+.connect-strip__icon:hover {
+  background-color: #035183;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+}
+
+@media (max-width: 768px) {
+  .connect-strip__inner {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .connect-strip__heading {
+    font-size: 28px;
+    margin-bottom: 0.75rem;
+  }
+
+  .connect-strip__divider {
+    display: none;
+  }
+}
+
+@media (max-width: 768px) {
+
+  .team-hero__intro {
+    width: 100%;
+  }
+}

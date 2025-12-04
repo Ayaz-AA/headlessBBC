@@ -1,18 +1,18 @@
-import Header from '@/components/Header'
-import Hero from '@/components/Hero'
-import About from '@/components/About'
-import Features from '@/components/Features'
-import Bootcamps from '@/components/Bootcamps'
-import WhatIsBootcamp from '@/components/WhatIsBootcamp'
-import Guide from '@/components/Guide'
-import Certification from '@/components/Certification'
-import FAQ from '@/components/FAQ'
-import Footer from '@/components/Footer'
+import Header from '@/components/global/Header'
+import Hero from '@/components/homepage/Hero'
+import About from '@/components/homepage/About'
+import Features from '@/components/homepage/Features'
+import Bootcamps from '@/components/homepage/Bootcamps'
+import WhatIsBootcamp from '@/components/homepage/WhatIsBootcamp'
+import Guide from '@/components/homepage/Guide'
+import Certification from '@/components/homepage/Certification'
+import FAQ from '@/components/homepage/FAQ'
+import Footer from '@/components/global/Footer'
 import { getHomepageData } from '@/lib/wordpress'
 
 export default async function Home() {
   let homepageData = null
-  
+
   try {
     homepageData = await getHomepageData()
   } catch (error) {

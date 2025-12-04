@@ -1,5 +1,9 @@
 import type { Metadata } from 'next'
+
+import 'bootstrap/dist/css/bootstrap.min.css'
 import '@/styles/main.css'
+
+import BootstrapClient from '@/components/global/BootstrapClient'
 
 export const metadata: Metadata = {
   title: 'Headless BBC | Home',
@@ -21,7 +25,10 @@ export default function RootLayout({
           rel="stylesheet"
         />
       </head>
-      <body>{children}</body>
+      <body>
+        <BootstrapClient />
+        {children}
+      </body>
     </html>
   )
 }
