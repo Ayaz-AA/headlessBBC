@@ -24,7 +24,7 @@ html {
 body {
   margin: 0;
   min-height: 100vh;
-  font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  font-family: 'Arimo', 'Segoe UI', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
   line-height: 1.6;
   color: var(--text-primary);
   padding-top: 135px;
@@ -1794,8 +1794,9 @@ img {
 }
 
 .team-hero__titles {
-  margin-bottom: 1.5rem;
-  font-size: 68px;
+  margin-bottom: 10px;
+  font-size: 48px;
+  font-weight: 700;
 }
 
 .team-hero__title-line1 {
@@ -2134,6 +2135,321 @@ img {
   background-color: #035183;
   transform: translateY(-1px);
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+}
+
+.programs-hero {
+  background-color: rgba(241, 246, 255, 1);
+}
+
+/* ---------- Filter card wrapper (matches reference) ---------- */
+.programs-filterbar-card {
+  border: 0.89px solid rgba(229, 231, 235, 1);
+  border-radius: 12px;
+  box-shadow: 0px 25px 50px -12px rgba(16, 24, 40, 0.05);
+}
+
+.programs-filterbar-head {
+  display: flex;
+  background-color: rgba(251, 251, 251, 1);
+  border-top-right-radius: 12px;
+  border-top-left-radius: 12px;
+  padding: 15px 35px;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 8px;
+}
+
+.programs-filterbar-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 16px;
+  display: grid;
+  place-items: center;
+  background: linear-gradient(135deg, rgba(43, 127, 255, 0.1) 0%, rgba(173, 70, 255, 0.1) 100%);
+  font-size: 20px;
+}
+
+.programs-filterbar-title {
+  font-size: 16px;
+  font-weight: 400;
+  color: rgba(16, 24, 40, 1);
+}
+
+.programs-filterbar-subtitle {
+  font-size: 14px;
+  color: var(--text-secondary);
+}
+
+/* ---------- Controls layout (fixes your broken positions) ---------- */
+.programs-filterbar-controls {
+  padding: 7px 35px;
+  display: grid;
+  grid-template-columns: 1fr 1fr 180px;
+  gap: 18px;
+  align-items: end;
+  background-color: rgba(255, 255, 255, 1);
+  border-bottom-right-radius: 12px;
+  border-bottom-left-radius: 12px;
+}
+
+.programs-filterbar-field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.programs-filterbar-label,
+.bbc-select__value {
+  font-size: 14px;
+  color: var(--text-secondary);
+}
+
+/* Mobile: stack */
+@media (max-width: 768px) {
+  .programs-filterbar-controls {
+    grid-template-columns: 1fr;
+  }
+
+  .programs-filterbar-btn {
+    width: 100%;
+  }
+}
+
+/* ---------- Search button (orange rounded like reference) ---------- */
+.programs-filterbar-btn {
+  height: 44px;
+  border: 0;
+  border-radius: 8px;
+  background: var(--header-orange-dark);
+  color: #fff;
+  font-weight: 400;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  font-size: 14px;
+}
+
+/* ---------- Custom dropdown base ---------- */
+.bbc-select {
+  position: relative;
+}
+
+.bbc-select__control {
+  width: 100%;
+  height: 44px;
+  border-radius: 14px;
+  border: 1px solid rgba(15, 23, 42, 0.10);
+  background: #fff;
+  padding: 0 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+
+}
+
+/* .bbc-select__control:focus {
+  outline: none;
+  border-color: rgba(249, 115, 22, 0.55);
+  box-shadow: 0 0 0 4px rgba(249, 115, 22, 0.12);
+} */
+.bbc-select__control:disabled {
+  background: #f8fafc;
+  color: #94a3b8;
+}
+
+.bbc-select__value.is-placeholder {
+  color: #94a3b8;
+}
+
+/* ---------- Dropdown menu (beautiful like reference) ---------- */
+.bbc-select {
+  position: relative;
+  z-index: 999;
+  /* 👈 ensures menu isn't trapped under siblings */
+}
+
+.programs-hero,
+.programs-hero .container,
+.programs-filterbar-card {
+  overflow: visible !important;
+  /* 👈 allow dropdown to escape */
+}
+
+/* .programs-wrapper {
+  position: relative;
+  z-index: -1;
+} */
+
+/* ---------- Program card styles ---------- */
+.program-card {
+  border: 1px solid #e5e7eb;
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.06);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.program-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 16px 40px rgba(15, 23, 42, 0.12);
+}
+
+.program-card__media {
+  position: relative;
+  overflow: hidden;
+  border-bottom: 1px solid #eef1f5;
+  background: #f8fafc;
+}
+
+.program-card__img {
+  width: 100%;
+  height: 190px;
+  object-fit: cover;
+  display: block;
+}
+
+.program-card__placeholder {
+  height: 190px;
+  display: grid;
+  place-items: center;
+  color: #64748b;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+.program-card__badges {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.program-card__badge {
+  background: rgba(255, 255, 255, 0.92);
+  color: #0f172a;
+  font-size: 12px;
+  padding: 5px 10px;
+  border-radius: 999px;
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 4px 10px rgba(15, 23, 42, 0.08);
+}
+
+.program-card__body {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  flex: 1;
+}
+
+.program-card__title {
+  font-size: 18px;
+  font-weight: 700;
+  color: #0f172a;
+  margin: 0;
+}
+
+.program-card__meta {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+  flex-wrap: wrap;
+  color: #475569;
+  font-size: 14px;
+  margin-top: 10px;
+  margin-bottom: 0;
+}
+
+.program-card__meta-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.program-card__meta-item i {
+  color: #94a3b8;
+}
+
+.program-card__btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border-radius: 10px;
+  padding: 10px 12px;
+  font-weight: 600;
+  border-color: #d0d5dd;
+  color: #0f172a;
+  background: #fff;
+}
+
+.program-card__footer {
+  margin-top: auto;
+  padding-top: 12px;
+}
+
+.program-card__btn:hover {
+  border-color: #0d6efd;
+  color: #0d6efd;
+}
+
+.program-card__btn i {
+  font-size: 14px;
+}
+
+.bbc-select__menu {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: calc(100% + 10px);
+  z-index: 99999;
+  /* 👈 bring to very front */
+
+  border-radius: 14px;
+  background: #fff;
+  border: 1px solid rgba(15, 23, 42, 0.10);
+  box-shadow: 0 22px 50px rgba(15, 23, 42, 0.14);
+  overflow: hidden;
+  padding: 8px;
+}
+
+.bbc-select__option {
+  width: 100%;
+  border: 0;
+  background: transparent;
+  padding: 10px 12px;
+  border-radius: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: var(--text-secondary);
+  text-align: left;
+  font-size: 14px;
+}
+
+.bbc-select__option:hover,
+.bbc-select__option.is-active {
+  background: rgba(249, 250, 251, 1);
+}
+
+.bbc-select__option:disabled {
+  opacity: 0.55;
+  cursor: pointer;
+}
+
+.bbc-select__option.is-selected .bbc-select__label {
+  color: rgba(7, 54, 92, 1);
+}
+
+.bbc-select__tick {
+  color: rgba(127, 86, 217, 1);
+  font-weight: 800;
 }
 
 @media (max-width: 768px) {
