@@ -1,14 +1,14 @@
 import { GraphQLClient, gql } from 'graphql-request'
 
-const endpoint = process.env.WP_GRAPHQL_ENDPOINT || 'http://34.236.237.236:8080/graphql'
+const endpoint = process.env.WP_GRAPHQL_ENDPOINT || 'http://34.205.184.15:8080/graphql'
 
 const authToken = process.env.WP_AUTH_TOKEN
 
 export const client = new GraphQLClient(endpoint, {
   headers: authToken
     ? {
-        Authorization: `Bearer ${authToken}`,
-      }
+      Authorization: `Bearer ${authToken}`,
+    }
     : undefined,
 })
 

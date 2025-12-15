@@ -2,16 +2,16 @@ import Header from "@/components/global/Header";
 import Footer from "@/components/global/Footer";
 import ProgramsPage from "@/components/programs/ProgramsPage";
 import { getPrograms, mapProgramNodeToVM } from "@/lib/programs";
-import { getProgramsListingHero } from "@/lib/programsHero";
+import { getProgramsListingHero, mapProgramsHero } from "@/lib/programsHero";
 
 export default async function HealthcareProgramsPage() {
-    const [programsData, hero] = await Promise.all([
+    const [programsData, heroData] = await Promise.all([
         getPrograms(),
         getProgramsListingHero("healthcare-programs"),
     ]);
 
     const programs = (programsData?.programs?.nodes ?? []).map(mapProgramNodeToVM);
-
+    const hero = mapProgramsHero(heroData);
     return (
         <>
             <Header />
@@ -20,6 +20,8 @@ export default async function HealthcareProgramsPage() {
                 initialIndustrySlug="healthcare"
                 programs={programs}
                 hero={hero}
+                showAllIndustriesOption={false}
+                lockedIndustry={true}
             />
             <Footer />
         </>
