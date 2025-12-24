@@ -5,7 +5,7 @@ This guide explains how to connect your Next.js application to WordPress and fet
 ## What Has Been Set Up
 
 1. **GraphQL Client Utility** (`lib/wordpress.ts`)
-   - Configured to connect to `http://34.205.184.15:8080/graphql`
+   - Configured to connect to `https://blog.bestbootcamps.com/graphql`
    - Includes TypeScript types for ACF fields
    - Ready to fetch homepage data with ACF `homepage_fields` group
 
@@ -30,7 +30,7 @@ This guide explains how to connect your Next.js application to WordPress and fet
 Create a `.env` file in the root directory:
 
 ```bash
-WP_GRAPHQL_ENDPOINT=http://34.205.184.15:8080/graphql
+WP_GRAPHQL_ENDPOINT=https://blog.bestbootcamps.com/graphql
 # Optional: Add if your endpoint requires authentication
 # WP_AUTH_TOKEN=your-token-here
 ```
@@ -124,7 +124,7 @@ Your WordPress site needs:
 
 ### Verify GraphQL Endpoint
 
-Visit: `http://34.205.184.15:8080/graphql`
+Visit: `https://blog.bestbootcamps.com/graphql`
 
 You should see a GraphQL playground or API explorer.
 

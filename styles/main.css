@@ -27,14 +27,504 @@ body {
   font-family: 'Arimo', 'Segoe UI', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
   line-height: 1.6;
   color: var(--text-primary);
-  padding-top: 135px;
-  overflow-x: hidden;
+
+  /* overflow-x: hidden; */
   width: 100%;
   max-width: 100%;
 }
 
 .orange-clr {
   color: var(--header-orange);
+}
+
+.bb-header {
+  z-index: 999999;
+  /* above page content */
+}
+
+.bb-mega-dropdown {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 100%;
+  margin-top: 8px;
+  z-index: 1090;
+  /* below header, above page */
+}
+
+.bb-bootcamps-dropdown {
+  left: 50%;
+  right: auto;
+  width: 800px;
+  max-width: 800px;
+  transform: translateX(-50%);
+}
+
+.bb-certificates-dropdown {
+  left: 50%;
+  right: auto;
+  width: 750px;
+  max-width: 750px;
+  transform: translateX(-50%);
+}
+
+.main-menu-items {
+  color: var(--text-secondary);
+  font-size: 16px;
+}
+
+.main-menu-items:hover {
+  color: var(--header-orange);
+}
+
+.drp-down-button {
+  font-size: 15px !important;
+  color: var(--header-orange);
+  background-color: rgba(248, 119, 12, 0.05);
+  border: none;
+  border-radius: 10px;
+
+}
+
+.drp-down-button:hover {
+  color: var(--header-orange-dark);
+  background-color: rgba(248, 119, 12, 0.09);
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(248, 119, 12, 0.30);
+}
+
+.view-all-topics-button {
+  font-size: 15px !important;
+  color: rgba(7, 54, 92, 1);
+  background-color: #f5f5f5;
+  border: none;
+  border-radius: 10px;
+  background-color: rgba(7, 54, 92, 0.05);
+}
+
+.view-all-topics-button:hover {
+  color: rgba(7, 54, 92, 1);
+  background-color: rgba(7, 54, 92, 0.09);
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(7, 54, 92, 0.30);
+}
+
+.mega-menu-container {
+  width: 798.22px;
+}
+
+.bb-industry-card {
+  background-color: rgba(249, 250, 251, 1);
+  border: none;
+  border-radius: 14px;
+  padding: 20px;
+  cursor: pointer;
+}
+
+.bb-industry-card-active {
+  background-color: rgba(249, 250, 251, 1);
+  border: 1.2px solid rgba(217, 98, 0, 0.2) !important;
+}
+
+.bb-industry-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 4px;
+}
+
+.bb-industry-icon i {
+  font-size: 24px;
+}
+
+.bb-industry-card-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.bb-industry-card-subtitle {
+  font-size: 14px;
+  color: var(--text-secondary);
+  margin: 0;
+  line-height: 1.4;
+}
+
+/* Featured Blog Card Styling */
+.bb-featured-blog-card {
+  border-radius: 10px;
+  overflow: hidden;
+  /* box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); */
+  border: 1px solid rgba(209, 213, 220, 0.54);
+  height: 168px;
+  transition: all 0.2s ease;
+  background: white;
+}
+
+.bb-featured-blog-card:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  transform: translateY(-2px);
+}
+
+.bb-featured-blog-image-wrapper {
+  position: relative;
+  height: 128px;
+  width: 100%;
+  overflow: hidden;
+}
+
+.bb-featured-blog-image {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  display: block;
+}
+
+.bb-featured-blog-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0.4) 50%, transparent 100%);
+  padding: 7px;
+}
+
+.bb-featured-blog-title {
+  color: rgba(255, 255, 255, 1);
+  font-size: 14px;
+  font-weight: 400;
+  margin: 0;
+}
+
+.bb-featured-blog-readmore {
+  display: flex;
+  padding: 7px;
+  background-color: #ffffff;
+  color: var(--text-primary);
+  font-size: 14px;
+  font-weight: 500;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.bb-featured-blog-readmore:hover {
+  background-color: #f9fafb;
+  color: var(--header-orange);
+}
+
+/* Dropdown List Group Styling */
+.bb-mega-dropdown .list-group {
+  border: none;
+  background: transparent;
+}
+
+.bb-mega-dropdown .list-group-item {
+  color: rgba(16, 24, 40, 1);
+  padding: 10px 0;
+  border: none;
+  font-size: 14px;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.bb-mega-dropdown .list-group-item:first-child {
+  padding-top: 0;
+}
+
+.bb-mega-dropdown .list-group-item:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.bb-mega-dropdown .list-group-item-action:hover {
+  color: var(--header-orange);
+  background: transparent;
+  border-bottom-color: #e5e7eb;
+}
+
+.bb-mega-dropdown .list-group-item-action:focus {
+  color: var(--header-orange);
+  background: transparent;
+  box-shadow: none;
+}
+
+.bb-mega-dropdown .list-group-item i {
+  color: #9CA3AF;
+  font-size: 13px;
+}
+
+.dropdown-headings {
+  color: rgba(106, 114, 130, 1);
+  font-size: 16px;
+}
+
+/* ================================
+   DESKTOP: Resources/About flyout
+================================== */
+.bb-header-overflow {
+  overflow: visible !important;
+  /* ensures dropdown is not clipped by header border */
+}
+
+.bb-desktop-nav {
+  position: relative;
+  overflow: visible;
+}
+
+.bb-desktop-anchor {
+  position: relative;
+  display: inline-block;
+}
+
+/* Flyout container: exactly under parent button, width 256px */
+.bb-simple-flyout {
+  position: absolute;
+  top: calc(100% + 22px);
+  left: 0;
+  width: 256px;
+  z-index: 2000;
+}
+
+.bb-simple-flyout-panel {
+  width: 256px;
+}
+
+.bb-simple-dropdown-card:hover {
+  background-color: rgba(243, 244, 246, 1);
+}
+
+/* ================================
+   MOBILE: Overlay + panel design
+   (matches your screenshot)
+================================== */
+.bbm-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(17, 24, 39, 0.45);
+  z-index: 5000;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 14px;
+}
+
+.bbm-panel {
+  width: 100%;
+  max-width: 360px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.18);
+  overflow: hidden;
+}
+
+.bbm-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 14px;
+  border-bottom: 1px solid #eef2f7;
+}
+
+.bbm-close {
+  border: 0;
+  background: #fff;
+  font-size: 26px;
+  line-height: 1;
+  padding: 0 6px;
+  cursor: pointer;
+  color: #111827;
+}
+
+.bbm-body {
+  padding: 12px;
+  max-height: calc(100vh - 140px);
+  overflow: auto;
+}
+
+/* Accordion buttons */
+.bbm-acc-btn {
+  width: 100%;
+  border: none;
+  border-bottom: 1.25px solid rgba(243, 244, 246, 1);
+  background: #fff;
+  padding: 12px 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-weight: 400;
+  color: rgba(16, 24, 40, 1);
+  margin-bottom: 10px;
+}
+
+.bbm-chevron {
+  transition: transform 0.2s ease;
+  font-size: 14px;
+  color: rgba(74, 85, 101, 1);
+}
+
+.bbm-chevron.is-open {
+  transform: rotate(180deg);
+}
+
+/* Industry cards list */
+.bbm-card-list {
+  display: grid;
+  gap: 10px;
+}
+
+.bbm-industry-card {
+  background: rgba(249, 250, 251, 1);
+  border: none;
+  border-radius: 14px;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-align: left;
+}
+
+.bbm-industry-icon {
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.bbm-industry-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.bbm-industry-name {
+  font-weight: 700;
+  color: #111827;
+  font-size: 13px;
+}
+
+.bbm-industry-sub {
+  font-size: 11px;
+  color: #6b7280;
+}
+
+/* Link list (Resources/About) */
+.bbm-link-list {
+  display: grid;
+  gap: 10px;
+}
+
+.bbm-link-row {
+  text-decoration: none;
+  border: none;
+  background: #fff;
+  padding: 5px;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  color: #111827;
+}
+
+.bbm-link-ic {
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.bbm-link-txt {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.bbm-link-title {
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.bbm-link-sub {
+  font-size: 11px;
+  color: #6b7280;
+}
+
+/* Sub pages */
+.bbm-subtop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.bbm-subheadings {
+  border: none;
+  background-color: transparent;
+  color: var(--text-secondary);
+  font-size: 14px;
+}
+
+.bbm-page-title {
+  font-weight: 800;
+  font-size: 14px;
+  color: #111827;
+  margin: 6px 0 12px;
+}
+
+.bbm-block {
+  padding: 5px;
+  margin-bottom: 12px;
+}
+
+.bbm-list {
+  display: grid;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.bbm-list-item {
+  text-decoration: none;
+  color: #111827;
+  font-size: 13px;
+}
+
+.bbm-list-item-disabled {
+  color: #6b7280;
+}
+
+/* Featured blog cards */
+.bbm-blog-grid {
+  display: grid;
+  gap: 10px;
+}
+
+.bbm-blog-card {
+  text-decoration: none;
+  border: 1px solid #eef2f7;
+  border-radius: 10px;
+  overflow: hidden;
+  color: #111827;
+  display: block;
+}
+
+.bbm-blog-img {
+  width: 100%;
+  height: 120px;
+  object-fit: cover;
+  display: block;
+}
+
+.bbm-blog-title {
+  padding: 10px;
+  font-size: 12px;
+  font-weight: 700;
 }
 
 a {
@@ -2466,6 +2956,26 @@ img {
   .connect-strip__divider {
     display: none;
   }
+}
+
+/* ............navbar */
+.bb-mobile-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.35);
+  z-index: 1050;
+  /* above header */
+  display: flex;
+  justify-content: flex-end;
+}
+
+.bb-mobile-panel {
+  width: 100%;
+  max-width: 420px;
+  height: 100%;
+  background: #fff;
+  padding: 16px;
+  overflow-y: auto;
 }
 
 @media (max-width: 768px) {
