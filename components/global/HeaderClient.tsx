@@ -753,7 +753,7 @@ export default function HeaderClient({
 
                     {/* Desktop CTA */}
                     <div className="d-none d-lg-block">
-                        <Link href="/get-started" className="btn btn--primary">
+                        <Link href="/career-assessment" className="btn btn--primary py-2 px-4">
                             Get Started
                         </Link>
                     </div>
@@ -978,7 +978,7 @@ export default function HeaderClient({
                                     )}
 
                                     {/* CTA */}
-                                    <Link href="/get-started" className="btn btn--primary w-100" onClick={closeMobile}>
+                                    <Link href="/career-assessment" className="btn btn--primary w-100" onClick={closeMobile}>
                                         Get Started
                                     </Link>
                                 </>
@@ -1082,7 +1082,7 @@ export default function HeaderClient({
                                         </div>
                                     </div>
 
-                                    <Link href="/get-started" className="btn btn--primary w-100" onClick={closeMobile}>
+                                    <Link href="/career-assessment" className="btn btn--primary w-100" onClick={closeMobile}>
                                         Get Started
                                     </Link>
                                 </>
@@ -1166,7 +1166,7 @@ export default function HeaderClient({
                                         </Link>
                                     </div>
 
-                                    <Link href="/get-started" className="btn btn--primary w-100" onClick={closeMobile}>
+                                    <Link href="/career-assessment" className="btn btn--primary w-100" onClick={closeMobile}>
                                         Get Started
                                     </Link>
                                 </>

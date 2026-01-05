@@ -54,7 +54,7 @@ export default function Guide({ data }: GuideProps) {
         </div>
         <div className="guide__cta scroll-animate scroll-animate--slide-up">
           <p className="guide__cta-text">Don&apos;t let indecision hold you back from the incredible possibilities that await. Join us on a journey of exploration and growth – let&apos;s find your perfect bootcamp match together!</p>
-          <Link href="#find-bootcamp" className="btn btn--primary">Find My Bootcamp</Link>
+          <Link href="/career-assessment" className="btn btn--primary">Find My Bootcamp</Link>
         </div>
       </div>
     </section>

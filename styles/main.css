@@ -2309,8 +2309,8 @@ img {
 
 .team-intro-heading {
   color: var(--header-blue);
-  font-size: 48px;
-  font-weight: 400;
+  font-size: 32px;
+  font-weight: 600;
 }
 
 .team-intro {
@@ -2692,6 +2692,7 @@ img {
 .bbc-select__value {
   font-size: 14px;
   color: var(--text-secondary);
+  text-align: left;
 }
 
 /* Mobile: stack */
@@ -2899,14 +2900,14 @@ img {
   right: 0;
   top: calc(100% + 10px);
   z-index: 99999;
-  /* 👈 bring to very front */
-
   border-radius: 14px;
   background: #fff;
   border: 1px solid rgba(15, 23, 42, 0.10);
   box-shadow: 0 22px 50px rgba(15, 23, 42, 0.14);
   overflow: hidden;
   padding: 8px;
+  max-height: 240px;
+  overflow-y: auto;
 }
 
 .bbc-select__option {
@@ -2942,6 +2943,157 @@ img {
   font-weight: 800;
 }
 
+/* ---------- Guides listing cards (match design) ---------- */
+.guides-wrapper {
+  padding-top: 10px;
+}
+
+/* horizontal card */
+.guide-card {
+  border: 1px solid #e5e7eb;
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.06);
+  background: #fff;
+  display: flex;
+  min-height: 170px;
+}
+
+.guide-card:hover {
+  box-shadow: 0 16px 40px rgba(15, 23, 42, 0.12);
+}
+
+.guide-card__media {
+  position: relative;
+  flex: 0 0 42%;
+  max-width: 42%;
+  background: #0b1220;
+}
+
+.guide-card__img {
+  width: 100%;
+  height: 100%;
+  min-height: 170px;
+  object-fit: cover;
+  display: block;
+}
+
+.guide-card__placeholder {
+  height: 100%;
+  min-height: 170px;
+  display: grid;
+  place-items: center;
+  color: #cbd5e1;
+  font-weight: 600;
+}
+
+.guide-card__badge {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  background: rgba(255, 255, 255, 0.92);
+  color: var(--header-blue);
+  font-size: 12px;
+  font-weight: 700;
+  padding: 7px 12px;
+  border-radius: 4px;
+
+  box-shadow: 0 4px 10px rgba(15, 23, 42, 0.08);
+}
+
+.guide-card__body {
+  flex: 1;
+  padding: 18px 18px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.guide-card__title {
+  font-size: 28px;
+  font-weight: 700;
+  color: rgba(16, 24, 40, 1);
+  margin: 0;
+  line-height: 1.2;
+}
+
+.guide-card__excerpt {
+  color: var(--text-secondary);
+  font-size: 12px;
+  line-height: 1.6;
+  margin: 0;
+}
+
+.guide-card__link {
+  margin-top: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 600;
+  font-size: 13px;
+  color: rgba(54, 65, 83, 1);
+}
+
+.guide-card__link:hover {
+  color: var(--header-orange);
+}
+
+/* orange center button */
+.guides-loadmore-btn {
+  height: 44px;
+  border: 0;
+  border-radius: 8px;
+  background: var(--header-orange-dark);
+  color: #fff;
+  font-weight: 500;
+  padding: 0 22px;
+  font-size: 14px;
+}
+
+/* mobile: stack card like screenshot */
+@media (max-width: 767px) {
+  .guide-card {
+    flex-direction: column;
+  }
+
+  .guide-card__media {
+    flex: 0 0 auto;
+    max-width: 100%;
+  }
+
+  .guide-card__img,
+  .guide-card__placeholder {
+    min-height: 190px;
+  }
+
+  .guide-card__title {
+    font-size: 20px;
+  }
+}
+
+.guide-intro__title {
+  font-size: 24px;
+  font-weight: 700;
+  margin: 0;
+  color: var(--header-blue);
+}
+
+@media (min-width: 992px) {
+  .guide-intro__title {
+    font-size: 32px;
+  }
+}
+
+.guide-intro__rightlist {
+  margin: 0;
+  background-color: rgba(243, 243, 244, 0.5);
+}
+
+.guide-intro__rightlist ul {
+  padding: 10px;
+}
+
+
 @media (max-width: 768px) {
   .connect-strip__inner {
     flex-direction: column;
@@ -2957,6 +3109,606 @@ img {
     display: none;
   }
 }
+
+/* =========================
+   Career Assessment - Step 1
+   ========================= */
+.matching-process-bg {
+  background: linear-gradient(135deg, #FFFFFF 0%, #F9FAFB 50%, #EFF6FF 100%);
+
+}
+
+.bb-assess {
+  /* min-height: calc(100vh - 160px); */
+  padding: 56px 16px 64px;
+  display: flex;
+  justify-content: center;
+}
+
+.bb-assess-card {
+  width: 100%;
+  max-width: 980px;
+  background: transparent;
+  border-radius: 16px;
+  padding: 24px 18px;
+}
+
+.bb-assess-progress {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.bb-assess-bar {
+  width: 44px;
+  height: 4px;
+  border-radius: 29826200px;
+  background: rgba(20, 42, 70, 0.12);
+}
+
+.bb-assess-bar.is-on {
+  background: var(--header-orange);
+  width: 64px;
+}
+
+.bb-assess-title {
+  text-align: center;
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--header-blue);
+
+}
+
+.bb-assess-subtitle {
+  text-align: center;
+  font-size: 12px;
+  color: rgba(54, 65, 83, 0.8);
+  max-width: 780px;
+  margin: 0 auto 22px;
+  line-height: 1.45;
+}
+
+.bb-assess-list {
+  width: 100%;
+  max-width: 780px;
+  margin: 0 auto;
+
+  /* overflow: hidden; */
+
+  border-bottom: 1px solid rgba(20, 42, 70, 0.08);
+}
+
+.bb-assess-row {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 25px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.bb-assess-row+.bb-assess-row {
+  border-top: 1px solid rgba(20, 42, 70, 0.08);
+}
+
+.bb-assess-row:hover {
+  background: rgba(240, 245, 255, 1);
+}
+
+.bb-assess-row.is-active {
+  background: rgba(240, 245, 255, 1);
+}
+
+.bb-assess-row-left {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  min-width: 0;
+}
+
+.bb-assess-icon {
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+}
+
+.bb-assess-icon i {
+  font-size: 16px;
+  color: var(--text-primary);
+}
+
+.bb-assess-icon-bg-it {
+  background: rgba(7, 54, 92, 0.08);
+}
+
+.bb-assess-icon-bg-biz {
+  background: rgba(248, 119, 12, 0.10);
+}
+
+.bb-assess-icon-bg-health {
+  background: rgba(16, 185, 129, 0.10);
+}
+
+.bb-assess-row-text {
+  min-width: 0;
+}
+
+.bb-assess-row-title {
+  text-align: left;
+  font-size: 28px;
+  font-weight: 400;
+  color: rgba(74, 85, 101, 1);
+  line-height: 1.2;
+}
+
+.bb-assess-row-sub {
+  font-size: 14px;
+  color: rgba(54, 65, 83, 0.75);
+  margin-top: 2px;
+}
+
+.bb-assess-radio {
+  width: 20px;
+  height: 20px;
+  border-radius: 999px;
+  border: 1.6px solid rgba(54, 65, 83, 0.25);
+  background: #fff;
+  flex: 0 0 auto;
+}
+
+.bb-assess-radio.is-on {
+  border-color: var(--header-orange);
+  box-shadow: inset 0 0 0 4px var(--header-orange);
+}
+
+.bb-assess-actions {
+  width: 100%;
+  max-width: 780px;
+  margin: 18px auto 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.bb-assess-back {
+  background: transparent;
+  border: none;
+  color: rgba(54, 65, 83, 0.65);
+  font-size: 14px;
+  cursor: pointer;
+  padding: 8px 6px;
+}
+
+.bb-assess-back:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.bb-assess-continue {
+  background: var(--header-orange);
+  box-shadow: 0 10px 15px -3px #f8770c33, 0 4px 6px -4px #f8770c33;
+  ;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 10px 22px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: 0.15s ease;
+}
+
+.bb-assess-continue:hover {
+  background: var(--header-orange-dark);
+}
+
+.bb-assess-continue:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+/* Responsive tweaks */
+@media (max-width: 640px) {
+  .bb-assess-card {
+    padding: 18px 10px;
+  }
+
+  .bb-assess-row {
+    padding: 14px 12px;
+  }
+
+  .bb-assess-subtitle {
+    font-size: 11px;
+  }
+}
+
+/* =========================
+   Career Assessment - Step 2 (Role chips)
+   ========================= */
+
+.bb-assess-bar.is-done {
+  background: var(--header-orange);
+  opacity: 0.55;
+}
+
+.bb-assess-chipsWrap {
+  width: 100%;
+  max-width: 820px;
+  margin: 18px auto 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+}
+
+.bb-assess-chip {
+  border: 1px solid rgba(243, 244, 246, 1);
+  background: rgba(243, 244, 246, 1);
+  border-radius: 29826200px;
+  padding: 12px 20px;
+  font-size: 14px;
+  color: rgba(74, 85, 101, 1);
+  cursor: pointer;
+  transition: 0.15s ease;
+}
+
+.bb-assess-chip:hover {
+  border: 1px solid rgba(20, 42, 70, 0.35);
+  background: rgba(255, 255, 255, 0.85);
+}
+
+.bb-assess-chip.is-active {
+  background: var(--header-blue);
+  color: white;
+}
+
+.bb-assess-selectedRow {
+  margin-top: 18px;
+  display: flex;
+  justify-content: center;
+}
+
+.bb-assess-selectedPill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid rgba(21, 93, 252, 0.55);
+  background: rgba(240, 246, 253, 1);
+  color: var(--text-secondary);
+  border-radius: 8px;
+  font-size: 14px;
+  min-width: 162px;
+  height: 58px;
+  justify-content: center;
+}
+
+.bb-assess-selectedX {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background-color: white;
+  font-size: 20px;
+}
+
+.bb-assess-note {
+  color: rgba(133, 65, 9, 0.85);
+  font-size: 12px;
+  margin: 0 auto;
+  border: 1px solid rgba(217, 98, 0, 0.2);
+  background: rgba(255, 248, 242, 1);
+  border-radius: 8px;
+  text-align: center;
+  width: fit-content;
+  padding: 12px 20px;
+}
+
+.lock-icon {
+  background: white;
+  border-radius: 50%;
+  padding: 10px;
+}
+
+/* Form wrapper inside your existing .bb-assess-card */
+.bb-assess-form {
+  width: 100%;
+  max-width: 620px;
+  margin: 0 auto;
+}
+
+/* 2 columns like the design */
+.bb-assess-form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px 18px;
+}
+
+@media (max-width: 640px) {
+  .bb-assess-form-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.bb-assess-field {
+  display: flex;
+  flex-direction: column;
+}
+
+.bb-assess-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--header-blue);
+  margin-bottom: 6px;
+}
+
+.bb-assess-input {
+  width: 100%;
+  height: 42px;
+  padding: 10px 12px;
+  border-radius: 6px;
+  border: 1px solid #e5e7eb;
+  background: #fff;
+  font-size: 13px;
+  color: #111827;
+  outline: none;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.bb-assess-input:focus {
+  border-color: var(--header-orange);
+  box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.18);
+}
+
+/* Opt-in section */
+.bb-assess-optin {
+  width: 100%;
+  margin-top: 10px;
+}
+
+.bb-assess-optin-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: #6b7280;
+  margin: 6px 0 8px;
+}
+
+/* Checkbox line */
+.bb-assess-check {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 12px;
+  color: #374151;
+  line-height: 1.35;
+  margin: 8px 0;
+}
+
+.bb-assess-check input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  margin-top: 2px;
+  accent-color: black;
+}
+
+/* Info box (blue outline style in design) */
+.bb-assess-infoBox {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 12px;
+  border-radius: 8px;
+  border: 1px solid rgba(21, 93, 252, 0.2);
+  background: rgba(240, 246, 253, 1);
+  font-size: 12px;
+  color: rgba(74, 85, 101, 1);
+}
+
+.bb-assess-infoIcon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  width: 24px;
+  height: 24px;
+  border-radius: 999px;
+  background: white;
+  color: var(--header-orange);
+  font-weight: 800;
+  flex: 0 0 24px;
+  line-height: 1;
+  margin-top: 1px;
+}
+
+/* Terms box (gray container at bottom) */
+.bb-assess-terms {
+
+  border-radius: 8px;
+  background: rgba(255, 248, 242, 0.67);
+  padding: 14px 14px;
+}
+
+.bb-assess-terms-title {
+  font-size: 12px;
+  font-weight: 700;
+  color: #374151;
+  margin-bottom: 8px;
+}
+
+.bb-assess-terms-list {
+  margin: 0;
+  padding-left: 16px;
+}
+
+.bb-assess-terms-list li {
+  font-size: 12px;
+  color: #6b7280;
+  line-height: 1.45;
+  margin: 6px 0;
+}
+
+/* Optional: tighten title spacing for this step so it matches screenshot */
+.bb-assess-card .bb-assess-title {
+  margin-bottom: 10px;
+}
+
+.bb-assess-error {
+  margin-top: 6px;
+  font-size: 12px;
+  color: #dc2626;
+  /* red */
+  line-height: 1.2;
+}
+
+.bb-assess-input.is-invalid {
+  border-color: rgba(220, 38, 38, 0.6);
+  box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.12);
+}
+
+.bb-shortFooter {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+
+  width: 100%;
+  background: #083a63;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  z-index: 40;
+}
+
+/* ✅ FIXED HEIGHT like design */
+.bb-shortFooter-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+
+  height: 44px;
+  /* ✅ fixed */
+  padding: 0 18px;
+  /* ✅ remove vertical padding */
+
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 12px;
+
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 12px;
+}
+
+.bb-shortFooter-left {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.bb-shortFooter-diamond {
+  width: 6px;
+  height: 6px;
+  background: #f97316;
+  transform: rotate(45deg);
+  border-radius: 1px;
+}
+
+.bb-shortFooter-link {
+  color: rgba(255, 255, 255, 0.9);
+  text-decoration: none;
+}
+
+.bb-shortFooter-link:hover {
+  color: #ffffff;
+  text-decoration: underline;
+}
+
+.bb-shortFooter-center {
+  text-align: center;
+  color: rgba(255, 255, 255, 0.75);
+  white-space: nowrap;
+}
+
+.bb-shortFooter-right {
+  display: inline-flex;
+  justify-content: flex-end;
+  gap: 18px;
+}
+
+.bb-shortFooter-social {
+  color: rgba(255, 255, 255, 0.75);
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.bb-shortFooter-social:hover {
+  color: #ffffff;
+  text-decoration: underline;
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .bb-shortFooter-inner {
+    grid-template-columns: 1fr;
+    text-align: center;
+    height: auto;
+    /* allow wrap on mobile */
+    padding: 10px 18px;
+    /* compact vertical padding */
+  }
+
+  .bb-shortFooter-left,
+  .bb-shortFooter-right {
+    justify-content: center;
+  }
+}
+
+/* =========================================
+   ASSESSMENT FOOTER (fixed above short footer)
+========================================= */
+.bb-assess-footer {
+  position: fixed;
+  left: 0;
+  right: 0;
+
+  bottom: 44px;
+  /* ✅ exactly short footer height on desktop */
+
+  padding: 12px 0;
+  z-index: 50;
+
+  background: linear-gradient(to top,
+      rgba(246, 249, 252, 0.98),
+      rgba(246, 249, 252, 0.65),
+      rgba(246, 249, 252, 0));
+}
+
+.bb-assess-footer-inner {
+  width: 100%;
+  max-width: 780px;
+  margin: 0 auto;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 0 6px;
+}
+
+/* =========================================
+   PAGE PADDING so content doesn't hide behind both bars
+   ✅ NO EXTRA SPACE: only the required amount
+========================================= */
+.matching-process-bg {
+  padding-bottom: 130px;
+  /* 44px short footer + ~86px assess footer */
+}
+
 
 /* ............navbar */
 .bb-mobile-overlay {
