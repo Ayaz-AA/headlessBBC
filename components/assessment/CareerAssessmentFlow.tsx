@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useMemo, useState } from "react";
+import Link from "next/link";
 import type { ProgramVM } from "@/lib/programs";
 
 // ✅ Use SelectDropdown only for UI/behavior (step 4)
@@ -34,7 +35,7 @@ type AssessmentCopy = {
     step5Heading?: string | null;
     step5Paragraph?: string | null;
 
-    // ✅ NEW: Step 6 copy from WordPress
+    // ✅ Step 6 copy from WordPress
     step6Heading?: string | null;
     step6Paragraph?: string | null;
 };
@@ -69,6 +70,54 @@ function onlyDigits(input: string) {
     return input.replace(/[^\d]/g, "");
 }
 
+function MatchCard({ program }: { program: ProgramVM }) {
+    return (
+        <article className="program-card card h-100">
+            <div className="program-card__media">
+                {program.imageUrl ? (
+                    <img
+                        src={program.imageUrl}
+                        alt={program.imageAlt ?? program.title}
+                        className="program-card__img"
+                    />
+                ) : (
+                    <div className="program-card__placeholder">Program</div>
+                )}
+            </div>
+
+            <div className="card-body program-card__body">
+                <h3 className="program-card__title">{program.title}</h3>
+
+                <div className="program-card__meta">
+                    {program.programLength && (
+                        <span className="program-card__meta-item">
+                            <i className="fa-regular fa-calendar" aria-hidden="true" />
+                            <span>{program.programLength}</span>
+                        </span>
+                    )}
+                    {program.programType && (
+                        <span className="program-card__meta-item">
+                            <i className="fa-regular fa-clock" aria-hidden="true" />
+                            <span>{program.programType}</span>
+                        </span>
+                    )}
+                </div>
+
+                <div className="program-card__footer">
+                    {/* ✅ Your PDP route is /program/[slug] */}
+                    <Link
+                        href={`/program/${program.slug}`}
+                        className="program-card__btn btn btn-outline-primary w-100"
+                    >
+                        <span>Learn More</span>
+                        <i className="fa-solid fa-arrow-right" aria-hidden="true" />
+                    </Link>
+                </div>
+            </div>
+        </article>
+    );
+}
+
 export default function CareerAssessmentFlow({ programs, industries, copy }: Props) {
     const [step, setStep] = useState<Step>(1);
 
@@ -98,6 +147,9 @@ export default function CareerAssessmentFlow({ programs, industries, copy }: Pro
     const [touchedEmail, setTouchedEmail] = useState(false);
     const [touchedPhone, setTouchedPhone] = useState(false);
     const [touchedZip, setTouchedZip] = useState(false);
+
+    // ✅ NEW: After step 6 submit, show results cards
+    const [submitted, setSubmitted] = useState(false);
 
     // ✅ Hardcoded pace options (stable)
     const paceOptions = useMemo(
@@ -134,7 +186,7 @@ export default function CareerAssessmentFlow({ programs, industries, copy }: Pro
         setSelectedRoleSlugs((prev) => (prev.includes(slug) ? prev.filter((x) => x !== slug) : [...prev, slug]));
     }
 
-    // (kept) results for later use (not shown in step 6 UI)
+    // results for cards (uses Step 1 + Step 2 selections)
     const results = useMemo(() => {
         if (!selectedIndustrySlug || selectedRoleSlugs.length === 0) return [];
         return programs.filter((p) => {
@@ -149,6 +201,11 @@ export default function CareerAssessmentFlow({ programs, industries, copy }: Pro
     }
 
     function back() {
+        // ✅ If user is viewing results (submitted=true), Back should return to the step 6 form
+        if (step === 6 && submitted) {
+            setSubmitted(false);
+            return;
+        }
         setStep((s) => (s === 1 ? 1 : ((s - 1) as Step)));
     }
 
@@ -195,11 +252,13 @@ export default function CareerAssessmentFlow({ programs, industries, copy }: Pro
         setTouchedEmail(false);
         setTouchedPhone(false);
         setTouchedZip(false);
+
+        // ✅ also reset results mode
+        setSubmitted(false);
     }
 
     return (
         <main className="matching-process-bg mx-auto w-full max-w-6xl px-4 pt-10">
-
             {/* STEP 1 */}
             {step === 1 && (
                 <section className="bb-assess">
@@ -271,7 +330,10 @@ export default function CareerAssessmentFlow({ programs, industries, copy }: Pro
                                     <button
                                         key={role.slug}
                                         type="button"
-                                        onClick={() => toggleRole(role.slug)}
+                                        onClick={() => {
+                                            toggleRole(role.slug);
+                                            setSubmitted(false); // ✅ if they change roles, hide results mode
+                                        }}
                                         className={`bb-assess-chip ${active ? "is-active" : ""}`}
                                     >
                                         {role.name}
@@ -286,6 +348,7 @@ export default function CareerAssessmentFlow({ programs, industries, copy }: Pro
                                 className="bb-assess-selectedPill"
                                 onClick={() => {
                                     setSelectedRoleSlugs([]);
+                                    setSubmitted(false);
 
                                     // reset downstream
                                     setSelectedPace("");
@@ -459,132 +522,160 @@ export default function CareerAssessmentFlow({ programs, industries, copy }: Pro
                 </section>
             )}
 
-            {/* ✅ STEP 6 (CONTACT INFO) */}
+            {/* ✅ STEP 6 (CONTACT INFO) + RESULTS CARDS AFTER SUBMIT */}
             {step === 6 && (
                 <section className="bb-assess">
                     <div className="bb-assess-card">
                         <ProgressBars step={6} />
 
-                        {!!copy?.step6Heading && <h2 className="bb-assess-title">{copy.step6Heading}</h2>}
-                        {!!copy?.step6Paragraph && <p className="regular-para text-center mb-3">{copy.step6Paragraph}</p>}
+                        {!submitted ? (
+                            <>
+                                {!!copy?.step6Heading && <h2 className="bb-assess-title">{copy.step6Heading}</h2>}
+                                {!!copy?.step6Paragraph && <p className="regular-para text-center mb-3">{copy.step6Paragraph}</p>}
 
-                        {/* ✅ reuse the same privacy note styling */}
-                        <div className="bb-assess-note mb-3">
-                            <span className="bb-assess-note-icon" aria-hidden="true">
-                                <i className=" me-2 fa-solid fa-lock lock-icon"></i>
-                            </span>
-                            <span>We will never share your personal information with any educator without your consent.</span>
-                        </div>
-
-                        {/* Form */}
-                        <div className="bb-assess-form">
-                            <div className="bb-assess-form-grid">
-                                <div className="bb-assess-field">
-                                    <label className="bb-assess-label">Your Name</label>
-                                    <input
-                                        className={`bb-assess-input ${nameError ? "is-invalid" : ""}`}
-                                        value={fullName}
-                                        onChange={(e) => {
-                                            setTouchedName(true);
-                                            setFullName(e.target.value);
-                                        }}
-                                        placeholder="Please Enter Your Full Name"
-                                        autoComplete="name"
-                                    />
-                                    {nameError ? <div className="bb-assess-error">{nameError}</div> : null}
+                                {/* ✅ reuse the same privacy note styling */}
+                                <div className="bb-assess-note mb-3">
+                                    <span className="bb-assess-note-icon" aria-hidden="true">
+                                        <i className=" me-2 fa-solid fa-lock lock-icon"></i>
+                                    </span>
+                                    <span>We will never share your personal information with any educator without your consent.</span>
                                 </div>
 
-                                <div className="bb-assess-field">
-                                    <label className="bb-assess-label">
-                                        Email <span className="bb-assess-req">*</span>
-                                    </label>
-                                    <input
-                                        className={`bb-assess-input ${emailError ? "is-invalid" : ""}`}
-                                        value={email}
-                                        onChange={(e) => {
-                                            setTouchedEmail(true);
-                                            setEmail(e.target.value);
-                                        }}
-                                        placeholder="Enter your email"
-                                        autoComplete="email"
-                                        inputMode="email"
-                                    />
-                                    {emailError ? <div className="bb-assess-error">{emailError}</div> : null}
+                                {/* Form */}
+                                <div className="bb-assess-form">
+                                    <div className="bb-assess-form-grid">
+                                        <div className="bb-assess-field">
+                                            <label className="bb-assess-label">Your Name</label>
+                                            <input
+                                                className={`bb-assess-input ${nameError ? "is-invalid" : ""}`}
+                                                value={fullName}
+                                                onChange={(e) => {
+                                                    setTouchedName(true);
+                                                    setFullName(e.target.value);
+                                                }}
+                                                placeholder="Please Enter Your Full Name"
+                                                autoComplete="name"
+                                            />
+                                            {nameError ? <div className="bb-assess-error">{nameError}</div> : null}
+                                        </div>
+
+                                        <div className="bb-assess-field">
+                                            <label className="bb-assess-label">
+                                                Email <span className="bb-assess-req">*</span>
+                                            </label>
+                                            <input
+                                                className={`bb-assess-input ${emailError ? "is-invalid" : ""}`}
+                                                value={email}
+                                                onChange={(e) => {
+                                                    setTouchedEmail(true);
+                                                    setEmail(e.target.value);
+                                                }}
+                                                placeholder="Enter your email"
+                                                autoComplete="email"
+                                                inputMode="email"
+                                            />
+                                            {emailError ? <div className="bb-assess-error">{emailError}</div> : null}
+                                        </div>
+
+                                        <div className="bb-assess-field">
+                                            <label className="bb-assess-label">
+                                                Phone Number <span className="bb-assess-req">*</span>
+                                            </label>
+                                            <input
+                                                className={`bb-assess-input ${phoneError ? "is-invalid" : ""}`}
+                                                value={phone}
+                                                onChange={(e) => {
+                                                    setTouchedPhone(true);
+                                                    setPhone(onlyDigits(e.target.value)); // ✅ digits only
+                                                }}
+                                                placeholder="Enter your number here"
+                                                autoComplete="tel"
+                                                inputMode="numeric"
+                                            />
+                                            {phoneError ? <div className="bb-assess-error">{phoneError}</div> : null}
+                                        </div>
+
+                                        <div className="bb-assess-field">
+                                            <label className="bb-assess-label">
+                                                Zip Code <span className="bb-assess-req">*</span>
+                                            </label>
+                                            <input
+                                                className={`bb-assess-input ${zipError ? "is-invalid" : ""}`}
+                                                value={zip}
+                                                onChange={(e) => {
+                                                    setTouchedZip(true);
+                                                    setZip(onlyDigits(e.target.value)); // ✅ digits only
+                                                }}
+                                                placeholder="Enter your zip code"
+                                                autoComplete="postal-code"
+                                                inputMode="numeric"
+                                            />
+                                            {zipError ? <div className="bb-assess-error">{zipError}</div> : null}
+                                        </div>
+                                    </div>
+
+                                    <div className="bb-assess-optin mt-3">
+                                        <div className="bb-assess-optin-title">Opt in fields:</div>
+
+                                        <label className="bb-assess-check">
+                                            <input type="checkbox" checked={optInTexts} onChange={(e) => setOptInTexts(e.target.checked)} />
+                                            <span>I agree to receive phone calls/texts from bootcamp programs I select.</span>
+                                        </label>
+
+                                        <label className="bb-assess-check">
+                                            <input type="checkbox" checked={optInEmails} onChange={(e) => setOptInEmails(e.target.checked)} />
+                                            <span>I agree to receive email updates from Best Bootcamps.</span>
+                                        </label>
+                                    </div>
+
+                                    {/* info note box */}
+                                    <div className="bb-assess-infoBox mt-3">
+                                        <span className="bb-assess-infoIcon" aria-hidden="true">
+                                            !
+                                        </span>
+                                        <span>
+                                            Your information remains secure and will only be used by school reps who reach out with information.
+                                        </span>
+                                    </div>
+
+                                    {/* terms box */}
+                                    <div className="bb-assess-terms mt-4">
+                                        <div className="bb-assess-terms-title">When You click on the next Button</div>
+                                        <ul className="bb-assess-terms-list">
+                                            <li>You agree that educators may reach out regarding their programs.</li>
+                                            <li>
+                                                You agree that educators you select may reach out for marketing purposes regarding their programs at
+                                                your provided contact information, even where that number is registered in a Do-Not-Call registry.
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </>
+                        ) : (
+                            <>
+                                {/* ✅ RESULTS VIEW (Strong match cards) */}
+                                <div className="text-center mb-4">
+                                    <div style={{ fontWeight: 600, color: "var(--text-primary)" }}>
+                                        Great {fullName?.trim() ? fullName.trim() : "there"}!
+                                    </div>
+                                    <h2 className="bb-assess-title mb-0">You are strong match for these bootcamps</h2>
                                 </div>
 
-                                <div className="bb-assess-field">
-                                    <label className="bb-assess-label">
-                                        Phone Number <span className="bb-assess-req">*</span>
-                                    </label>
-                                    <input
-                                        className={`bb-assess-input ${phoneError ? "is-invalid" : ""}`}
-                                        value={phone}
-                                        onChange={(e) => {
-                                            setTouchedPhone(true);
-                                            setPhone(onlyDigits(e.target.value)); // ✅ digits only
-                                        }}
-                                        placeholder="Enter your number here"
-                                        autoComplete="tel"
-                                        inputMode="numeric"
-                                    />
-                                    {phoneError ? <div className="bb-assess-error">{phoneError}</div> : null}
-                                </div>
-
-                                <div className="bb-assess-field">
-                                    <label className="bb-assess-label">
-                                        Zip Code <span className="bb-assess-req">*</span>
-                                    </label>
-                                    <input
-                                        className={`bb-assess-input ${zipError ? "is-invalid" : ""}`}
-                                        value={zip}
-                                        onChange={(e) => {
-                                            setTouchedZip(true);
-                                            setZip(onlyDigits(e.target.value)); // ✅ digits only
-                                        }}
-                                        placeholder="Enter your zip code"
-                                        autoComplete="postal-code"
-                                        inputMode="numeric"
-                                    />
-                                    {zipError ? <div className="bb-assess-error">{zipError}</div> : null}
-                                </div>
-                            </div>
-
-                            <div className="bb-assess-optin mt-3">
-                                <div className="bb-assess-optin-title">Opt in fields:</div>
-
-                                <label className="bb-assess-check">
-                                    <input type="checkbox" checked={optInTexts} onChange={(e) => setOptInTexts(e.target.checked)} />
-                                    <span>I agree to receive phone calls/texts from bootcamp programs I select.</span>
-                                </label>
-
-                                <label className="bb-assess-check">
-                                    <input type="checkbox" checked={optInEmails} onChange={(e) => setOptInEmails(e.target.checked)} />
-                                    <span>I agree to receive email updates from Best Bootcamps.</span>
-                                </label>
-                            </div>
-
-                            {/* info note box */}
-                            <div className="bb-assess-infoBox mt-3">
-                                <span className="bb-assess-infoIcon" aria-hidden="true">
-                                    !
-                                </span>
-                                <span>
-                                    Your information remains secure and will only be used by school reps who reach out with information.
-                                </span>
-                            </div>
-
-                            {/* terms box */}
-                            <div className="bb-assess-terms mt-4">
-                                <div className="bb-assess-terms-title">When You click on the next Button</div>
-                                <ul className="bb-assess-terms-list">
-                                    <li>You agree that educators may reach out regarding their programs.</li>
-                                    <li>
-                                        You agree that educators you select may reach out for marketing purposes regarding their programs at
-                                        your provided contact information, even where that number is registered in a Do-Not-Call registry.
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
+                                {results.length > 0 ? (
+                                    <div className="row g-3 mt-2">
+                                        {results.map((p) => (
+                                            <div key={p.id} className="col-12 col-md-6">
+                                                <MatchCard program={p} />
+                                            </div>
+                                        ))}
+                                    </div>
+                                ) : (
+                                    <p className="text-center text-muted mt-4">
+                                        No matches found for your selections. Please go back and choose a different role.
+                                    </p>
+                                )}
+                            </>
+                        )}
                     </div>
                 </section>
             )}
@@ -606,9 +697,10 @@ export default function CareerAssessmentFlow({ programs, industries, copy }: Pro
                                 return;
                             }
 
-                            // ✅ Step 6 is the current last step.
-                            // Plug your real submit logic here (API call / redirect / modal).
-                            // You already have all captured answers in state.
+                            // ✅ Step 6 submit -> show results cards
+                            setSubmitted(true);
+
+                            // If later you want API submit, do it here before setSubmitted(true).
                         }}
                     >
                         Continue
