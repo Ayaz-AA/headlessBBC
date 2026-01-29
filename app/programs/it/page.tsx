@@ -3,11 +3,13 @@ import Footer from "@/components/global/Footer";
 import ProgramsPage from "@/components/programs/ProgramsPage";
 import { getPrograms, mapProgramNodeToVM } from "@/lib/programs";
 import { getProgramsListingHero, mapProgramsHero } from "@/lib/programsHero";
+import { getGlobalMatchMeCta } from "@/lib/globalCtas";
 
 export default async function ITProgramsPage() {
-    const [programsData, heroData]: any = await Promise.all([
+    const [programsData, heroData, matchMeCta]: any = await Promise.all([
         getPrograms(),
         getProgramsListingHero("it-programs"),
+        getGlobalMatchMeCta(),
     ]);
 
     const programs = (programsData?.programs?.nodes ?? []).map(mapProgramNodeToVM);
@@ -23,6 +25,7 @@ export default async function ITProgramsPage() {
                 hero={hero}
                 showAllIndustriesOption={false}
                 lockedIndustry={true}
+                matchMeCta={matchMeCta}
             />
             <Footer />
         </>

@@ -1,8 +1,10 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import ProgramGrid from "./ProgramGrid";
 import ProgramsHero from "./ProgramsHero";
+import MatchMeCta from "@/components/global/MatchMeCta";
+
 
 export type ProgramVM = {
     id: string;
@@ -35,7 +37,18 @@ type Props = {
     // for /programs pages:
     showAllIndustriesOption?: boolean; // default true
     lockedIndustry?: boolean; // default false
+    matchMeCta?: {
+        enabled: boolean;
+        title: string;
+        description?: string;
+        buttonLabel: string;
+        buttonHref: string;
+        imageUrl?: string;
+        imageAlt?: string;
+    } | null;
 };
+
+const PAGE_SIZE = 9;
 
 export default function ProgramsPage({
     pageTitle,
@@ -44,6 +57,7 @@ export default function ProgramsPage({
     hero,
     showAllIndustriesOption = true,
     lockedIndustry = false,
+    matchMeCta,
 }: Props) {
     // UI state (dropdowns)
     const [industrySlug, setIndustrySlug] = useState<string>(initialIndustrySlug ?? "all");
@@ -52,6 +66,9 @@ export default function ProgramsPage({
     // Applied state (when user clicks Search)
     const [appliedIndustry, setAppliedIndustry] = useState<string>(initialIndustrySlug ?? "all");
     const [appliedProgramSlug, setAppliedProgramSlug] = useState<string>("");
+
+    // ✅ Load more state
+    const [visibleCount, setVisibleCount] = useState<number>(PAGE_SIZE);
 
     const industries = useMemo(() => {
         // If this is a locked industry page, show only that industry
@@ -96,6 +113,9 @@ export default function ProgramsPage({
     const onSearch = () => {
         setAppliedIndustry(industrySlug);
         setAppliedProgramSlug(programSlug);
+
+        // ✅ reset pagination on new search
+        setVisibleCount(PAGE_SIZE);
     };
 
     const filtered = useMemo(() => {
@@ -116,6 +136,18 @@ export default function ProgramsPage({
         return result;
     }, [programs, appliedIndustry, appliedProgramSlug]);
 
+    // ✅ Also reset pagination if filters auto-apply (your existing behavior on All Programs page)
+    useEffect(() => {
+        setVisibleCount(PAGE_SIZE);
+    }, [appliedIndustry, appliedProgramSlug]);
+
+    // ✅ only show a slice based on visibleCount
+    const visiblePrograms = useMemo(() => {
+        return filtered.slice(0, visibleCount);
+    }, [filtered, visibleCount]);
+
+    const canLoadMore = visibleCount < filtered.length;
+
     return (
         <main>
             <ProgramsHero
@@ -131,9 +163,10 @@ export default function ProgramsPage({
                     // (i.e. not locked pages like /programs/it, /programs/business, etc.)
                     if (!lockedIndustry) {
                         setAppliedIndustry(v);
+                        // ✅ reset pagination when auto-applying
+                        setVisibleCount(PAGE_SIZE);
                     }
                 }}
-
                 showAllIndustriesOption={showAllIndustriesOption}
                 lockedIndustry={lockedIndustry}
                 programs={programOptions}
@@ -144,11 +177,33 @@ export default function ProgramsPage({
 
             <div className="container programs-wrapper pb-5">
                 <p className="text-muted mt-3">
-                    Showing {filtered.length} program{filtered.length === 1 ? "" : "s"}
+                    Showing {visiblePrograms.length} of {filtered.length} program{filtered.length === 1 ? "" : "s"}
                 </p>
 
-                <ProgramGrid programs={filtered} />
+                <ProgramGrid programs={visiblePrograms} />
+
+                {canLoadMore && (
+                    <div className="d-flex justify-content-center mt-4">
+                        <button
+                            type="button"
+                            className="btn btn--primary p-3"
+                            onClick={() => setVisibleCount((c) => Math.min(c + PAGE_SIZE, filtered.length))}
+                        >
+                            Load more programs
+                        </button>
+                    </div>
+                )}
             </div>
+            {matchMeCta?.enabled && (
+                <MatchMeCta
+                    title={matchMeCta.title}
+                    description={matchMeCta.description}
+                    ctaLabel={matchMeCta.buttonLabel}
+                    ctaHref={matchMeCta.buttonHref}
+                    imageSrc={matchMeCta.imageUrl}
+                    imageAlt={matchMeCta.imageAlt}
+                />
+            )}
         </main>
     );
 }

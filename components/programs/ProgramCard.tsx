@@ -2,6 +2,11 @@ import Link from "next/link";
 import type { ProgramVM } from "./ProgramsPage";
 
 export default function ProgramCard({ program }: { program: ProgramVM }) {
+    // Program-specific PLP route
+    const href = program.slug
+        ? `/programs/${program.slug}`
+        : `/programs`;
+
     return (
         <article className="program-card card h-100">
             <div className="program-card__media">
@@ -17,9 +22,9 @@ export default function ProgramCard({ program }: { program: ProgramVM }) {
 
                 {!!program.industryNames?.length && (
                     <div className="program-card__badges">
-                        {program.industryNames.map((n) => (
-                            <span key={n} className="program-card__badge">
-                                {n}
+                        {program.industryNames.map((name) => (
+                            <span key={name} className="program-card__badge">
+                                {name}
                             </span>
                         ))}
                     </div>
@@ -36,6 +41,7 @@ export default function ProgramCard({ program }: { program: ProgramVM }) {
                             <span>{program.programLength}</span>
                         </span>
                     )}
+
                     {program.programType && (
                         <span className="program-card__meta-item">
                             <i className="fa-regular fa-clock" aria-hidden="true" />
@@ -45,14 +51,13 @@ export default function ProgramCard({ program }: { program: ProgramVM }) {
                 </div>
 
                 <div className="program-card__footer">
-                    <button
-                        className="program-card__btn btn btn-outline-primary w-100"
-                        type="button"
-                        onClick={() => alert("Detail page coming soon")}
+                    <Link
+                        href={href}
+                        className="program-card__btn btn  w-100"
                     >
                         <span>Learn More</span>
                         <i className="fa-solid fa-arrow-right" aria-hidden="true" />
-                    </button>
+                    </Link>
                 </div>
             </div>
         </article>

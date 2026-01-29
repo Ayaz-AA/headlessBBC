@@ -1,110 +1,3 @@
-// import { GraphQLClient, gql } from 'graphql-request'
-
-// const endpoint = process.env.WP_GRAPHQL_ENDPOINT || 'https://blog.bestbootcamps.com/graphql'
-
-// const authToken = process.env.WP_AUTH_TOKEN
-
-// export const client = new GraphQLClient(endpoint, {
-//   headers: authToken
-//     ? {
-//       Authorization: `Bearer ${authToken}`,
-//     }
-//     : undefined,
-// })
-
-// // GraphQL query to fetch homepage with ACF fields
-// // Using pages query to match the working GraphQL structure
-// export const GET_HOMEPAGE = gql`
-//   query GetHomepage {
-//     pages(where: {name: "bbc-home"}) {
-//       nodes {
-//         id
-//         databaseId
-//         title
-//         content
-//         slug
-//         uri
-//         homepageFields {
-//           homepageFields {
-//             heroSection {
-//               heroTitle
-//             }
-//           }
-//         }
-//       }
-//     }
-//   }
-// `
-
-// // Alternative query to get page by database ID (uncomment if needed)
-// // export const GET_HOMEPAGE_BY_ID = gql`
-// //   query GetHomepage($id: ID!) {
-// //     page(id: $id, idType: DATABASE_ID) {
-// //       id
-// //       title
-// //       content
-// //       homepageFields {
-// //         # Your ACF fields here
-// //       }
-// //     }
-// //   }
-// // `
-
-// // Type definitions for ACF fields
-// export interface MediaItem {
-//   sourceUrl: string
-//   altText?: string | null
-//   mediaDetails?: {
-//     width?: number | null
-//     height?: number | null
-//   } | null
-// }
-
-// // Flexible type for ACF fields - adjust based on your actual ACF field structure
-// export interface HeroSection {
-//   heroTitle?: string | null
-//   // Add other hero section fields here as needed
-// }
-
-// export interface HomepageFields {
-//   // heroTitle is nested inside heroSection group
-//   heroSection?: HeroSection | null
-//   // Add other field groups here as needed
-//   [key: string]: any
-// }
-
-// export interface HomepageData {
-//   pages: {
-//     nodes: Array<{
-//       id: string
-//       databaseId: number
-//       title: string | null
-//       content: string | null
-//       slug: string | null
-//       uri: string | null
-//       homepageFields?: {
-//         homepageFields?: HomepageFields | null
-//       } | null
-//     }>
-//   }
-// }
-
-// // Function to fetch homepage data
-// export async function getHomepageData(): Promise<HomepageData> {
-//   try {
-//     const data = await client.request<HomepageData>(GET_HOMEPAGE)
-//     return data
-//   } catch (error: any) {
-//     console.error('Failed to fetch homepage data:', error)
-//     if (error.response?.errors) {
-//       error.response.errors.forEach(({ message }: { message: string }, idx: number) => {
-//         console.error(`  Error ${idx + 1}: ${message}`)
-//       })
-//     }
-//     throw error
-//   }
-// }
-
 import { GraphQLClient, gql } from "graphql-request";
 
 const endpoint = process.env.WP_GRAPHQL_ENDPOINT || "https://blog.bestbootcamps.com/graphql";
@@ -119,7 +12,7 @@ export const client = new GraphQLClient(endpoint, {
 });
 
 // =========================
-// HOMEPAGE QUERY (existing)
+// HOMEPAGE QUERY
 // =========================
 
 export const GET_HOMEPAGE = gql`
@@ -145,7 +38,7 @@ export const GET_HOMEPAGE = gql`
 `;
 
 // =========================
-// TYPES (existing + reused)
+// SHARED TYPES
 // =========================
 
 export interface MediaItem {
@@ -155,6 +48,21 @@ export interface MediaItem {
     width?: number | null;
     height?: number | null;
   } | null;
+}
+
+/** WPGraphQL ACF "Page Link / Post Object / Link" connection type */
+export type AcfContentNodeConnection = {
+  nodes?: Array<{
+    uri?: string | null; // internal e.g. "/blog/"
+    link?: string | null; // absolute e.g. "https://site.com/blog/"
+  } | null> | null;
+} | null;
+
+/** Exported helper so components can reuse it */
+export function pickUrlFromConnection(conn?: AcfContentNodeConnection): string | null {
+  const node = conn?.nodes?.[0] ?? null;
+  if (!node) return null;
+  return node.uri ?? node.link ?? null;
 }
 
 export interface HeroSection {
@@ -182,7 +90,6 @@ export interface HomepageData {
   };
 }
 
-// Function to fetch homepage data
 export async function getHomepageData(): Promise<HomepageData> {
   try {
     const data = await client.request<HomepageData>(GET_HOMEPAGE);
@@ -199,10 +106,9 @@ export async function getHomepageData(): Promise<HomepageData> {
 }
 
 // ==========================================
-// BOOTCAMP MEGA MENU (NEW - add below)
+// BOOTCAMP MEGA MENU
 // ==========================================
 
-// GraphQL query (matches your working GraphiQL query)
 export const GET_BOOTCAMP_MEGA_MENU = gql`
   query BootcampExtrasCamelCase {
     bootcampCategories(where: { parent: 0, hideEmpty: false }, first: 50) {
@@ -221,14 +127,36 @@ export const GET_BOOTCAMP_MEGA_MENU = gql`
 
         bootcampMegaMenuExtras {
           popularTopic1Label
-          popularTopic1Url
+          popularTopic1Url {
+            nodes {
+              uri
+              link
+            }
+          }
+
           popularTopic2Label
-          popularTopic2Url
+          popularTopic2Url {
+            nodes {
+              uri
+              link
+            }
+          }
+
           popularTopic3Label
-          popularTopic3Url
+          popularTopic3Url {
+            nodes {
+              uri
+              link
+            }
+          }
 
           featuredBlog1Title
-          featuredBlog1Url
+          featuredBlog1Url {
+            nodes {
+              uri
+              link
+            }
+          }
           featuredBlog1Image {
             node {
               sourceUrl
@@ -237,7 +165,12 @@ export const GET_BOOTCAMP_MEGA_MENU = gql`
           }
 
           featuredBlog2Title
-          featuredBlog2Url
+          featuredBlog2Url {
+            nodes {
+              uri
+              link
+            }
+          }
           featuredBlog2Image {
             node {
               sourceUrl
@@ -250,7 +183,6 @@ export const GET_BOOTCAMP_MEGA_MENU = gql`
   }
 `;
 
-// Types for mega menu
 export interface BootcampChildTerm {
   id: string;
   name: string;
@@ -258,21 +190,25 @@ export interface BootcampChildTerm {
 }
 
 export interface BootcampMegaMenuExtras {
+  // Popular Topics (now Page Link / Post Object)
   popularTopic1Label?: string | null;
-  popularTopic1Url?: string | null;
-  popularTopic2Label?: string | null;
-  popularTopic2Url?: string | null;
-  popularTopic3Label?: string | null;
-  popularTopic3Url?: string | null;
+  popularTopic1Url?: AcfContentNodeConnection;
 
+  popularTopic2Label?: string | null;
+  popularTopic2Url?: AcfContentNodeConnection;
+
+  popularTopic3Label?: string | null;
+  popularTopic3Url?: AcfContentNodeConnection;
+
+  // Featured Blogs (now Page Link / Post Object)
   featuredBlog1Title?: string | null;
-  featuredBlog1Url?: string | null;
+  featuredBlog1Url?: AcfContentNodeConnection;
   featuredBlog1Image?: {
     node?: MediaItem | null;
   } | null;
 
   featuredBlog2Title?: string | null;
-  featuredBlog2Url?: string | null;
+  featuredBlog2Url?: AcfContentNodeConnection;
   featuredBlog2Image?: {
     node?: MediaItem | null;
   } | null;
@@ -294,7 +230,6 @@ export interface BootcampMegaMenuData {
   };
 }
 
-// Fetch function (same error handling style as homepage)
 export async function getBootcampMegaMenuData(): Promise<BootcampMegaMenuData> {
   try {
     const data = await client.request<BootcampMegaMenuData>(GET_BOOTCAMP_MEGA_MENU);
@@ -311,7 +246,7 @@ export async function getBootcampMegaMenuData(): Promise<BootcampMegaMenuData> {
 }
 
 // ==========================================
-// CERTIFICATIONS MEGA MENU (NEW)
+// CERTIFICATIONS MEGA MENU
 // ==========================================
 
 export const GET_CERTIFICATIONS_MEGA_MENU = gql`
@@ -392,14 +327,11 @@ export async function getCertificationsMegaMenuData(): Promise<CertificationsMeg
     throw error;
   }
 }
+
 // ==========================================
 // HEADER SETTINGS (Resources + About dropdown)
 // ==========================================
 
-const RESOURCES_GROUP_FIELD = "headerResourcesDropdown";
-const ABOUT_GROUP_FIELD = "headerAboutDropdown";
-
-// ✅ GraphQL Query (Page slug: header-settings)
 export const GET_HEADER_SETTINGS = gql`
   query HeaderSettings {
     pages(where: { name: "header-settings" }, first: 1) {
@@ -410,12 +342,8 @@ export const GET_HEADER_SETTINGS = gql`
         headerResourcesDropdown {
           resourcesItem1Title
           resourcesItem1Subtitle
-          resourcesItem1Url {
-            nodes {
-              uri
-              link
-            }
-          }
+          resourcesItem1Url 
+          
 
           resourcesItem2Title
           resourcesItem2Subtitle
@@ -469,26 +397,16 @@ export const GET_HEADER_SETTINGS = gql`
   }
 `;
 
-// -------------------------
-// Types for ACF connection
-// -------------------------
-export type AcfContentNodeConnection = {
-  nodes?: Array<{
-    uri?: string | null;  // internal e.g. "/blog/"
-    link?: string | null; // absolute e.g. "https://site.com/blog/"
-  } | null> | null;
-} | null;
-
 export type HeaderNavItem = {
   title?: string | null;
   subtitle?: string | null;
-  url?: string | null; // normalized url string
+  url?: string | null;
 };
 
 export type HeaderResourcesGroup = {
   resourcesItem1Title?: string | null;
   resourcesItem1Subtitle?: string | null;
-  resourcesItem1Url?: AcfContentNodeConnection;
+  resourcesItem1Url?: string | null;
 
   resourcesItem2Title?: string | null;
   resourcesItem2Subtitle?: string | null;
@@ -518,16 +436,12 @@ export interface HeaderSettingsData {
     nodes: Array<{
       id: string;
       title?: string | null;
-
       headerResourcesDropdown?: HeaderResourcesGroup | null;
       headerAboutDropdown?: HeaderAboutGroup | null;
     }>;
   };
 }
 
-// -------------------------
-// Fetch function
-// -------------------------
 export async function getHeaderSettingsData(): Promise<HeaderSettingsData> {
   try {
     const data = await client.request<HeaderSettingsData>(GET_HEADER_SETTINGS);
@@ -543,34 +457,17 @@ export async function getHeaderSettingsData(): Promise<HeaderSettingsData> {
   }
 }
 
-// -------------------------
-// Helpers (normalize)
-// -------------------------
-function pickUrlFromConnection(conn?: AcfContentNodeConnection): string | null {
-  const node = conn?.nodes?.[0] ?? null;
-  if (!node) return null;
-  // Prefer internal uri (works well with Next.js <Link/>), fallback to full link
-  return node.uri ?? node.link ?? null;
-}
-
 function safeText(v?: string | null): string | null {
   if (!v) return null;
   const s = String(v).trim();
   return s.length ? s : null;
 }
 
-/**
- * ✅ Convert the Resources/About group into clean items:
- * [{title, subtitle, url}]
- *
- * - If url is missing => "#"
- */
 export function normalizeHeaderDropdownItems(
   group?: HeaderResourcesGroup | HeaderAboutGroup | null
 ): HeaderNavItem[] {
   if (!group) return [];
 
-  // detect which group it is by presence of keys
   const isResources = "resourcesItem1Title" in (group as any);
 
   const makeItem = (
@@ -593,11 +490,25 @@ export function normalizeHeaderDropdownItems(
 
   if (isResources) {
     return [
-      makeItem(
-        (group as HeaderResourcesGroup).resourcesItem1Title,
-        (group as HeaderResourcesGroup).resourcesItem1Subtitle,
-        (group as HeaderResourcesGroup).resourcesItem1Url
-      ),
+      (() => {
+        const g = group as HeaderResourcesGroup;
+
+        const t = safeText(g.resourcesItem1Title);
+        const sub = safeText(g.resourcesItem1Subtitle);
+        const raw = safeText(g.resourcesItem1Url); // ✅ string now
+
+        // ensure leading slash for internal routes
+        const url = raw
+          ? raw.startsWith("/") || /^https?:\/\//i.test(raw)
+            ? raw
+            : `/${raw}`
+          : null;
+
+        if (!t && !sub && !url) return null;
+
+        return { title: t, subtitle: sub, url: url ?? "#" };
+      })(),
+
       makeItem(
         (group as HeaderResourcesGroup).resourcesItem2Title,
         (group as HeaderResourcesGroup).resourcesItem2Subtitle,
@@ -611,7 +522,6 @@ export function normalizeHeaderDropdownItems(
     ].filter(Boolean) as HeaderNavItem[];
   }
 
-  // About group
   return [
     makeItem(
       (group as HeaderAboutGroup).aboutItem1Title,

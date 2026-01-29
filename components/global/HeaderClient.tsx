@@ -9,13 +9,8 @@ import type {
     HeaderNavItem,
 } from "@/lib/wordpress";
 
-type MobileView =
-    | "main"
-    | "bootcampsIndustry"
-    | "certsIndustry";
-
+type MobileView = "main" | "bootcampsIndustry" | "certsIndustry";
 type DesktopMenuKey = "bootcamps" | "certificates" | "resources" | "about" | null;
-
 type MobileAccordionKey = "bootcamps" | "certs" | "resources" | "about" | null;
 
 /** UI for industry cards */
@@ -52,8 +47,7 @@ const DEFAULT_INDUSTRY_UI = {
 
 // Bootcamps routing helpers
 const industryUrl = (industrySlug: string) => `/programs/${industrySlug}`;
-const childUrl = (industrySlug: string, childSlug: string) =>
-    `/programs/${industrySlug}?category=${encodeURIComponent(childSlug)}`;
+const childUrl = (childSlug: string) => `/programs/${childSlug}`;
 
 // Certifications landing
 const certificationsLandingUrl = "/certifications";
@@ -63,15 +57,33 @@ const certificationIndustryUrl = (industrySlug: string) =>
 const isExternalUrl = (url?: string | null) => !!url && /^https?:\/\//i.test(url);
 const withHashFallback = (url?: string | null) => (url && url.trim() ? url : "#");
 
-/** Build list items from "label/url" field pairs */
+/**
+ * ✅ ACF Page Link / Post Object "connection" -> URL string
+ * Works with: { nodes: [{ uri, link }] }
+ */
+function pickUrlFromConnection(conn: any): string {
+    const node = conn?.nodes?.[0] ?? null;
+    const url = node?.uri ?? node?.link ?? null;
+    return withHashFallback(url);
+}
+
+/** Build list items from "label/url" field pairs (url can be string OR connection) */
 function buildPairs(
-    pairs: Array<[label?: string | null, url?: string | null]>
+    pairs: Array<[label?: string | null, urlOrConn?: any]>
 ): Array<{ label: string; url: string }> {
     return pairs
         .filter(([label]) => !!label && String(label).trim().length > 0)
-        .map(([label, url]) => ({
+        .map(([label, urlOrConn]) => ({
             label: String(label),
-            url: withHashFallback(url),
+            url:
+                typeof urlOrConn === "string" || urlOrConn == null
+                    ? withHashFallback(
+                        urlOrConn && !/^https?:\/\//i.test(urlOrConn) && !urlOrConn.startsWith("/")
+                            ? `/${urlOrConn}`
+                            : urlOrConn
+                    )
+                    : pickUrlFromConnection(urlOrConn),
+
         }));
 }
 
@@ -144,7 +156,8 @@ export default function HeaderClient({
     // Mobile
     const [mobileOpen, setMobileOpen] = useState(false);
     const [mobileView, setMobileView] = useState<MobileView>("main");
-    const [mobileAccordionOpen, setMobileAccordionOpen] = useState<MobileAccordionKey>(null);
+    const [mobileAccordionOpen, setMobileAccordionOpen] =
+        useState<MobileAccordionKey>(null);
 
     const [mobileActiveSlug, setMobileActiveSlug] = useState<string | null>(null);
     const [mobileActiveCertSlug, setMobileActiveCertSlug] = useState<string | null>(null);
@@ -219,7 +232,7 @@ export default function HeaderClient({
 
     // Bootcamps derived
     const children = activeParent?.children?.nodes ?? [];
-    const extras = activeParent?.bootcampMegaMenuExtras ?? {};
+    const extras: any = activeParent?.bootcampMegaMenuExtras ?? {};
 
     const bootcampPopularTopics = useMemo(
         () =>
@@ -236,13 +249,13 @@ export default function HeaderClient({
         return [
             {
                 title: extras.featuredBlog1Title,
-                url: withHashFallback(extras.featuredBlog1Url),
+                url: pickUrlFromConnection(extras.featuredBlog1Url),
                 img: extras.featuredBlog1Image?.node?.sourceUrl,
                 alt: extras.featuredBlog1Image?.node?.altText ?? undefined,
             },
             {
                 title: extras.featuredBlog2Title,
-                url: withHashFallback(extras.featuredBlog2Url),
+                url: pickUrlFromConnection(extras.featuredBlog2Url),
                 img: extras.featuredBlog2Image?.node?.sourceUrl,
                 alt: extras.featuredBlog2Image?.node?.altText ?? undefined,
             },
@@ -252,17 +265,17 @@ export default function HeaderClient({
     /** Mobile Featured Blogs for Bootcamps Industry screen */
     const mobileBootcampFeaturedBlogs = useMemo(() => {
         if (!mobileParent) return [];
-        const ex = mobileParent.bootcampMegaMenuExtras ?? {};
+        const ex: any = mobileParent.bootcampMegaMenuExtras ?? {};
         return [
             {
                 title: ex.featuredBlog1Title,
-                url: withHashFallback(ex.featuredBlog1Url),
+                url: pickUrlFromConnection(ex.featuredBlog1Url),
                 img: ex.featuredBlog1Image?.node?.sourceUrl,
                 alt: ex.featuredBlog1Image?.node?.altText ?? undefined,
             },
             {
                 title: ex.featuredBlog2Title,
-                url: withHashFallback(ex.featuredBlog2Url),
+                url: pickUrlFromConnection(ex.featuredBlog2Url),
                 img: ex.featuredBlog2Image?.node?.sourceUrl,
                 alt: ex.featuredBlog2Image?.node?.altText ?? undefined,
             },
@@ -270,7 +283,7 @@ export default function HeaderClient({
     }, [mobileParent]);
 
     // Certificates derived
-    const certExtras = activeCertParent?.certificationsMegaMenu ?? null;
+    const certExtras: any = activeCertParent?.certificationsMegaMenu ?? null;
 
     const topCertifications = useMemo(() => {
         if (!certExtras) return [];
@@ -307,7 +320,10 @@ export default function HeaderClient({
     };
 
     const Arrow = ({ isOpen }: { isOpen: boolean }) => (
-        <i className={`fas ${isOpen ? "fa-chevron-up" : "fa-chevron-down"} ms-1`} aria-hidden="true"></i>
+        <i
+            className={`fas ${isOpen ? "fa-chevron-up" : "fa-chevron-down"} ms-1`}
+            aria-hidden="true"
+        />
     );
 
     const SmartLink = ({
@@ -325,7 +341,13 @@ export default function HeaderClient({
 
         if (isExternalUrl(safeHref)) {
             return (
-                <a href={safeHref} className={className} target="_blank" rel="noopener noreferrer" onClick={onClick}>
+                <a
+                    href={safeHref}
+                    className={className}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={onClick}
+                >
                     {children}
                 </a>
             );
@@ -386,7 +408,9 @@ export default function HeaderClient({
 
                                         <div className="flex-grow-1">
                                             <div className="fw-semibold">{title}</div>
-                                            {subtitle ? <div className="bb-industry-card-subtitle">{subtitle}</div> : null}
+                                            {subtitle ? (
+                                                <div className="bb-industry-card-subtitle">{subtitle}</div>
+                                            ) : null}
                                         </div>
                                     </div>
                                 </SmartLink>
@@ -428,13 +452,20 @@ export default function HeaderClient({
         setMobileActiveCertSlug(slug);
         setMobileView("certsIndustry");
     };
+    const blogTopicUrl = (industrySlug: string) => `/blog/${industrySlug}`;
 
     return (
         <header className="border-bottom bg-white position-sticky top-0 bb-header position-relative bb-header-overflow">
             <div className="container py-3">
                 <div className="d-flex align-items-center justify-content-between">
                     <Link href="/" className="text-decoration-none fw-bold text-dark">
-                        <Image src="/assets/logo-bestbootcamps.png" alt="Best Bootcamps" width={207.92} height={48} priority />
+                        <Image
+                            src="/assets/logo-bestbootcamps.png"
+                            alt="Best Bootcamps"
+                            width={207.92}
+                            height={48}
+                            priority
+                        />
                     </Link>
 
                     {/* Desktop nav + dropdowns */}
@@ -453,7 +484,9 @@ export default function HeaderClient({
                                 type="button"
                                 className="btn btn-link text-decoration-none main-menu-items p-2"
                                 onClick={() => toggleDesktopMenu("certificates")}
-                                style={isCertificatesOpen ? { color: "var(--header-orange-dark)" } : undefined}
+                                style={
+                                    isCertificatesOpen ? { color: "var(--header-orange-dark)" } : undefined
+                                }
                             >
                                 Find Certificates <Arrow isOpen={isCertificatesOpen} />
                             </button>
@@ -487,7 +520,7 @@ export default function HeaderClient({
                             </div>
                         </nav>
 
-                        {/* DESKTOP MEGA DROPDOWNS (unchanged) */}
+                        {/* DESKTOP MEGA DROPDOWNS */}
                         {openDesktopMenu && (
                             <div>
                                 {/* BOOTCAMPS */}
@@ -497,7 +530,11 @@ export default function HeaderClient({
                                             <div className="border rounded-4 shadow-sm p-4 bg-white">
                                                 <div className="d-flex align-items-center justify-content-between mb-3">
                                                     <div className="regular-para">Explore by Category</div>
-                                                    <Link href="/programs" className="btn drp-down-button" onClick={() => setOpenDesktopMenu(null)}>
+                                                    <Link
+                                                        href="/programs"
+                                                        className="btn drp-down-button"
+                                                        onClick={() => setOpenDesktopMenu(null)}
+                                                    >
                                                         View All Programs
                                                     </Link>
                                                 </div>
@@ -515,11 +552,16 @@ export default function HeaderClient({
                                                                     onClick={() => setActiveSlug(p.slug)}
                                                                 >
                                                                     <div className="d-flex flex-column gap-2">
-                                                                        <div className="bb-industry-icon" style={{ background: ui.iconBg }}>
+                                                                        <div
+                                                                            className="bb-industry-icon"
+                                                                            style={{ background: ui.iconBg }}
+                                                                        >
                                                                             <i className={ui.iconClass} style={{ color: ui.iconColor }} />
                                                                         </div>
                                                                         <div className="bb-industry-card-title">{p.name}</div>
-                                                                        {ui.subtitle ? <div className="bb-industry-card-subtitle">{ui.subtitle}</div> : null}
+                                                                        {ui.subtitle ? (
+                                                                            <div className="bb-industry-card-subtitle">{ui.subtitle}</div>
+                                                                        ) : null}
                                                                     </div>
                                                                 </button>
                                                             </div>
@@ -538,7 +580,7 @@ export default function HeaderClient({
                                                                 {children.map((c) => (
                                                                     <Link
                                                                         key={c.id}
-                                                                        href={childUrl(activeParent.slug, c.slug)}
+                                                                        href={childUrl(c.slug)}
                                                                         className="list-group-item list-group-item-action"
                                                                         onClick={() => setOpenDesktopMenu(null)}
                                                                     >
@@ -566,14 +608,14 @@ export default function HeaderClient({
                                                             <div className="list-group">
                                                                 {bootcampPopularTopics.map((t, idx) =>
                                                                     t.url !== "#" ? (
-                                                                        <Link
+                                                                        <SmartLink
                                                                             key={idx}
                                                                             href={t.url}
                                                                             className="list-group-item list-group-item-action"
                                                                             onClick={() => setOpenDesktopMenu(null)}
                                                                         >
                                                                             {t.label}
-                                                                        </Link>
+                                                                        </SmartLink>
                                                                     ) : (
                                                                         <div key={idx} className="list-group-item">
                                                                             {t.label}
@@ -582,7 +624,7 @@ export default function HeaderClient({
                                                                 )}
                                                             </div>
                                                             <Link
-                                                                href="/topics"
+                                                                href={activeParent ? blogTopicUrl(activeParent.slug) : "/blog"}
                                                                 className="btn w-100 mt-3 view-all-topics-button"
                                                                 onClick={() => setOpenDesktopMenu(null)}
                                                             >
@@ -609,7 +651,9 @@ export default function HeaderClient({
                                                                                     />
                                                                                     {b.title && (
                                                                                         <div className="bb-featured-blog-overlay">
-                                                                                            <div className="bb-featured-blog-title">{b.title}</div>
+                                                                                            <div className="bb-featured-blog-title">
+                                                                                                {b.title}
+                                                                                            </div>
                                                                                         </div>
                                                                                     )}
                                                                                 </div>
@@ -662,11 +706,16 @@ export default function HeaderClient({
                                                                     onClick={() => setActiveCertSlug(p.slug)}
                                                                 >
                                                                     <div className="d-flex flex-column gap-2">
-                                                                        <div className="bb-industry-icon" style={{ background: ui.iconBg }}>
+                                                                        <div
+                                                                            className="bb-industry-icon"
+                                                                            style={{ background: ui.iconBg }}
+                                                                        >
                                                                             <i className={ui.iconClass} style={{ color: ui.iconColor }} />
                                                                         </div>
                                                                         <div className="bb-industry-card-title">{p.name}</div>
-                                                                        {ui.subtitle ? <div className="bb-industry-card-subtitle">{ui.subtitle}</div> : null}
+                                                                        {ui.subtitle ? (
+                                                                            <div className="bb-industry-card-subtitle">{ui.subtitle}</div>
+                                                                        ) : null}
                                                                     </div>
                                                                 </button>
                                                             </div>
@@ -694,7 +743,8 @@ export default function HeaderClient({
                                                                         </SmartLink>
                                                                     ) : (
                                                                         <div key={idx} className="list-group-item">
-                                                                            {c.label} <span className="text-muted">(add URL)</span>
+                                                                            {c.label}{" "}
+                                                                            <span className="text-muted">(add URL)</span>
                                                                         </div>
                                                                     )
                                                                 )}
@@ -728,13 +778,14 @@ export default function HeaderClient({
                                                                         </SmartLink>
                                                                     ) : (
                                                                         <div key={idx} className="list-group-item">
-                                                                            {t.label} <span className="text-muted">(add URL)</span>
+                                                                            {t.label}{" "}
+                                                                            <span className="text-muted">(add URL)</span>
                                                                         </div>
                                                                     )
                                                                 )}
                                                             </div>
                                                             <Link
-                                                                href="/topics"
+                                                                href={activeCertParent ? blogTopicUrl(activeCertParent.slug) : "/blog"}
                                                                 className="btn w-100 mt-3  view-all-topics-button"
                                                                 onClick={() => setOpenDesktopMenu(null)}
                                                             >
@@ -770,7 +821,7 @@ export default function HeaderClient({
                 </div>
             </div>
 
-            {/* MOBILE MENU (redesigned to match screenshot) */}
+            {/* MOBILE MENU */}
             {mobileOpen && (
                 <div className="bbm-overlay" role="dialog" aria-modal="true">
                     <div className="bbm-panel">
@@ -810,8 +861,6 @@ export default function HeaderClient({
 
                                     {mobileAccordionOpen === "bootcamps" && (
                                         <div className="bbm-acc-panel">
-
-
                                             <div className="bbm-card-list">
                                                 {bootcampParents.map((p) => {
                                                     const ui = INDUSTRY_UI[p.slug] ?? DEFAULT_INDUSTRY_UI;
@@ -855,8 +904,6 @@ export default function HeaderClient({
 
                                     {mobileAccordionOpen === "certs" && (
                                         <div className="bbm-acc-panel">
-
-
                                             <div className="bbm-card-list">
                                                 {certificationParents.map((p) => {
                                                     const ui = INDUSTRY_UI[p.slug] ?? DEFAULT_INDUSTRY_UI;
@@ -879,7 +926,11 @@ export default function HeaderClient({
                                                 })}
                                             </div>
 
-                                            <Link href={certificationsLandingUrl} className="btn drp-down-button w-100 mt-2" onClick={closeMobile}>
+                                            <Link
+                                                href={certificationsLandingUrl}
+                                                className="btn drp-down-button w-100 mt-2"
+                                                onClick={closeMobile}
+                                            >
                                                 View All Certifications
                                             </Link>
                                         </div>
@@ -999,18 +1050,19 @@ export default function HeaderClient({
                                         >
                                             <i className="fa-solid fa-chevron-left me-2"></i> Back to categories
                                         </button>
-
                                     </div>
 
                                     <div className="bbm-page-title">{mobileParent.name}</div>
 
                                     <div className="bbm-block">
-                                        <div className="bbm-subheadings mb-2"><i className="fa-solid fa-book-open me-2"></i> Popular Programs</div>
+                                        <div className="bbm-subheadings mb-2">
+                                            <i className="fa-solid fa-book-open me-2"></i> Popular Programs
+                                        </div>
                                         <div className="bbm-list">
                                             {(mobileParent.children?.nodes ?? []).map((c) => (
                                                 <Link
                                                     key={c.id}
-                                                    href={childUrl(mobileParent.slug, c.slug)}
+                                                    href={childUrl(c.slug)}
                                                     className="bbm-list-item"
                                                     onClick={closeMobile}
                                                 >
@@ -1029,26 +1081,34 @@ export default function HeaderClient({
                                     </div>
 
                                     <div className="bbm-block">
-                                        <div className="bbm-subheadings mb-2"> <i className="fas fa-lightbulb me-2"></i> Popular Topics</div>
+                                        <div className="bbm-subheadings mb-2">
+                                            {" "}
+                                            <i className="fas fa-lightbulb me-2"></i> Popular Topics
+                                        </div>
                                         <div className="bbm-list">
                                             {buildPairs([
                                                 [
                                                     mobileParent.bootcampMegaMenuExtras?.popularTopic1Label,
-                                                    mobileParent.bootcampMegaMenuExtras?.popularTopic1Url,
+                                                    (mobileParent as any).bootcampMegaMenuExtras?.popularTopic1Url,
                                                 ],
                                                 [
                                                     mobileParent.bootcampMegaMenuExtras?.popularTopic2Label,
-                                                    mobileParent.bootcampMegaMenuExtras?.popularTopic2Url,
+                                                    (mobileParent as any).bootcampMegaMenuExtras?.popularTopic2Url,
                                                 ],
                                                 [
                                                     mobileParent.bootcampMegaMenuExtras?.popularTopic3Label,
-                                                    mobileParent.bootcampMegaMenuExtras?.popularTopic3Url,
+                                                    (mobileParent as any).bootcampMegaMenuExtras?.popularTopic3Url,
                                                 ],
                                             ]).map((t, idx) =>
                                                 t.url !== "#" ? (
-                                                    <Link key={idx} href={t.url} className="bbm-list-item" onClick={closeMobile}>
+                                                    <SmartLink
+                                                        key={idx}
+                                                        href={t.url}
+                                                        className="bbm-list-item"
+                                                        onClick={closeMobile}
+                                                    >
                                                         {t.label}
-                                                    </Link>
+                                                    </SmartLink>
                                                 ) : (
                                                     <div key={idx} className="bbm-list-item bbm-list-item-disabled">
                                                         {t.label}
@@ -1057,17 +1117,24 @@ export default function HeaderClient({
                                             )}
                                         </div>
 
-                                        <Link href="/topics" className="btn drp-down-button w-100" onClick={closeMobile}>
+                                        <Link href={activeParent ? blogTopicUrl(activeParent.slug) : "/blog"} className="btn drp-down-button w-100" onClick={closeMobile}>
                                             View All
                                         </Link>
                                     </div>
 
                                     <div className="bbm-block">
-                                        <div className="bbm-subheadings mb-2"><i className="fas fa-file-alt me-2"></i> Featured Blog</div>
+                                        <div className="bbm-subheadings mb-2">
+                                            <i className="fas fa-file-alt me-2"></i> Featured Blog
+                                        </div>
 
                                         <div className="bbm-blog-grid">
                                             {mobileBootcampFeaturedBlogs.map((b, idx) => (
-                                                <SmartLink key={idx} href={b.url} className="bbm-blog-card" onClick={closeMobile}>
+                                                <SmartLink
+                                                    key={idx}
+                                                    href={b.url}
+                                                    className="bbm-blog-card"
+                                                    onClick={closeMobile}
+                                                >
                                                     {b.img ? (
                                                         // eslint-disable-next-line @next/next/no-img-element
                                                         <img
@@ -1111,7 +1178,9 @@ export default function HeaderClient({
                                     <div className="bbm-page-title">{mobileCertParent.name}</div>
 
                                     <div className="bbm-block">
-                                        <div className="bbm-subheadings mb-2"><i className="fas fa-certificate me-2"></i> Top Certifications</div>
+                                        <div className="bbm-subheadings mb-2">
+                                            <i className="fas fa-certificate me-2"></i> Top Certifications
+                                        </div>
                                         <div className="bbm-list">
                                             {buildPairs([
                                                 [mobileCertParent.certificationsMegaMenu?.topcert1label, mobileCertParent.certificationsMegaMenu?.topcert1url],
@@ -1141,7 +1210,10 @@ export default function HeaderClient({
                                     </div>
 
                                     <div className="bbm-block">
-                                        <div className="bbm-subheadings mb-2"> <i className="fas fa-lightbulb me-2"></i> Popular Topics</div>
+                                        <div className="bbm-subheadings mb-2">
+                                            {" "}
+                                            <i className="fas fa-lightbulb me-2"></i> Popular Topics
+                                        </div>
                                         <div className="bbm-list">
                                             {buildPairs([
                                                 [mobileCertParent.certificationsMegaMenu?.populartopic1label, mobileCertParent.certificationsMegaMenu?.populartopic1url],
@@ -1161,7 +1233,7 @@ export default function HeaderClient({
                                             )}
                                         </div>
 
-                                        <Link href="/topics" className="btn drp-down-button w-100 " onClick={closeMobile}>
+                                        <Link href={activeCertParent ? blogTopicUrl(activeCertParent.slug) : "/blog"}>
                                             View All
                                         </Link>
                                     </div>
