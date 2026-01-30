@@ -41,10 +41,19 @@ export const GET_PROGRAMS = gql`
         programFields {
           programLength
           programType
+
+          # (kept, for Programs page / card fallback)
           programImage {
             node {
               sourceUrl
               altText
+            }
+          }
+
+          # ✅ PDP data (confirmed by your IDE)
+          programPdpFields {
+            heroSectionPdp {
+              heroShortDescription
             }
           }
         }
@@ -80,6 +89,9 @@ export type ProgramVM = {
   programLength?: string;
   programType?: string;
 
+  // ✅ NEW: PDP hero short description for assessment result cards
+  heroShortDescription?: string;
+
   imageUrl?: string;
   imageAlt?: string;
 };
@@ -98,6 +110,9 @@ export function mapProgramNodeToVM(node: any): ProgramVM {
 
   const fields = node?.programFields ?? {};
   const imgNode = fields?.programImage?.node;
+
+  const heroShortDescription =
+    fields?.programPdpFields?.heroSectionPdp?.heroShortDescription ?? undefined;
 
   return {
     id: node.id,
@@ -124,6 +139,10 @@ export function mapProgramNodeToVM(node: any): ProgramVM {
     programLength: fields?.programLength ?? undefined,
     programType: fields?.programType ?? undefined,
 
+    // ✅ NEW
+    heroShortDescription,
+
+    // kept for existing UI / fallback
     imageUrl: imgNode?.sourceUrl ?? undefined,
     imageAlt: imgNode?.altText ?? undefined,
   };

@@ -1,7 +1,6 @@
 // components/team/TeamCard.tsx
-
-import React from 'react'
-import type { TeamMemberViewModel } from './TeamGrid'
+import React from "react";
+import type { TeamMemberViewModel } from "./TeamGrid";
 
 export default function TeamCard({
     name,
@@ -9,11 +8,12 @@ export default function TeamCard({
     photoUrl,
     photoAlt,
     roleImageUrl,
-    roleImageAlt
+    roleImageAlt, linkedinUrl,
+
 }: TeamMemberViewModel) {
     return (
-        <article className="team-card text-start">
 
+        <article className="team-card d-flex flex-column align-items-center text-center">
             {/* Image wrapper */}
             <div className="team-card__image-wrapper">
                 {photoUrl && (
@@ -25,31 +25,37 @@ export default function TeamCard({
                 )}
 
                 {/* Small round social badge */}
-                <div className="team-card__social-badge">
-                    <img
-                        src="/assets/linkedin-icon.png"   // your small badge icon
-                        alt="linkedin-icon"
-                    />
-                </div>
+
             </div>
 
             {/* Text area */}
-            <div className="team-card__body w-100 p-0">
-                <h3 className="team-card__name">{name}</h3>
+            <div className="team-card__body d-flex flex-column align-items-center text-center">
+                <h3 className="team-card__name mb-1">{name}</h3>
 
-                {roleText && <p className="team-card__role">{roleText}</p>}
+                {roleText && <p className="team-card__role mb-0">{roleText}</p>}
 
-                {/* Company/brand logo below name */}
+                {/* Company/brand logo below */}
                 {roleImageUrl && (
-                    <div className="team-card__company mt-2 p-0">
+                    <div className="team-card__company mt-2">
                         <img
                             src={roleImageUrl}
-                            alt={roleImageAlt || ''}
+                            alt={roleImageAlt || ""}
                             className="team-card__company-logo"
                         />
                     </div>
                 )}
+                {linkedinUrl && (
+                    <a
+                        href={linkedinUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="team-card__social-badge d-flex align-items-center justify-content-center"
+                        aria-label={`${name} LinkedIn`}
+                    >
+
+                        <i className="fa-brands fa-linkedin-in"></i>
+                    </a>)}
             </div>
         </article>
-    )
+    );
 }

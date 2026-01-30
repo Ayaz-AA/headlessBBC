@@ -71,17 +71,24 @@ function onlyDigits(input: string) {
 }
 
 function MatchCard({ program }: { program: ProgramVM }) {
+    const providerLogo = program.provider?.logoUrl;
+    const providerAlt = program.provider?.logoAlt ?? program.provider?.name ?? program.title;
+
     return (
         <article className="program-card card h-100">
-            <div className="program-card__media">
-                {program.imageUrl ? (
+            {/* ✅ Provider logo instead of program image */}
+            <div className="program-card__providerHeader">
+                {providerLogo ? (
                     <img
-                        src={program.imageUrl}
-                        alt={program.imageAlt ?? program.title}
-                        className="program-card__img"
+                        src={providerLogo}
+                        alt={providerAlt}
+                        className="program-card__providerLogo"
+                        loading="lazy"
                     />
                 ) : (
-                    <div className="program-card__placeholder">Program</div>
+                    <div className="program-card__providerFallback">
+                        {program.provider?.name ?? "Provider"}
+                    </div>
                 )}
             </div>
 
@@ -103,8 +110,12 @@ function MatchCard({ program }: { program: ProgramVM }) {
                     )}
                 </div>
 
+                {/* ✅ PDP hero short description */}
+                {program.heroShortDescription ? (
+                    <p className="program-card__desc">{program.heroShortDescription}</p>
+                ) : null}
+
                 <div className="program-card__footer">
-                    {/* ✅ Your PDP route is /program/[slug] */}
                     <Link
                         href={`/program/${program.slug}`}
                         className="program-card__btn btn btn-outline-primary w-100"
