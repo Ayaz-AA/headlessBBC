@@ -685,7 +685,7 @@ export default function HeaderClient({
                                                 <div className="d-flex align-items-center justify-content-between mb-3">
                                                     <div className="regular-para">Explore by Category</div>
                                                     <Link
-                                                        href={certificationsLandingUrl}
+                                                        href="/certifications"
                                                         className="btn drp-down-button "
                                                         onClick={() => setOpenDesktopMenu(null)}
                                                     >
@@ -927,7 +927,7 @@ export default function HeaderClient({
                                             </div>
 
                                             <Link
-                                                href={certificationsLandingUrl}
+                                                href="/certifications"
                                                 className="btn drp-down-button w-100 mt-2"
                                                 onClick={closeMobile}
                                             >

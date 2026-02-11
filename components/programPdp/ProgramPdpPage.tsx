@@ -1,7 +1,8 @@
 // src/components/programPdp/ProgramPdpPage.tsx
 import PdpTabs from "./PdpTabs";
-// import HubSpotFormEmbed from "./HubSpotFormEmbed";
+import HubSpotForm from "@/components/hubspot/HubSpotForm";
 import type { ProgramPdpVM } from "@/lib/programPdp";
+import { HUBSPOT } from "@/lib/hubspotConfig";
 
 function TitleStyled({ title }: { title: string }) {
     const parts = title.trim().split(/\s+/);
@@ -32,9 +33,12 @@ export default function ProgramPdpPage({ program }: { program: ProgramPdpVM }) {
         { id: "faq", label: "FAQ" },
     ];
 
-    const portalId = process.env.NEXT_PUBLIC_HUBSPOT_PORTAL_ID ?? "";
-    const formId = process.env.NEXT_PUBLIC_HUBSPOT_FORM_ID ?? "";
+    //const portalId = process.env.NEXT_PUBLIC_HUBSPOT_PORTAL_ID ?? "";
+    //const formId = process.env.NEXT_PUBLIC_HUBSPOT_FORM_ID ?? "";
 
+    const portalId = HUBSPOT.portalId;
+    const formId = HUBSPOT.formId;
+    const region = HUBSPOT.region;
     // ✅ Provider logo ONLY (clickable if URL exists)
     const providerLogoOnly = program.providerLogoUrl ? (
         <img
@@ -380,27 +384,42 @@ export default function ProgramPdpPage({ program }: { program: ProgramPdpVM }) {
                         </div>
 
                         {/* SIDEBAR */}
+                        {/* SIDEBAR */}
                         <div className="col-lg-4 order-1 order-lg-2">
                             <aside className="pdp-sidebar">
                                 <div className="pdp-enroll">
-                                    <div className="pdp-enroll__head">
+                                    {/* <div className="pdp-enroll__head">
                                         <div className="pdp-enroll__title">Enroll Today</div>
                                         <div className="pdp-enroll__subtitle">Start your career journey</div>
-                                    </div>
+                                    </div> */}
 
-                                    {/* <div className="pdp-enroll__body">
-                    {portalId && formId ? (
-                      <HubSpotFormEmbed portalId={portalId} formId={formId} />
-                    ) : (
-                      <div className="pdp-enroll__placeholder">
-                        Set <code>NEXT_PUBLIC_HUBSPOT_PORTAL_ID</code> and{" "}
-                        <code>NEXT_PUBLIC_HUBSPOT_FORM_ID</code> in <code>.env.local</code>
-                      </div>
-                    )}
-                  </div> */}
+                                    {/* ✅ THIS is what was missing */}
+                                    <div className="pdp-enroll__body">
+                                        {portalId && formId ? (
+                                            <HubSpotForm
+                                                portalId={portalId}
+                                                formId={formId}
+                                                // region={process.env.NEXT_PUBLIC_HUBSPOT_REGION ?? "na1"}
+                                                region={region}
+                                                portfolio={program.providerName ?? ""}
+                                                learningInterest={program.title ?? ""}
+                                                // if your internal names differ, update these:
+                                                portfolioFieldName="portfolio"
+                                                learningInterestFieldName="learning_interest"
+                                                instanceId="sidebar"
+                                            />
+                                        ) : (
+                                            <div className="pdp-enroll__placeholder">
+                                                Missing env vars:{" "}
+                                                <code>NEXT_PUBLIC_HUBSPOT_PORTAL_ID</code> /{" "}
+                                                <code>NEXT_PUBLIC_HUBSPOT_FORM_ID</code>
+                                            </div>
+                                        )}
+                                    </div>
                                 </div>
                             </aside>
                         </div>
+
                     </div>
                 </div>
             </section>

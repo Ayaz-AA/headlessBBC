@@ -1,8 +1,11 @@
 // src/components/programs/ProgramDetailsFlyout.tsx
 "use client";
 
-import { useEffect, useMemo } from "react";
+import { useEffect } from "react";
 import type { FeaturedProgramCardVM } from "@/lib/rolePlp";
+
+import HubSpotForm from "@/components/hubspot/HubSpotForm";
+import { HUBSPOT } from "@/lib/hubspotConfig";
 
 function HtmlBlock({ html, className }: { html?: string; className?: string }) {
     if (!html) return null;
@@ -47,9 +50,7 @@ export default function ProgramDetailsFlyout({
     const providerLogo = program.providerLogoUrl ?? "";
     const providerLogoAlt = program.providerLogoAlt ?? providerName;
 
-    const kicker = program?.programTitle
-        ? toKicker(program.programTitle)
-        : "";
+    const kicker = program?.programTitle ? toKicker(program.programTitle) : "";
 
     // Intro paragraph in design:
     // prefer heroShortDescription; fallback to overviewParagraph
@@ -177,11 +178,12 @@ export default function ProgramDetailsFlyout({
                                                         <details
                                                             key={item.key}
                                                             className={`p-0 pdp-accordion pdp-accordion--${item.variant}`}
-                                                        /* ✅ none open by default */
                                                         >
                                                             <summary>
                                                                 <span className="pdp-accordion__left">
-                                                                    <span className={`pdp-accordion__icon pdp-accordion__icon--${item.variant}`}>
+                                                                    <span
+                                                                        className={`pdp-accordion__icon pdp-accordion__icon--${item.variant}`}
+                                                                    >
                                                                         {item.icon}
                                                                     </span>
                                                                     <span className="pdp-accordion__title">{item.title}</span>
@@ -193,7 +195,10 @@ export default function ProgramDetailsFlyout({
                                                             </summary>
 
                                                             <div className="px-3 pdp-accordion__content">
-                                                                <div className="pdp-wysiwyg" dangerouslySetInnerHTML={{ __html: item.html as string }} />
+                                                                <div
+                                                                    className="pdp-wysiwyg"
+                                                                    dangerouslySetInnerHTML={{ __html: item.html as string }}
+                                                                />
                                                             </div>
                                                         </details>
                                                     ))}
@@ -201,10 +206,8 @@ export default function ProgramDetailsFlyout({
                                             );
                                         })()}
                                     </div>
-
                                 </details>
 
-                                {/* OUTCOMES + PAYMENTS (your design combines these) */}
                                 {/* OUTCOMES + PAYMENTS (combined like design) */}
                                 {(
                                     program.learningOutcomesHeading ||
@@ -312,7 +315,6 @@ export default function ProgramDetailsFlyout({
                                     </details>
                                 ) : null}
 
-
                                 {/* CAREER + SKILLS (combined like design) */}
                                 {(program.careerOutlookHeading ||
                                     program.careerOutlookIntro ||
@@ -368,6 +370,7 @@ export default function ProgramDetailsFlyout({
                                             </div>
                                         </details>
                                     )}
+
                                 {/* Certifications (only if exists) */}
                                 {showCert ? (
                                     <details className="flyout-accordion">
@@ -398,6 +401,7 @@ export default function ProgramDetailsFlyout({
                                         </div>
                                     </details>
                                 ) : null}
+
                                 {/* FAQ (label like design) */}
                                 {(program.faqs?.length ?? 0) > 0 ? (
                                     <details className="flyout-accordion">
@@ -414,7 +418,6 @@ export default function ProgramDetailsFlyout({
                                                             <span className="pdp-faq__chev">
                                                                 <i className="fa-solid fa-chevron-down" aria-hidden="true" />
                                                             </span>
-                                                            {/* <i className="fa-solid fa-chevron-down pdp-faq__chev" aria-hidden="true" /> */}
                                                         </summary>
                                                         <div className="pdp-faq__answer">{f.a}</div>
                                                     </details>
@@ -423,22 +426,24 @@ export default function ProgramDetailsFlyout({
                                         </div>
                                     </details>
                                 ) : null}
-
-
                             </div>
                         </div>
 
-                        {/* RIGHT SIDEBAR (keep your PDP enroll box placeholder) */}
+                        {/* RIGHT SIDEBAR (HubSpot form instead of placeholder) */}
                         <aside className="flyout-sidebar">
                             <div className="pdp-sidebar">
                                 <div className="pdp-enroll">
-                                    <div className="pdp-enroll__head">
-                                        <div className="pdp-enroll__title">Enroll Today</div>
-                                        <div className="pdp-enroll__subtitle">Start your career journey</div>
-                                    </div>
-
                                     <div className="pdp-enroll__body">
-                                        <div className="flyout-enrollPlaceholder">HubSpot form will be embedded here.</div>
+                                        <HubSpotForm
+                                            portalId={HUBSPOT.portalId}
+                                            formId={HUBSPOT.formId}
+                                            region={HUBSPOT.region}
+                                            portfolio={program.providerName ?? ""}
+                                            learningInterest={program.programTitle ?? ""}  // ✅ correct field for flyout
+                                            portfolioFieldName="portfolio"
+                                            learningInterestFieldName="learning_interest"
+                                            instanceId="flyout" // ✅ unique id for this embed
+                                        />
                                     </div>
                                 </div>
                             </div>
