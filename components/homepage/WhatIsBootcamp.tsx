@@ -1,10 +1,10 @@
 'use client'
 
 import Image from 'next/image'
-import { HomepageFields } from '@/lib/wordpress'
+import { HomepageFieldsGroup } from '@/lib/homepage'
 
 interface WhatIsBootcampProps {
-  data?: HomepageFields | null
+  data?: HomepageFieldsGroup | null
 }
 
 export default function WhatIsBootcamp({ data }: WhatIsBootcampProps) {
@@ -21,8 +21,8 @@ export default function WhatIsBootcamp({ data }: WhatIsBootcampProps) {
               <div className="what-is-bootcamp__feature-number">01</div>
               <div className="what-is-bootcamp__feature-icon">
                 <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <circle cx="20" cy="20" r="18" stroke="currentColor" strokeWidth="2"/>
-                  <path d="M12 20L18 26L28 14" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+                  <circle cx="20" cy="20" r="18" stroke="currentColor" strokeWidth="2" />
+                  <path d="M12 20L18 26L28 14" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
                 </svg>
               </div>
               <div className="what-is-bootcamp__feature-content">
@@ -34,8 +34,8 @@ export default function WhatIsBootcamp({ data }: WhatIsBootcampProps) {
               <div className="what-is-bootcamp__feature-number">02</div>
               <div className="what-is-bootcamp__feature-icon">
                 <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <circle cx="20" cy="20" r="18" stroke="currentColor" strokeWidth="2"/>
-                  <path d="M12 20L18 26L28 14" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+                  <circle cx="20" cy="20" r="18" stroke="currentColor" strokeWidth="2" />
+                  <path d="M12 20L18 26L28 14" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
                 </svg>
               </div>
               <div className="what-is-bootcamp__feature-content">
@@ -47,8 +47,8 @@ export default function WhatIsBootcamp({ data }: WhatIsBootcampProps) {
               <div className="what-is-bootcamp__feature-number">03</div>
               <div className="what-is-bootcamp__feature-icon">
                 <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <circle cx="20" cy="20" r="18" stroke="currentColor" strokeWidth="2"/>
-                  <path d="M12 20L18 26L28 14" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+                  <circle cx="20" cy="20" r="18" stroke="currentColor" strokeWidth="2" />
+                  <path d="M12 20L18 26L28 14" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
                 </svg>
               </div>
               <div className="what-is-bootcamp__feature-content">
@@ -59,9 +59,9 @@ export default function WhatIsBootcamp({ data }: WhatIsBootcampProps) {
           </div>
         </div>
         <div className="what-is-bootcamp__image scroll-animate scroll-animate--slide-up scroll-animate--delay-1">
-          <Image 
-            src="/assets/whatisbootcamp.png" 
-            alt="Bootcamp illustration" 
+          <Image
+            src="/assets/whatisbootcamp.png"
+            alt="Bootcamp illustration"
             className="what-is-bootcamp__image-placeholder"
             width={600}
             height={400}

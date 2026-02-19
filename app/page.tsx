@@ -8,7 +8,7 @@ import Guide from '@/components/homepage/Guide'
 import Certification from '@/components/homepage/Certification'
 import FAQ from '@/components/homepage/FAQ'
 import Footer from '@/components/global/Footer'
-import { getHomepageData } from '@/lib/wordpress'
+import { getHomepageData } from '@/lib/homepage'
 
 export default async function Home() {
   let homepageData = null

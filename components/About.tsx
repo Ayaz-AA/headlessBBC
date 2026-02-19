@@ -1,10 +1,10 @@
 'use client'
 
 import Image from 'next/image'
-import { HomepageFields } from '@/lib/wordpress'
+import type { HomepageFieldsGroup } from '@/lib/homepage'
 
 interface AboutProps {
-  data?: HomepageFields | null
+  data?: HomepageFieldsGroup | null
 }
 
 export default function About({ data }: AboutProps) {

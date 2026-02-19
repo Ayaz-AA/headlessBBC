@@ -1,10 +1,10 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { HomepageFields } from '@/lib/wordpress'
+import { HomepageFieldsGroup } from '@/lib/homepage'
 
 interface FAQProps {
-  data?: HomepageFields | null
+  data?: HomepageFieldsGroup | null
 }
 
 export default function FAQ({ data }: FAQProps) {
@@ -66,14 +66,14 @@ export default function FAQ({ data }: FAQProps) {
         <div className="faq__list">
           {faqs.map((faq, index) => (
             <div key={index} className={`faq__item scroll-animate scroll-animate--slide-up scroll-animate--delay-${index + 1} ${activeIndex === index ? 'faq__item--active' : ''}`}>
-              <button 
-                className="faq__question" 
+              <button
+                className="faq__question"
                 aria-expanded={activeIndex === index}
                 onClick={() => toggleFAQ(index)}
               >
                 <span>{faq.question}</span>
                 <svg className="faq__icon" width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M15 5V25M5 15H25" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+                  <path d="M15 5V25M5 15H25" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
                 </svg>
               </button>
               <div className="faq__answer">

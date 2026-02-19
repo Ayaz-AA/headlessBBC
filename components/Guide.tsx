@@ -1,10 +1,10 @@
 'use client'
 
 import Link from 'next/link'
-import { HomepageFields } from '@/lib/wordpress'
+import { HomepageFieldsGroup } from '@/lib/homepage'
 
 interface GuideProps {
-  data?: HomepageFields | null
+  data?: HomepageFieldsGroup | null
 }
 
 export default function Guide({ data }: GuideProps) {

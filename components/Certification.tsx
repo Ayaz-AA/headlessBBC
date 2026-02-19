@@ -1,10 +1,10 @@
 'use client'
 
 import Link from 'next/link'
-import { HomepageFields } from '@/lib/wordpress'
+import { HomepageFieldsGroup } from '@/lib/homepage'
 
 interface CertificationProps {
-  data?: HomepageFields | null
+  data?: HomepageFieldsGroup | null
 }
 
 export default function Certification({ data }: CertificationProps) {
@@ -19,7 +19,7 @@ export default function Certification({ data }: CertificationProps) {
           <div className="certification__feature scroll-animate scroll-animate--slide-up scroll-animate--delay-1">
             <div className="certification__feature-icon">
               <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M12 20L18 26L28 14" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+                <path d="M12 20L18 26L28 14" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
               </svg>
             </div>
             <h3 className="certification__feature-title">Comprehensive Standards</h3>
@@ -28,7 +28,7 @@ export default function Certification({ data }: CertificationProps) {
           <div className="certification__feature scroll-animate scroll-animate--slide-up scroll-animate--delay-2">
             <div className="certification__feature-icon">
               <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M12 20L18 26L28 14" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+                <path d="M12 20L18 26L28 14" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
               </svg>
             </div>
             <h3 className="certification__feature-title">Rigorous Evaluation Process</h3>
@@ -37,7 +37,7 @@ export default function Certification({ data }: CertificationProps) {
           <div className="certification__feature scroll-animate scroll-animate--slide-up scroll-animate--delay-3">
             <div className="certification__feature-icon">
               <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M12 20L18 26L28 14" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+                <path d="M12 20L18 26L28 14" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
               </svg>
             </div>
             <h3 className="certification__feature-title">Industry-Relevant Credentials</h3>

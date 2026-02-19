@@ -2,10 +2,10 @@
 
 import Image from 'next/image'
 import Link from 'next/link'
-import { HomepageFields } from '@/lib/wordpress'
+import type { HomepageFieldsGroup } from '@/lib/homepage'
 
 interface BootcampsProps {
-  data?: HomepageFields | null
+  data?: HomepageFieldsGroup | null
 }
 
 export default function Bootcamps({ data }: BootcampsProps) {
@@ -33,22 +33,22 @@ export default function Bootcamps({ data }: BootcampsProps) {
               <div className="bootcamp-card__meta">
                 <span className="bootcamp-card__meta-item">
                   <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                    <rect x="2" y="3" width="12" height="11" rx="1.5" stroke="currentColor" strokeWidth="1.2" fill="none"/>
-                    <path d="M2 6h12" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round"/>
-                    <path d="M5 2v4M11 2v4" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round"/>
-                    <circle cx="6" cy="9.5" r="0.8" fill="currentColor"/>
-                    <circle cx="8" cy="9.5" r="0.8" fill="currentColor"/>
-                    <circle cx="10" cy="9.5" r="0.8" fill="currentColor"/>
-                    <circle cx="6" cy="12" r="0.8" fill="currentColor"/>
-                    <circle cx="8" cy="12" r="0.8" fill="currentColor"/>
-                    <circle cx="10" cy="12" r="0.8" fill="currentColor"/>
+                    <rect x="2" y="3" width="12" height="11" rx="1.5" stroke="currentColor" strokeWidth="1.2" fill="none" />
+                    <path d="M2 6h12" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" />
+                    <path d="M5 2v4M11 2v4" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" />
+                    <circle cx="6" cy="9.5" r="0.8" fill="currentColor" />
+                    <circle cx="8" cy="9.5" r="0.8" fill="currentColor" />
+                    <circle cx="10" cy="9.5" r="0.8" fill="currentColor" />
+                    <circle cx="6" cy="12" r="0.8" fill="currentColor" />
+                    <circle cx="8" cy="12" r="0.8" fill="currentColor" />
+                    <circle cx="10" cy="12" r="0.8" fill="currentColor" />
                   </svg>
                   16 Weeks
                 </span>
                 <span className="bootcamp-card__meta-item">
                   <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                    <circle cx="8" cy="8" r="6" stroke="currentColor" strokeWidth="1.2" fill="none"/>
-                    <path d="M8 4v4l3 2" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/>
+                    <circle cx="8" cy="8" r="6" stroke="currentColor" strokeWidth="1.2" fill="none" />
+                    <path d="M8 4v4l3 2" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
                   </svg>
                   Full-Time
                 </span>
@@ -69,22 +69,22 @@ export default function Bootcamps({ data }: BootcampsProps) {
               <div className="bootcamp-card__meta">
                 <span className="bootcamp-card__meta-item">
                   <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                    <rect x="2" y="3" width="12" height="11" rx="1.5" stroke="currentColor" strokeWidth="1.2" fill="none"/>
-                    <path d="M2 6h12" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round"/>
-                    <path d="M5 2v4M11 2v4" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round"/>
-                    <circle cx="6" cy="9.5" r="0.8" fill="currentColor"/>
-                    <circle cx="8" cy="9.5" r="0.8" fill="currentColor"/>
-                    <circle cx="10" cy="9.5" r="0.8" fill="currentColor"/>
-                    <circle cx="6" cy="12" r="0.8" fill="currentColor"/>
-                    <circle cx="8" cy="12" r="0.8" fill="currentColor"/>
-                    <circle cx="10" cy="12" r="0.8" fill="currentColor"/>
+                    <rect x="2" y="3" width="12" height="11" rx="1.5" stroke="currentColor" strokeWidth="1.2" fill="none" />
+                    <path d="M2 6h12" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" />
+                    <path d="M5 2v4M11 2v4" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" />
+                    <circle cx="6" cy="9.5" r="0.8" fill="currentColor" />
+                    <circle cx="8" cy="9.5" r="0.8" fill="currentColor" />
+                    <circle cx="10" cy="9.5" r="0.8" fill="currentColor" />
+                    <circle cx="6" cy="12" r="0.8" fill="currentColor" />
+                    <circle cx="8" cy="12" r="0.8" fill="currentColor" />
+                    <circle cx="10" cy="12" r="0.8" fill="currentColor" />
                   </svg>
                   24 Weeks
                 </span>
                 <span className="bootcamp-card__meta-item">
                   <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                    <circle cx="8" cy="8" r="6" stroke="currentColor" strokeWidth="1.2" fill="none"/>
-                    <path d="M8 4v4l3 2" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/>
+                    <circle cx="8" cy="8" r="6" stroke="currentColor" strokeWidth="1.2" fill="none" />
+                    <path d="M8 4v4l3 2" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
                   </svg>
                   Part-Time
                 </span>
@@ -105,22 +105,22 @@ export default function Bootcamps({ data }: BootcampsProps) {
               <div className="bootcamp-card__meta">
                 <span className="bootcamp-card__meta-item">
                   <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                    <rect x="2" y="3" width="12" height="11" rx="1.5" stroke="currentColor" strokeWidth="1.2" fill="none"/>
-                    <path d="M2 6h12" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round"/>
-                    <path d="M5 2v4M11 2v4" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round"/>
-                    <circle cx="6" cy="9.5" r="0.8" fill="currentColor"/>
-                    <circle cx="8" cy="9.5" r="0.8" fill="currentColor"/>
-                    <circle cx="10" cy="9.5" r="0.8" fill="currentColor"/>
-                    <circle cx="6" cy="12" r="0.8" fill="currentColor"/>
-                    <circle cx="8" cy="12" r="0.8" fill="currentColor"/>
-                    <circle cx="10" cy="12" r="0.8" fill="currentColor"/>
+                    <rect x="2" y="3" width="12" height="11" rx="1.5" stroke="currentColor" strokeWidth="1.2" fill="none" />
+                    <path d="M2 6h12" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" />
+                    <path d="M5 2v4M11 2v4" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" />
+                    <circle cx="6" cy="9.5" r="0.8" fill="currentColor" />
+                    <circle cx="8" cy="9.5" r="0.8" fill="currentColor" />
+                    <circle cx="10" cy="9.5" r="0.8" fill="currentColor" />
+                    <circle cx="6" cy="12" r="0.8" fill="currentColor" />
+                    <circle cx="8" cy="12" r="0.8" fill="currentColor" />
+                    <circle cx="10" cy="12" r="0.8" fill="currentColor" />
                   </svg>
                   20 Weeks
                 </span>
                 <span className="bootcamp-card__meta-item">
                   <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                    <circle cx="8" cy="8" r="6" stroke="currentColor" strokeWidth="1.2" fill="none"/>
-                    <path d="M8 4v4l3 2" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/>
+                    <circle cx="8" cy="8" r="6" stroke="currentColor" strokeWidth="1.2" fill="none" />
+                    <path d="M8 4v4l3 2" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
                   </svg>
                   Full-Time
                 </span>

@@ -51,11 +51,24 @@ const childUrl = (childSlug: string) => `/programs/${childSlug}`;
 
 // Certifications landing
 const certificationsLandingUrl = "/certifications";
-const certificationIndustryUrl = (industrySlug: string) =>
-    `/certifications/${industrySlug}`;
+const certificationIndustryUrl = (industrySlug: string) => `/certifications/${industrySlug}`;
 
 const isExternalUrl = (url?: string | null) => !!url && /^https?:\/\//i.test(url);
 const withHashFallback = (url?: string | null) => (url && url.trim() ? url : "#");
+
+/**
+ * ✅ NEW: normalize Text URL (TopCertUrl fields) safely
+ * - keeps external URLs
+ * - supports "#hash"
+ * - supports "/path" and "path" -> "/path"
+ */
+const normalizeInternalOrExternal = (raw?: string | null) => {
+    const u = (raw ?? "").trim();
+    if (!u) return "#";
+    if (/^https?:\/\//i.test(u)) return u; // external
+    if (u.startsWith("#")) return u; // hash only
+    return u.startsWith("/") ? u : `/${u}`; // internal path
+};
 
 /**
  * ✅ ACF Page Link / Post Object "connection" -> URL string
@@ -67,24 +80,20 @@ function pickUrlFromConnection(conn: any): string {
     return withHashFallback(url);
 }
 
-/** Build list items from "label/url" field pairs (url can be string OR connection) */
+/** ✅ Updated: Build list items from "label/url" pairs (url can be string OR connection) */
 function buildPairs(
     pairs: Array<[label?: string | null, urlOrConn?: any]>
 ): Array<{ label: string; url: string }> {
     return pairs
         .filter(([label]) => !!label && String(label).trim().length > 0)
-        .map(([label, urlOrConn]) => ({
-            label: String(label),
-            url:
+        .map(([label, urlOrConn]) => {
+            const url =
                 typeof urlOrConn === "string" || urlOrConn == null
-                    ? withHashFallback(
-                        urlOrConn && !/^https?:\/\//i.test(urlOrConn) && !urlOrConn.startsWith("/")
-                            ? `/${urlOrConn}`
-                            : urlOrConn
-                    )
-                    : pickUrlFromConnection(urlOrConn),
+                    ? normalizeInternalOrExternal(urlOrConn)
+                    : pickUrlFromConnection(urlOrConn);
 
-        }));
+            return { label: String(label), url };
+        });
 }
 
 const SIMPLE_DROPDOWN_ICONS: Record<
@@ -160,7 +169,9 @@ export default function HeaderClient({
         useState<MobileAccordionKey>(null);
 
     const [mobileActiveSlug, setMobileActiveSlug] = useState<string | null>(null);
-    const [mobileActiveCertSlug, setMobileActiveCertSlug] = useState<string | null>(null);
+    const [mobileActiveCertSlug, setMobileActiveCertSlug] = useState<string | null>(
+        null
+    );
 
     const desktopMenuRef = useRef<HTMLDivElement | null>(null);
 
@@ -320,10 +331,7 @@ export default function HeaderClient({
     };
 
     const Arrow = ({ isOpen }: { isOpen: boolean }) => (
-        <i
-            className={`fas ${isOpen ? "fa-chevron-up" : "fa-chevron-down"} ms-1`}
-            aria-hidden="true"
-        />
+        <i className={`fas ${isOpen ? "fa-chevron-up" : "fa-chevron-down"} ms-1`} aria-hidden="true" />
     );
 
     const SmartLink = ({
@@ -359,12 +367,6 @@ export default function HeaderClient({
         );
     };
 
-    /**
-     * ✅ Desktop Resources/About dropdown:
-     * - width exactly 256px
-     * - positioned exactly under parent
-     * - not constrained by container border
-     */
     const renderDesktopSimpleDropdown = (items: HeaderNavItem[]) => {
         return (
             <div className="bb-simple-flyout d-none d-lg-block">
@@ -408,9 +410,7 @@ export default function HeaderClient({
 
                                         <div className="flex-grow-1">
                                             <div className="fw-semibold">{title}</div>
-                                            {subtitle ? (
-                                                <div className="bb-industry-card-subtitle">{subtitle}</div>
-                                            ) : null}
+                                            {subtitle ? <div className="bb-industry-card-subtitle">{subtitle}</div> : null}
                                         </div>
                                     </div>
                                 </SmartLink>
@@ -452,6 +452,7 @@ export default function HeaderClient({
         setMobileActiveCertSlug(slug);
         setMobileView("certsIndustry");
     };
+
     const blogTopicUrl = (industrySlug: string) => `/blog/${industrySlug}`;
 
     return (
@@ -484,9 +485,7 @@ export default function HeaderClient({
                                 type="button"
                                 className="btn btn-link text-decoration-none main-menu-items p-2"
                                 onClick={() => toggleDesktopMenu("certificates")}
-                                style={
-                                    isCertificatesOpen ? { color: "var(--header-orange-dark)" } : undefined
-                                }
+                                style={isCertificatesOpen ? { color: "var(--header-orange-dark)" } : undefined}
                             >
                                 Find Certificates <Arrow isOpen={isCertificatesOpen} />
                             </button>
@@ -552,10 +551,7 @@ export default function HeaderClient({
                                                                     onClick={() => setActiveSlug(p.slug)}
                                                                 >
                                                                     <div className="d-flex flex-column gap-2">
-                                                                        <div
-                                                                            className="bb-industry-icon"
-                                                                            style={{ background: ui.iconBg }}
-                                                                        >
+                                                                        <div className="bb-industry-icon" style={{ background: ui.iconBg }}>
                                                                             <i className={ui.iconClass} style={{ color: ui.iconColor }} />
                                                                         </div>
                                                                         <div className="bb-industry-card-title">{p.name}</div>
@@ -651,9 +647,7 @@ export default function HeaderClient({
                                                                                     />
                                                                                     {b.title && (
                                                                                         <div className="bb-featured-blog-overlay">
-                                                                                            <div className="bb-featured-blog-title">
-                                                                                                {b.title}
-                                                                                            </div>
+                                                                                            <div className="bb-featured-blog-title">{b.title}</div>
                                                                                         </div>
                                                                                     )}
                                                                                 </div>
@@ -706,10 +700,7 @@ export default function HeaderClient({
                                                                     onClick={() => setActiveCertSlug(p.slug)}
                                                                 >
                                                                     <div className="d-flex flex-column gap-2">
-                                                                        <div
-                                                                            className="bb-industry-icon"
-                                                                            style={{ background: ui.iconBg }}
-                                                                        >
+                                                                        <div className="bb-industry-icon" style={{ background: ui.iconBg }}>
                                                                             <i className={ui.iconClass} style={{ color: ui.iconColor }} />
                                                                         </div>
                                                                         <div className="bb-industry-card-title">{p.name}</div>
@@ -743,8 +734,7 @@ export default function HeaderClient({
                                                                         </SmartLink>
                                                                     ) : (
                                                                         <div key={idx} className="list-group-item">
-                                                                            {c.label}{" "}
-                                                                            <span className="text-muted">(add URL)</span>
+                                                                            {c.label} <span className="text-muted">(add URL)</span>
                                                                         </div>
                                                                     )
                                                                 )}
@@ -778,8 +768,7 @@ export default function HeaderClient({
                                                                         </SmartLink>
                                                                     ) : (
                                                                         <div key={idx} className="list-group-item">
-                                                                            {t.label}{" "}
-                                                                            <span className="text-muted">(add URL)</span>
+                                                                            {t.label} <span className="text-muted">(add URL)</span>
                                                                         </div>
                                                                     )
                                                                 )}
@@ -883,7 +872,11 @@ export default function HeaderClient({
                                                 })}
                                             </div>
 
-                                            <Link href="/programs" className="mt-2 btn drp-down-button w-100" onClick={closeMobile}>
+                                            <Link
+                                                href="/programs"
+                                                className="mt-2 btn drp-down-button w-100"
+                                                onClick={closeMobile}
+                                            >
                                                 View All Programs
                                             </Link>
                                         </div>
@@ -1082,31 +1075,16 @@ export default function HeaderClient({
 
                                     <div className="bbm-block">
                                         <div className="bbm-subheadings mb-2">
-                                            {" "}
                                             <i className="fas fa-lightbulb me-2"></i> Popular Topics
                                         </div>
                                         <div className="bbm-list">
                                             {buildPairs([
-                                                [
-                                                    mobileParent.bootcampMegaMenuExtras?.popularTopic1Label,
-                                                    (mobileParent as any).bootcampMegaMenuExtras?.popularTopic1Url,
-                                                ],
-                                                [
-                                                    mobileParent.bootcampMegaMenuExtras?.popularTopic2Label,
-                                                    (mobileParent as any).bootcampMegaMenuExtras?.popularTopic2Url,
-                                                ],
-                                                [
-                                                    mobileParent.bootcampMegaMenuExtras?.popularTopic3Label,
-                                                    (mobileParent as any).bootcampMegaMenuExtras?.popularTopic3Url,
-                                                ],
+                                                [mobileParent.bootcampMegaMenuExtras?.popularTopic1Label, (mobileParent as any).bootcampMegaMenuExtras?.popularTopic1Url],
+                                                [mobileParent.bootcampMegaMenuExtras?.popularTopic2Label, (mobileParent as any).bootcampMegaMenuExtras?.popularTopic2Url],
+                                                [mobileParent.bootcampMegaMenuExtras?.popularTopic3Label, (mobileParent as any).bootcampMegaMenuExtras?.popularTopic3Url],
                                             ]).map((t, idx) =>
                                                 t.url !== "#" ? (
-                                                    <SmartLink
-                                                        key={idx}
-                                                        href={t.url}
-                                                        className="bbm-list-item"
-                                                        onClick={closeMobile}
-                                                    >
+                                                    <SmartLink key={idx} href={t.url} className="bbm-list-item" onClick={closeMobile}>
                                                         {t.label}
                                                     </SmartLink>
                                                 ) : (
@@ -1117,7 +1095,11 @@ export default function HeaderClient({
                                             )}
                                         </div>
 
-                                        <Link href={activeParent ? blogTopicUrl(activeParent.slug) : "/blog"} className="btn drp-down-button w-100" onClick={closeMobile}>
+                                        <Link
+                                            href={mobileParent ? blogTopicUrl(mobileParent.slug) : "/blog"}
+                                            className="btn drp-down-button w-100"
+                                            onClick={closeMobile}
+                                        >
                                             View All
                                         </Link>
                                     </div>
@@ -1129,19 +1111,10 @@ export default function HeaderClient({
 
                                         <div className="bbm-blog-grid">
                                             {mobileBootcampFeaturedBlogs.map((b, idx) => (
-                                                <SmartLink
-                                                    key={idx}
-                                                    href={b.url}
-                                                    className="bbm-blog-card"
-                                                    onClick={closeMobile}
-                                                >
+                                                <SmartLink key={idx} href={b.url} className="bbm-blog-card" onClick={closeMobile}>
                                                     {b.img ? (
                                                         // eslint-disable-next-line @next/next/no-img-element
-                                                        <img
-                                                            src={b.img}
-                                                            alt={b.alt || b.title || "Featured blog"}
-                                                            className="bbm-blog-img"
-                                                        />
+                                                        <img src={b.img} alt={b.alt || b.title || "Featured blog"} className="bbm-blog-img" />
                                                     ) : null}
                                                     <div className="bbm-blog-title">{b.title}</div>
                                                 </SmartLink>
@@ -1211,7 +1184,6 @@ export default function HeaderClient({
 
                                     <div className="bbm-block">
                                         <div className="bbm-subheadings mb-2">
-                                            {" "}
                                             <i className="fas fa-lightbulb me-2"></i> Popular Topics
                                         </div>
                                         <div className="bbm-list">
@@ -1233,7 +1205,12 @@ export default function HeaderClient({
                                             )}
                                         </div>
 
-                                        <Link href={activeCertParent ? blogTopicUrl(activeCertParent.slug) : "/blog"}>
+                                        {/* ✅ FIXED: use mobileCertParent instead of activeCertParent */}
+                                        <Link
+                                            href={mobileCertParent ? blogTopicUrl(mobileCertParent.slug) : "/blog"}
+                                            onClick={closeMobile}
+                                            className="btn drp-down-button w-100"
+                                        >
                                             View All
                                         </Link>
                                     </div>

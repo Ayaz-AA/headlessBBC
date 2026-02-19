@@ -12,32 +12,6 @@ export const client = new GraphQLClient(endpoint, {
 });
 
 // =========================
-// HOMEPAGE QUERY
-// =========================
-
-export const GET_HOMEPAGE = gql`
-  query GetHomepage {
-    pages(where: { name: "bbc-home" }) {
-      nodes {
-        id
-        databaseId
-        title
-        content
-        slug
-        uri
-        homepageFields {
-          homepageFields {
-            heroSection {
-              heroTitle
-            }
-          }
-        }
-      }
-    }
-  }
-`;
-
-// =========================
 // SHARED TYPES
 // =========================
 
@@ -63,46 +37,6 @@ export function pickUrlFromConnection(conn?: AcfContentNodeConnection): string |
   const node = conn?.nodes?.[0] ?? null;
   if (!node) return null;
   return node.uri ?? node.link ?? null;
-}
-
-export interface HeroSection {
-  heroTitle?: string | null;
-}
-
-export interface HomepageFields {
-  heroSection?: HeroSection | null;
-  [key: string]: any;
-}
-
-export interface HomepageData {
-  pages: {
-    nodes: Array<{
-      id: string;
-      databaseId: number;
-      title: string | null;
-      content: string | null;
-      slug: string | null;
-      uri: string | null;
-      homepageFields?: {
-        homepageFields?: HomepageFields | null;
-      } | null;
-    }>;
-  };
-}
-
-export async function getHomepageData(): Promise<HomepageData> {
-  try {
-    const data = await client.request<HomepageData>(GET_HOMEPAGE);
-    return data;
-  } catch (error: any) {
-    console.error("Failed to fetch homepage data:", error);
-    if (error.response?.errors) {
-      error.response.errors.forEach(({ message }: { message: string }, idx: number) => {
-        console.error(`  Error ${idx + 1}: ${message}`);
-      });
-    }
-    throw error;
-  }
 }
 
 // ==========================================
@@ -258,23 +192,51 @@ export const GET_CERTIFICATIONS_MEGA_MENU = gql`
         slug
 
         certificationsMegaMenu {
+          # ✅ These are STRING fields
           topcert1label
           topcert1url
+
           topcert2label
           topcert2url
+
           topcert3label
           topcert3url
+
           topcert4label
           topcert4url
 
+          # ✅ These are CONNECTION fields
           populartopic1label
-          populartopic1url
+          populartopic1url {
+            nodes {
+              uri
+              link
+            }
+          }
+
           populartopic2label
-          populartopic2url
+          populartopic2url {
+            nodes {
+              uri
+              link
+            }
+          }
+
           populartopic3label
-          populartopic3url
+          populartopic3url {
+            nodes {
+              uri
+              link
+            }
+          }
+
           populartopic4label
-          populartopic4url
+          populartopic4url {
+            nodes {
+              uri
+              link
+            }
+          }
         }
       }
     }
@@ -282,23 +244,31 @@ export const GET_CERTIFICATIONS_MEGA_MENU = gql`
 `;
 
 export interface CertificationsMegaMenuFields {
+  // STRING fields
   topcert1label?: string | null;
   topcert1url?: string | null;
+
   topcert2label?: string | null;
   topcert2url?: string | null;
+
   topcert3label?: string | null;
   topcert3url?: string | null;
+
   topcert4label?: string | null;
   topcert4url?: string | null;
 
+  // CONNECTION fields
   populartopic1label?: string | null;
-  populartopic1url?: string | null;
+  populartopic1url?: AcfContentNodeConnection;
+
   populartopic2label?: string | null;
-  populartopic2url?: string | null;
+  populartopic2url?: AcfContentNodeConnection;
+
   populartopic3label?: string | null;
-  populartopic3url?: string | null;
+  populartopic3url?: AcfContentNodeConnection;
+
   populartopic4label?: string | null;
-  populartopic4url?: string | null;
+  populartopic4url?: AcfContentNodeConnection;
 }
 
 export interface CertificationsMegaMenuParentTerm {
@@ -342,8 +312,7 @@ export const GET_HEADER_SETTINGS = gql`
         headerResourcesDropdown {
           resourcesItem1Title
           resourcesItem1Subtitle
-          resourcesItem1Url 
-          
+          resourcesItem1Url
 
           resourcesItem2Title
           resourcesItem2Subtitle

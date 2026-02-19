@@ -1,52 +1,64 @@
-'use client'
 
-import Image from 'next/image'
-import { HomepageFields } from '@/lib/wordpress'
+import type { HomepageFieldsGroup } from '@/lib/homepage'
 
 interface AboutProps {
-  data?: HomepageFields | null
+  data?: HomepageFieldsGroup | null
 }
 
 export default function About({ data }: AboutProps) {
+  const about = data?.aboutUs
+
+  const heading = about?.aboutUsHeading?.trim() || 'About Us'
+  const paragraphRaw =
+    about?.aboutUsParagraph?.trim() ||
+    "It’s not always easy to take your first step — or your next step — toward the career you deserve."
+
+  const paragraphs = paragraphRaw
+    ? paragraphRaw.split(/\n+/).map((p) => p.trim()).filter(Boolean)
+    : []
+
+  const imageUrl =
+    about?.aboutUsImage?.node?.sourceUrl || '/assets/about-fallback.png' // <-- add a fallback image if you want
+  const imageAlt = about?.aboutUsImage?.node?.altText || 'About Us'
+
   return (
-    <section className="about">
-      <div className="about__container">
-        <div className="about__content scroll-animate scroll-animate--slide-up">
-          <div className="about__badge">
-            <svg className="about__badge-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-              <circle cx="12" cy="12" r="9" stroke="#ff8a1f" strokeWidth="1.5" fill="none" opacity="0.8" />
-              <circle cx="12" cy="12" r="6" stroke="#ffffff" strokeWidth="1.5" fill="none" opacity="0.9" />
-              <circle cx="12" cy="12" r="3" fill="#ff8a1f" opacity="0.8" />
-            </svg>
-            <span className="about__badge-text">About Us</span>
-          </div>
-          <h2 className="about__heading">Learn in Weeks. Succeed for Decades.</h2>
-          <div className="about__description">
-            <p>It&apos;s not always easy to take your first step - or your next step - toward the career you deserve.</p>
-            <p>Whether you&apos;re comparing paths or learning opportunities Best Bootcamps is your advocate in education. We&apos;ll connect you with resources you need to approach your next career move with confidence.</p>
-          </div>
-        </div>
-        <div className="about__partners-wrapper scroll-animate scroll-animate--slide-up scroll-animate--delay-1">
-          <div className="about__decorative-circles">
-            <div className="about__circle about__circle--1"></div>
-            <div className="about__circle about__circle--2"></div>
-            <div className="about__circle about__circle--3"></div>
-            <div className="about__circle about__circle--4"></div>
-          </div>
-          <div className="about__partners">
-            <div className="about__partner-logo">
-              <Image src="/assets/logo-workforce.png" alt="Workforce" width={200} height={37} />
+    <section className="about py-5">
+      <div className="container">
+        <div className="row align-items-center g-4">
+          {/* LEFT */}
+          <div className="col-12 col-lg-7">
+
+            <div className=" badge d-flex justify-content-between align-items-center mb-3 aboutus-badge">
+              <div className="me-2">
+                <img src="/assets/Icon-badge.png" alt="icon" />
+              </div>
+              <span>About Us</span>
             </div>
-            <div className="about__partner-logo">
-              <Image src="/assets/logo-quickstart.png" alt="QuickStart" width={200} height={37} />
+
+            <h2 className="team-intro-heading mb-3">{heading}</h2>
+
+            <div className="regular-para">
+              {paragraphs.map((p, idx) => (
+                <p key={idx}>{p}</p>
+              ))}
             </div>
-            <div className="about__partner-logo">
-              <Image src="/assets/logo-healthtech.png" alt="HealthTech" width={200} height={37} />
-            </div>
+
+          </div>
+
+          {/* RIGHT */}
+          <div className="col-12 col-lg-5">
+
+
+            <img
+              src={imageUrl}
+              alt={imageAlt}
+              className="img-fluid"
+              loading="lazy"
+              style={{ height: 'auto' }}
+            />
           </div>
         </div>
       </div>
     </section>
   )
 }
-
