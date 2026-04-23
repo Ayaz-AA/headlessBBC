@@ -21,8 +21,8 @@ export default function SectionOne({
         <section className=" team-section container text-center mt-5 p-lg-5 p-3 py-5">
 
             <div>
-                {heading && <h2 className="team-intro-heading">{heading}</h2>}
-                {paragraph && <p className="team-intro">{paragraph}</p>}
+                {heading && <h2 className="component-heading">{heading}</h2>}
+                {paragraph && <p className="regular-para team-intro">{paragraph}</p>}
             </div>
             <div className="mt-lg-5 mt-4">
                 {imageUrl && (
@@ -33,7 +33,7 @@ export default function SectionOne({
                     />
                 )}
             </div>
-            {paragraph && <p className="team-intro mt-5">{paragraph2}</p>}
+            {paragraph && <p className="regular-para team-intro mt-5">{paragraph2}</p>}
         </section>
     )
 }

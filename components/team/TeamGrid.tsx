@@ -32,7 +32,7 @@ export default function TeamGrid({
     return (
         <section className="team-section container text-center my-5 p-lg-5 p-3">
             {label && (
-                <div className="team-card-badge badge d-flex justify-content-between align-items-center mb-3 mx-auto">
+                <div className=" colored-badge badge d-flex justify-content-between align-items-center mb-3 mx-auto">
                     <div className="me-2">
                         <img src="/assets/Icon-badge.png" alt="icon" className="" />
                     </div>
@@ -40,8 +40,8 @@ export default function TeamGrid({
                 </div>
             )}
 
-            {heading && <h2 className="team-intro-heading">{heading}</h2>}
-            {intro && <p className="team-intro">{intro}</p>}
+            {heading && <h2 className="component-heading">{heading}</h2>}
+            {intro && <p className="team-intro regular-para">{intro}</p>}
 
             <div className="row g-4 mt-4">
                 {members.map((m, idx) => (
@@ -54,7 +54,7 @@ export default function TeamGrid({
             {/* ✅ Bottom mission INSIDE same container */}
             {missionText && (
                 <div className="team-mission team-mission--inside mt-4 pt-4">
-                    <p className="team-mission__text mb-0">{missionText}</p>
+                    <p className="regular-para mb-0">{missionText}</p>
                 </div>
             )}
         </section>

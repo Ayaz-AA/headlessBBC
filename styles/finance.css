@@ -1,0 +1,24 @@
+.finacne-options {
+    background-color: rgba(249, 250, 251, 1);
+}
+
+.finance-card {
+    background: #ffffff;
+    border: 0.89px solid rgba(229, 231, 235, 0.6);
+}
+
+.finance-card--note {
+    background: #fff8e5;
+    /* light yellow-ish note */
+    box-shadow: none;
+    border: 1px solid #ffe0a8;
+}
+
+.finance-card__inline-link {
+    text-decoration: underline;
+}
+
+.finance-card__note {
+    background-color: rgba(255, 243, 233, 1);
+    border-radius: 7px;
+}

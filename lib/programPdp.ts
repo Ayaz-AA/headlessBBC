@@ -106,18 +106,73 @@ export const GET_PROGRAM_PDP_BY_SLUG = gql`
             skillsHeading
             skillsList
           }
+certificationsSection {
+  certificationsHeading
 
-          certificationsSection {
-            certificationsHeading
-            certificationsName
-            certificationsIntro
-            certificationsImage {
-              node {
-                sourceUrl
-                altText
-              }
-            }
-          }
+  certificationsName
+  certificationsIntro
+  certificationsImage {
+    node {
+      sourceUrl
+      altText
+    }
+  }
+
+  certification2Name
+  certification2Intro
+  certification2Image {
+    node {
+      sourceUrl
+      altText
+    }
+  }
+
+  certification3Name
+  certification3Intro
+  certification3Image {
+    node {
+      sourceUrl
+      altText
+    }
+  }
+
+  certification4Name
+  certification4Intro
+  certification4Image {
+    node {
+      sourceUrl
+      altText
+    }
+  }
+
+  certification5Name
+  certification5Intro
+  certification5Image {
+    node {
+      sourceUrl
+      altText
+    }
+  }
+
+  certification6Name
+  certification6Intro
+  certification6Image {
+    node {
+      sourceUrl
+      altText
+    }
+  }
+
+  certification7Name
+  certification7Intro
+  certification7Image {
+    node {
+      sourceUrl
+      altText
+    }
+  }
+}
+      
 
           faqsSection {
             faqsHeading
@@ -195,10 +250,16 @@ export type ProgramPdpVM = {
   skillsListHtml?: string;
 
   certificationsHeading?: string;
-  certificationsName?: string;
-  certificationsIntro?: string;
-  certificationsImageUrl?: string;
-  certificationsImageAlt?: string | null;
+  // certificationsName?: string;
+  // certificationsIntro?: string;
+  // certificationsImageUrl?: string;
+  // certificationsImageAlt?: string | null;
+  certifications?: {
+    name?: string;
+    intro?: string;
+    imageUrl?: string;
+    imageAlt?: string | null;
+  }[];
 
   faqsHeading?: string;
   faqs: Array<{ q: string; a: string }>;
@@ -270,7 +331,25 @@ export function mapProgramPdpToVM(data: any): ProgramPdpVM | null {
     { q: faq.question4, a: faq.answer4 },
     { q: faq.question5, a: faq.answer5 },
   ].filter((x) => x.q && x.a);
+  const cs = pdp?.certificationsSection ?? {};
 
+  const certifications = [
+    // ✅ FIRST (no "1" in name)
+    {
+      name: cs?.certificationsName,
+      intro: cs?.certificationsIntro,
+      imageUrl: cs?.certificationsImage?.node?.sourceUrl,
+      imageAlt: cs?.certificationsImage?.node?.altText ?? null,
+    },
+
+    // ✅ REST (2–7)
+    ...[2, 3, 4, 5, 6, 7].map((i) => ({
+      name: cs?.[`certification${i}Name`],
+      intro: cs?.[`certification${i}Intro`],
+      imageUrl: cs?.[`certification${i}Image`]?.node?.sourceUrl,
+      imageAlt: cs?.[`certification${i}Image`]?.node?.altText ?? null,
+    })),
+  ].filter((cert) => cert.name);
   return {
     id: p.id,
     title: p.title,
@@ -319,17 +398,18 @@ export function mapProgramPdpToVM(data: any): ProgramPdpVM | null {
     skillsHeading: pdp?.skillsSection?.skillsHeading ?? undefined,
     skillsListHtml: pdp?.skillsSection?.skillsList ?? undefined,
 
-    certificationsHeading:
-      pdp?.certificationsSection?.certificationsHeading ?? undefined,
-    certificationsName:
-      pdp?.certificationsSection?.certificationsName ?? undefined,
-    certificationsIntro:
-      pdp?.certificationsSection?.certificationsIntro ?? undefined,
-    certificationsImageUrl:
-      pdp?.certificationsSection?.certificationsImage?.node?.sourceUrl ?? undefined,
-    certificationsImageAlt:
-      pdp?.certificationsSection?.certificationsImage?.node?.altText ?? null,
-
+    // certificationsHeading:
+    //   pdp?.certificationsSection?.certificationsHeading ?? undefined,
+    // certificationsName:
+    //   pdp?.certificationsSection?.certificationsName ?? undefined,
+    // certificationsIntro:
+    //   pdp?.certificationsSection?.certificationsIntro ?? undefined,
+    // certificationsImageUrl:
+    //   pdp?.certificationsSection?.certificationsImage?.node?.sourceUrl ?? undefined,
+    // certificationsImageAlt:
+    //   pdp?.certificationsSection?.certificationsImage?.node?.altText ?? null,
+    certificationsHeading: cs?.certificationsHeading ?? undefined,
+    certifications,
     faqsHeading: faq?.faqsHeading ?? undefined,
     faqs,
   };

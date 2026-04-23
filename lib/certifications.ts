@@ -49,64 +49,64 @@ export const GET_CERTIFICATIONS = gql`
 `;
 
 export type CertificationVM = {
-    id: string;
-    title: string;
-    slug: string;
+  id: string;
+  title: string;
+  slug: string;
 
-    excerpt?: string;
+  excerpt?: string;
 
-    shortName?: string;
+  shortName?: string;
 
-    categorySlugs: string[];
-    categoryNames: string[];
+  categorySlugs: string[];
+  categoryNames: string[];
 
-    imageUrl?: string;
-    imageAlt?: string;
+  imageUrl?: string;
+  imageAlt?: string;
 
-    learnMoreType?: "internal_plp" | "external" | string;
-    anchorId?: string;
+  learnMoreType?: "internal_plp" | "external" | string;
+  anchorId?: string;
 
-    externalUrl?: string;
-    duration?: string;
-    cost?: string;
+  externalUrl?: string;
+  duration?: string;
+  cost?: string;
 
-    linkedProgram?: AcfContentNodeConnection; // internal link connection
+  linkedProgram?: AcfContentNodeConnection; // internal link connection
 };
 
 export async function getCertifications(first = 200): Promise<CertificationVM[]> {
-    const data: any = await client.request(GET_CERTIFICATIONS, { first });
-    const nodes = data?.certifications?.nodes ?? [];
-    return nodes.map(mapCertificationNodeToVM);
+  const data: any = await client.request(GET_CERTIFICATIONS, { first });
+  const nodes = data?.certifications?.nodes ?? [];
+  return nodes.map(mapCertificationNodeToVM);
 }
 
 export function mapCertificationNodeToVM(node: any): CertificationVM {
-    const catNodes = node?.certificationsCategories?.nodes ?? [];
-    const fields = node?.certificationFields ?? {};
-    const imgNode = node?.featuredImage?.node;
+  const catNodes = node?.certificationsCategories?.nodes ?? [];
+  const fields = node?.certificationFields ?? {};
+  const imgNode = node?.featuredImage?.node;
 
-    return {
-        id: node?.id ?? "",
-        title: node?.title ?? "",
-        slug: node?.slug ?? "",
-        excerpt: node?.excerpt ?? undefined,
+  return {
+    id: node?.id ?? "",
+    title: node?.title ?? "",
+    slug: node?.slug ?? "",
+    excerpt: node?.excerpt ?? undefined,
 
-        shortName: fields?.shortName ?? undefined,
+    shortName: fields?.shortName ?? undefined,
 
-        categorySlugs: catNodes.map((t: any) => t?.slug).filter(Boolean),
-        categoryNames: catNodes.map((t: any) => t?.name).filter(Boolean),
+    categorySlugs: catNodes.map((t: any) => t?.slug).filter(Boolean),
+    categoryNames: catNodes.map((t: any) => t?.name).filter(Boolean),
 
-        imageUrl: imgNode?.sourceUrl ?? undefined,
-        imageAlt: imgNode?.altText ?? undefined,
+    imageUrl: imgNode?.sourceUrl ?? undefined,
+    imageAlt: imgNode?.altText ?? undefined,
 
-        learnMoreType: fields?.learnmoretype ?? undefined,
-        anchorId: fields?.anchorid ?? undefined,
+    learnMoreType: fields?.learnmoretype ?? undefined,
+    anchorId: fields?.anchorid ?? undefined,
 
-        externalUrl: fields?.externalurl ?? undefined,
-        duration: fields?.duration ?? undefined,
-        cost: fields?.cost ?? undefined,
+    externalUrl: fields?.externalurl ?? undefined,
+    duration: fields?.duration ?? undefined,
+    cost: fields?.cost ?? undefined,
 
-        linkedProgram: fields?.linkedprogram ?? undefined,
-    };
+    linkedProgram: fields?.linkedprogram ?? undefined,
+  };
 }
 
 // =========================
@@ -119,7 +119,8 @@ export const GET_CERTIFICATIONS_HERO = gql`
       title
       certificationsHero {
         heroLabel
-        heroHeading
+        heroHeadingLine1
+        heroHeadingLine2
         heroParagraph
       }
     }
@@ -127,22 +128,24 @@ export const GET_CERTIFICATIONS_HERO = gql`
 `;
 
 export type CertificationsHeroVM = {
-    heroLabel?: string | null;
-    heroHeading?: string | null;
-    heroParagraph?: string | null;
+  heroLabel?: string | null;
+  heroHeadingLine1?: string | null;
+  heroHeadingLine2?: string | null;
+  heroParagraph?: string | null;
 };
 
 export async function getCertificationsHero(
-    pageSlug: "all-certifications" | "healthcare-certifications" | "it-certifications"
+  pageSlug: "all-certifications" | "healthcare-certifications" | "it-certifications"
 ): Promise<CertificationsHeroVM | null> {
-    const data: any = await client.request(GET_CERTIFICATIONS_HERO, { slug: pageSlug });
+  const data: any = await client.request(GET_CERTIFICATIONS_HERO, { slug: pageSlug });
 
-    const hero = data?.page?.certificationsHero ?? null;
-    if (!hero) return null;
+  const hero = data?.page?.certificationsHero ?? null;
+  if (!hero) return null;
 
-    return {
-        heroLabel: hero?.heroLabel ?? null,
-        heroHeading: hero?.heroHeading ?? null,
-        heroParagraph: hero?.heroParagraph ?? null,
-    };
+  return {
+    heroLabel: hero?.heroLabel ?? null,
+    heroHeadingLine1: hero?.heroHeadingLine1 ?? null,
+    heroHeadingLine2: hero?.heroHeadingLine2 ?? null,
+    heroParagraph: hero?.heroParagraph ?? null,
+  };
 }

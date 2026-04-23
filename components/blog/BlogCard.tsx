@@ -58,15 +58,15 @@ export default function BlogCard({ blog }: { blog: BlogCardVM }) {
     const excerptText = blog.excerpt ? stripHtml(blog.excerpt) : "";
 
     return (
-        <article className="program-card">
-            <div className="program-card__media">
+        <article className="bbc-card">
+            <div className="bbc-card__media">
                 {imgUrl ? (
                     <Link href={href} aria-label={blog.title}>
                         {/* eslint-disable-next-line @next/next/no-img-element */}
-                        <img className="program-card__img" src={imgUrl} alt={imgAlt} />
+                        <img className="bbc-card__img" src={imgUrl} alt={imgAlt} />
                     </Link>
                 ) : (
-                    <div className="program-card__placeholder">
+                    <div className="bbc-card__placeholder">
                         <Link href={href} className="text-decoration-none">
                             Read
                         </Link>
@@ -74,29 +74,29 @@ export default function BlogCard({ blog }: { blog: BlogCardVM }) {
                 )}
 
                 {!!industry?.name && (
-                    <div className="program-card__badges">
-                        <span className="program-card__badge">{industry.name}</span>
+                    <div className="bbc-card__badges">
+                        <span className="bbc-card__badge">{industry.name}</span>
                     </div>
                 )}
             </div>
 
-            <div className="p-3 program-card__body">
-                <p className="program-card__meta">
+            <div className="p-3 bbc-card__body">
+                <p className="bbc-card__meta">
                     {!!dateText && (
-                        <span className="program-card__meta-item">
+                        <span className="bbc-card__meta-item">
 
                             {dateText}
                         </span>
                     )}
                     <span >|</span>
                     {!!blog.authorName && (
-                        <span className="program-card__meta-item">
+                        <span className="bbc-card__meta-item">
 
                             {blog.authorName}
                         </span>
                     )}
                 </p>
-                <h3 className="program-card__title">
+                <h3 className="bbc-card__title">
                     <Link href={href} className="text-decoration-none text-reset">
                         {blog.title}
                     </Link>
@@ -108,7 +108,7 @@ export default function BlogCard({ blog }: { blog: BlogCardVM }) {
 
 
 
-                <div className="program-card__footer ">
+                <div className="bbc-card__footer ">
                     <Link href={href} className="blog-card__btn d-flex
                 align-items-center">
                         <span className="text-decoration-underline me-2">Read More</span>   <i className="fa-solid fa-arrow-right" aria-hidden="true" />

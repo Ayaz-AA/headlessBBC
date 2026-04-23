@@ -14,19 +14,19 @@ export default function FAQ({ heading, items }: FAQProps) {
     if (!heading && !items?.length) return null
 
     return (
-        <section className="container py-5 finance-faq-section">
-            {heading && <h2 className="mb-4 text-center finance-faq-heading">{heading}</h2>}
+        <section className="container py-5 custom-faq-section">
+            {heading && <h2 className="mb-4 text-center component-heading">{heading}</h2>}
 
-            <div className="accordion finance-faq-accordion" id="financeFaq">
+            <div className="accordion custom-faq-accordion" id="financeFaq">
                 {items.map((item, idx) => {
                     const collapseId = `faq-collapse-${idx}`
                     const headingId = `faq-heading-${idx}`
                     return (
-                        <div className="accordion-item finance-faq-item" key={idx}>
+                        <div className="accordion-item custom-faq-item" key={idx}>
                             <h2 className="accordion-header" id={headingId}>
                                 <button
                                     className={
-                                        'accordion-button finance-faq-button ' +
+                                        'accordion-button custom-faq-button ' +
                                         (idx === 0 ? '' : 'collapsed')
                                     }
                                     type="button"

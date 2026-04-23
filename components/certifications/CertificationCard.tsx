@@ -66,7 +66,7 @@ export default function CertificationCard({ cert }: { cert: CertificationVM }) {
 
                 {cert.excerpt && (
                     <div
-                        className="regular-para"
+                        className="cert-description"
                         dangerouslySetInnerHTML={{ __html: cert.excerpt }}
                     />
                 )}
@@ -75,13 +75,13 @@ export default function CertificationCard({ cert }: { cert: CertificationVM }) {
                     <div className="cert-list-card__meta">
                         {cert.duration && (
                             <span className="cert-list-card__metaItem">
-                                <i className="fa-regular fa-clock" aria-hidden="true" />
+                                <i className="fa-regular fa-clock clock-icon" aria-hidden="true" />
                                 <span>{cert.duration}</span>
                             </span>
                         )}
                         {cert.cost && (
                             <span className="cert-list-card__metaItem">
-                                <i className="fa-solid fa-tag" aria-hidden="true" />
+                                <i className="fa-solid fa-tag price-icon" aria-hidden="true" />
                                 <span>{cert.cost}</span>
                             </span>
                         )}
@@ -90,11 +90,11 @@ export default function CertificationCard({ cert }: { cert: CertificationVM }) {
             </div>
 
             {/* Right CTA */}
-            <div className="cert-list-card__cta">
+            <div className="cert-list-card__cta mx-auto mx-md-0">
                 {learnMoreHref ? (
                     isExternal ? (
                         <a
-                            className="plp-featuredCard__btn"
+                            className="btn--secondary"
                             href={learnMoreHref}
                             target="_blank"
                             rel="noopener noreferrer"
@@ -102,12 +102,12 @@ export default function CertificationCard({ cert }: { cert: CertificationVM }) {
                             Learn More <i className="fa-solid fa-arrow-right" aria-hidden="true" />
                         </a>
                     ) : (
-                        <Link className="plp-featuredCard__btn" href={learnMoreHref}>
+                        <Link className="btn--secondary" href={learnMoreHref}>
                             Learn More <i className="fa-solid fa-arrow-right" aria-hidden="true" />
                         </Link>
                     )
                 ) : (
-                    <button className="plp-featuredCard__btn" disabled>
+                    <button className="btn--secondary" disabled>
                         Learn More <i className="fa-solid fa-arrow-right" aria-hidden="true" />
                     </button>
                 )}

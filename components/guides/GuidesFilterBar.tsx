@@ -48,20 +48,20 @@ export default function GuidesFilterBar({
     const canSearch = !!guideSlug;
 
     return (
-        <div className="programs-filterbar-card">
-            <div className="programs-filterbar-head mb-0">
-                <div className="programs-filterbar-icon" aria-hidden="true">
+        <div className="custom-filterbar-card">
+            <div className="custom-filterbar-head mb-0">
+                <div className="custom-filterbar-icon" aria-hidden="true">
                     <img src="/assets/filter-icon.png" alt="" height="20.41" width="19.5" />
                 </div>
                 <div>
-                    <div className="programs-filterbar-title">I’m looking for Guides</div>
-                    <div className="programs-filterbar-subtitle">Search Guides by Industry</div>
+                    <div className="custom-filterbar-title">I’m looking for Guides</div>
+                    <div className="custom-filterbar-subtitle">Search Guides by Industry</div>
                 </div>
             </div>
 
-            <div className="programs-filterbar-controls pb-4">
-                <div className="programs-filterbar-field">
-                    <div className="programs-filterbar-label">Industry</div>
+            <div className="custom-filterbar-controls pb-4">
+                <div className="custom-filterbar-field">
+                    <div className="custom-filterbar-label">Industry</div>
                     <SelectDropdown
                         label=""
                         value={industrySlug}
@@ -75,8 +75,8 @@ export default function GuidesFilterBar({
                     />
                 </div>
 
-                <div className="programs-filterbar-field">
-                    <div className="programs-filterbar-label">Guides</div>
+                <div className="custom-filterbar-field">
+                    <div className="custom-filterbar-label">Guides</div>
                     <SelectDropdown
                         label=""
                         value={guideSlug}
@@ -89,11 +89,11 @@ export default function GuidesFilterBar({
 
                 <button
                     type="button"
-                    className="programs-filterbar-btn"
+                    className="custom-filterbar-btn"
                     onClick={onSearch}
                     disabled={!canSearch}
                 >
-                    <span className="programs-filterbar-btn-icon" aria-hidden="true">
+                    <span className="custom-filterbar-btn-icon" aria-hidden="true">
                         <i className="fa-solid fa-magnifying-glass"></i>
                     </span>
                     <span>Search Guides</span>

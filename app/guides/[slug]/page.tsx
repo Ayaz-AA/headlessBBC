@@ -2,9 +2,12 @@ import Header from "@/components/global/Header";
 import Footer from "@/components/global/Footer";
 import GuideHero from "@/components/guides/GuideHero";
 import GuideIntroSection from "@/components/guides/GuideIntroSection";
-
-import { getGuideBySlug, getGuidesForFilter } from "@/lib/guides";
-import { mapGuideHero, mapGuideIntro } from "@/lib/guidesMapper";
+import GuideOverview from "@/components/guides/GuideOverview";
+import SalarySection from "@/components/guides/SalarySection";
+import FAQSection from "@/components/guides/FAQSection";
+import { getGuideBySlug, getGuidesForFilter, } from "@/lib/guides";
+import ProgramPromoSection from "@/components/guides/ProgramPromoSection";
+import { mapGuideHero, mapGuideIntro, mapCareerOverview, mapGuideSalary, mapProgramPromo, mapGuideFAQ } from "@/lib/guidesMapper";
 import { notFound } from "next/navigation";
 
 export default async function GuideDetailPage({
@@ -23,7 +26,10 @@ export default async function GuideDetailPage({
 
     const hero = mapGuideHero(guideData.guide);
     const intro = mapGuideIntro(guideData.guide);
-
+    const overview = mapCareerOverview(guideData.guide);
+    const salary = mapGuideSalary(guideData.guide);
+    const promo = mapProgramPromo(guideData.guide);
+    const faq = mapGuideFAQ(guideData.guide);
     // Build allGuides list for dropdowns
     const allGuides = (allGuidesData?.guides?.nodes ?? []).map((g: any) => ({
         slug: g.slug,
@@ -38,6 +44,7 @@ export default async function GuideDetailPage({
     const fromAll = allGuides.find((g: any) => g.slug === slug)?.industrySlugs?.[0] ?? "";
     const defaultIndustrySlug = fromGuide || fromAll || "";
 
+
     return (
         <>
             <Header />
@@ -48,6 +55,10 @@ export default async function GuideDetailPage({
                 currentGuideSlug={slug}
                 defaultIndustrySlug={defaultIndustrySlug}
             />
+            <GuideOverview data={overview} />
+            <SalarySection data={salary} />
+            <ProgramPromoSection data={promo} />
+            <FAQSection heading={faq.heading} items={faq.items} />
             <Footer />
         </>
     );

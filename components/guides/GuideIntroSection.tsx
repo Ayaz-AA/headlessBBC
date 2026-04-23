@@ -66,12 +66,12 @@ export default function GuideIntroSection({
     };
 
     return (
-        <section className="guide-intro py-4 py-md-5">
+        <section className="guide-intro pt-4 pt-md-5">
             <div className="container py-4">
-                <div className="row g-4 g-lg-5 align-items-center justify-content-between">
+                <div className="row g-4 g-lg-5 align-items-start justify-content-between">
                     {/* LEFT */}
                     <div className="col-12 col-lg-7">
-                        {!!intro.title && <h2 className="team-intro-heading ">{intro.title}</h2>}
+                        {!!intro.title && <h2 className="component-heading ">{intro.title}</h2>}
 
                         {!!intro.topDescription && (
                             <p className="regular-para mt-2">{intro.topDescription}</p>
@@ -91,16 +91,22 @@ export default function GuideIntroSection({
                             />
                         </div>
 
-                        {!!intro.bottomDescription && (
+                        {/* {!!intro.bottomDescription && (
                             <p className="regular-para mt-3 mb-0">{intro.bottomDescription}</p>
+                        )} */}
+                        {!!intro.bottomDescription && (
+                            <div
+                                className="regular-para mt-3 mb-0"
+                                dangerouslySetInnerHTML={{ __html: intro.bottomDescription }}
+                            />
                         )}
                     </div>
 
                     {/* RIGHT */}
-                    <div className="col-12 col-lg-4 offset-lg-1 guide-intro__rightlist">
+                    <div className="col-12 col-lg-4 offset-lg-1 guide-intro__rightlist mt-2 mt-lg-5">
                         {!!intro.rightListHtml && (
                             <div
-                                className=""
+                                className="p-3"
                                 dangerouslySetInnerHTML={{ __html: intro.rightListHtml }}
                             />
                         )}

@@ -1,6 +1,5 @@
 'use client'
 
-import Image from 'next/image'
 import { HomepageFieldsGroup } from '@/lib/homepage'
 
 interface WhatIsBootcampProps {
@@ -8,67 +7,113 @@ interface WhatIsBootcampProps {
 }
 
 export default function WhatIsBootcamp({ data }: WhatIsBootcampProps) {
+  const section = data?.whatIsABootcamp
+  if (!section) return null
+
+  const cards = [
+    {
+      title: section.bootcampSectionCard1Heading,
+      description: section.bootcampSectionCard1Para,
+      icon: section.bootcampSectionCard1Icon?.node,
+    },
+    {
+      title: section.bootcampSectionCard2Heading,
+      description: section.bootcampSectionCard2Para,
+      icon: section.bootcampSectionCard2Icon?.node,
+    },
+    {
+      title: section.bootcampSectionCard3Heading,
+      description: section.bootcampSectionCard3Para,
+      icon: section.bootcampSectionCard3Icon?.node,
+    },
+  ].filter((card) => card.title)
+
+  if (!cards.length) return null
+
   return (
-    <section className="what-is-bootcamp">
-      <div className="what-is-bootcamp__container">
-        <div className="what-is-bootcamp__content scroll-animate scroll-animate--slide-up">
-          <h2 className="what-is-bootcamp__heading">What is a Bootcamp?</h2>
-          <p className="what-is-bootcamp__description">
-            A bootcamp is an intensive, dynamic training program designed to take you from elementary to expert in record time. Each bootcamp we offer is geared toward helping you achieve your career goals faster, for less money, on your time.
-          </p>
-          <div className="what-is-bootcamp__features">
-            <div className="what-is-bootcamp__feature scroll-animate scroll-animate--slide-up scroll-animate--delay-1">
-              <div className="what-is-bootcamp__feature-number">01</div>
-              <div className="what-is-bootcamp__feature-icon">
-                <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <circle cx="20" cy="20" r="18" stroke="currentColor" strokeWidth="2" />
-                  <path d="M12 20L18 26L28 14" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-                </svg>
+    <section className="py-5 bg-white">
+      <div className="container">
+        <div className="row align-items-center g-4 g-lg-5">
+          {/* CONTENT */}
+          <div className="col-12 col-lg-7 order-1 scroll-animate scroll-animate--slide-up">
+            {section.bootcampSectionHeading && (
+              <h2 className="mb-3 component-heading">
+                {section.bootcampSectionHeading}
+              </h2>
+            )}
+
+            {section.bootcampSectionPara && (
+              <p className="regular-para mb-4">
+                {section.bootcampSectionPara}
+              </p>
+            )}
+
+            {/* MOBILE IMAGE */}
+            {section.bootcampSectionImage?.node?.sourceUrl && (
+              <div className="d-flex d-lg-none justify-content-center mb-4">
+                <div className="what-is-a-bootcamp-image-wrapper">
+                  <span className="glow-blue-br" aria-hidden="true" />
+                  <span className="glow-orange-tl" aria-hidden="true" />
+                  <img
+                    src={section.bootcampSectionImage.node.sourceUrl}
+                    alt={section.bootcampSectionImage.node.altText ?? ''}
+                    className="img-fluid what-is-a-bootcamp-image"
+                  />
+                </div>
               </div>
-              <div className="what-is-bootcamp__feature-content">
-                <h3 className="what-is-bootcamp__feature-title">Intensive Learning Environment</h3>
-                <p className="what-is-bootcamp__feature-description">Dive straight into hands-on learning without any fluff. If you&apos;re ready to roll up your sleeves, our expert instructors are ready to help.</p>
-              </div>
-            </div>
-            <div className="what-is-bootcamp__feature scroll-animate scroll-animate--slide-up scroll-animate--delay-2">
-              <div className="what-is-bootcamp__feature-number">02</div>
-              <div className="what-is-bootcamp__feature-icon">
-                <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <circle cx="20" cy="20" r="18" stroke="currentColor" strokeWidth="2" />
-                  <path d="M12 20L18 26L28 14" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-                </svg>
-              </div>
-              <div className="what-is-bootcamp__feature-content">
-                <h3 className="what-is-bootcamp__feature-title">Highly Focused Curriculum</h3>
-                <p className="what-is-bootcamp__feature-description">The people set our programs apart from the rest. Join dedicated, licensed instructors and a taught-knit community of fellow learners ready to ascend the career ladder. Be prepared to challenge yourself, and your fellow learners, as you quickly develop in-demand skills.</p>
-              </div>
-            </div>
-            <div className="what-is-bootcamp__feature scroll-animate scroll-animate--slide-up scroll-animate--delay-3">
-              <div className="what-is-bootcamp__feature-number">03</div>
-              <div className="what-is-bootcamp__feature-icon">
-                <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <circle cx="20" cy="20" r="18" stroke="currentColor" strokeWidth="2" />
-                  <path d="M12 20L18 26L28 14" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-                </svg>
-              </div>
-              <div className="what-is-bootcamp__feature-content">
-                <h3 className="what-is-bootcamp__feature-title">Real-World Skills</h3>
-                <p className="what-is-bootcamp__feature-description">Forget tedious memorization or theory. Everything a bootcamp teaches is vital to a successful career, without any unnecessary lessons in between. You&apos;ll graduate with full confidence in yourself and newfound abilities in your chosen field.</p>
-              </div>
+            )}
+
+            <div className="d-flex flex-column gap-4">
+              {cards.map((card, index) => (
+                <div
+                  key={index}
+                  className={`scroll-animate scroll-animate--slide-up scroll-animate--delay-${index + 1}`}
+                >
+                  <div className="d-flex flex-column flex-md-row align-items-start gap-3">
+                    {card.icon?.sourceUrl && (
+                      <div
+                        className={`what-is-a-bootcamp-icon flex-shrink-0 ${index === 1 ? 'what-is-a-bootcamp-icon--alt' : ''
+                          }`}
+                      >
+                        <img
+                          src={card.icon.sourceUrl}
+                          alt={card.icon.altText ?? ''}
+                          width={40}
+                          height={40}
+                        />
+                      </div>
+                    )}
+
+                    <div className="flex-grow-1">
+                      <h5 className="mb-2 home-page-inner-points">
+                        {card.title}
+                      </h5>
+                      <p className="regular-para mb-0">
+                        {card.description}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
-        </div>
-        <div className="what-is-bootcamp__image scroll-animate scroll-animate--slide-up scroll-animate--delay-1">
-          <Image
-            src="/assets/whatisbootcamp.png"
-            alt="Bootcamp illustration"
-            className="what-is-bootcamp__image-placeholder"
-            width={600}
-            height={400}
-          />
+
+          {/* DESKTOP IMAGE */}
+          <div className="col-12 col-lg-5 order-2 d-none d-lg-flex justify-content-end scroll-animate scroll-animate--slide-up scroll-animate--delay-2">
+            {section.bootcampSectionImage?.node?.sourceUrl && (
+              <div className="what-is-a-bootcamp-image-wrapper">
+                <span className="glow-blue-br" aria-hidden="true" />
+                <span className="glow-orange-tl" aria-hidden="true" />
+                <img
+                  src={section.bootcampSectionImage.node.sourceUrl}
+                  alt={section.bootcampSectionImage.node.altText ?? ''}
+                  className="img-fluid what-is-a-bootcamp-image"
+                />
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </section>
   )
 }
-

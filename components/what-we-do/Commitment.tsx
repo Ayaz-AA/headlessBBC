@@ -27,8 +27,8 @@ export default function Commitment({
                         />
                     )}
                 </div>
-                <div className="col-lg-7 ps-lg-5 ps-0">
-                    {heading && <h2 className="team-intro-heading">{heading}</h2>}
+                <div className="col-lg-7 ps-lg-5 ps-0 mt-4 mt-lg-5">
+                    {heading && <h2 className="component-heading">{heading}</h2>}
                     {paragraph && <p className="regular-para">{paragraph}</p>}
                 </div>
 

@@ -48,16 +48,16 @@
 //     );
 
 //     return (
-//         <div className="programs-filterbar rounded-4">
+//         <div className="custom-filterbar rounded-4">
 //             <div className="d-flex align-items-start gap-2 mb-3">
-//                 <div className="programs-filterbar__icon rounded-circle d-flex align-items-center justify-content-center">
+//                 <div className="custom-filterbar__icon rounded-circle d-flex align-items-center justify-content-center">
 //                     <span role="img" aria-label="graduation cap" style={{ fontSize: 18 }}>
 //                         🎓
 //                     </span>
 //                 </div>
 
 //                 <div className="lh-sm">
-//                     <div className="fw-semibold programs-filterbar__title">I’m looking for Programs</div>
+//                     <div className="fw-semibold custom-filterbar__title">I’m looking for Programs</div>
 //                     <div className="text-muted small">I’m looking for Programs</div>
 //                 </div>
 //             </div>
@@ -67,7 +67,7 @@
 //                 <div className="col-12 col-md-5">
 //                     <label className="form-label small text-muted mb-1">Industry</label>
 //                     <select
-//                         className="form-select programs-filterbar__select"
+//                         className="form-select custom-filterbar__select"
 //                         value={industrySlug}
 //                         disabled={lockedIndustry}
 //                         onChange={(e) => {
@@ -89,7 +89,7 @@
 //                 <div className="col-12 col-md-5">
 //                     <label className="form-label small text-muted mb-1">Programs</label>
 //                     <select
-//                         className="form-select programs-filterbar__select"
+//                         className="form-select custom-filterbar__select"
 //                         value={programSlug}
 //                         disabled={programsDisabled}
 //                         onChange={(e) => onProgramChange(e.target.value)}
@@ -113,7 +113,7 @@
 //                 <div className="col-12 col-md-2">
 //                     <button
 //                         type="button"
-//                         className="btn programs-filterbar__btn w-100 d-flex align-items-center justify-content-center gap-2"
+//                         className="btn custom-filterbar__btn w-100 d-flex align-items-center justify-content-center gap-2"
 //                         onClick={onSearch}
 //                     >
 //                         <SearchIcon />
@@ -171,22 +171,22 @@ export default function ProgramsFilterBar({
         ];
 
     return (
-        <div className="programs-filterbar-card">
+        <div className="custom-filterbar-card">
             {/* top header row */}
-            <div className="programs-filterbar-head mb-0">
-                <div className="programs-filterbar-icon" aria-hidden="true">
+            <div className="custom-filterbar-head mb-0">
+                <div className="custom-filterbar-icon" aria-hidden="true">
                     <img src="/assets/filter-icon.png" alt="" height="20.41" width="19.5" />
                 </div>
                 <div>
-                    <div className="programs-filterbar-title">Filter Programs</div>
-                    <div className="programs-filterbar-subtitle">I’m looking for Programs</div>
+                    <div className="custom-filterbar-title">Filter Programs</div>
+                    <div className="custom-filterbar-subtitle">I’m looking for Programs</div>
                 </div>
             </div>
 
             {/* controls */}
-            <div className="programs-filterbar-controls pb-4">
-                <div className="programs-filterbar-field">
-                    <div className="programs-filterbar-label">Industry</div>
+            <div className="custom-filterbar-controls pb-4">
+                <div className="custom-filterbar-field">
+                    <div className="custom-filterbar-label">Industry</div>
                     <SelectDropdown
                         label=""
                         value={industrySlug}
@@ -200,8 +200,8 @@ export default function ProgramsFilterBar({
                     />
                 </div>
 
-                <div className="programs-filterbar-field">
-                    <div className="programs-filterbar-label">Programs</div>
+                <div className="custom-filterbar-field">
+                    <div className="custom-filterbar-label">Programs</div>
                     <SelectDropdown
                         label=""
                         value={programSlug}
@@ -212,8 +212,8 @@ export default function ProgramsFilterBar({
                     />
                 </div>
 
-                <button type="button" className="programs-filterbar-btn" onClick={onSearch}>
-                    <span className="programs-filterbar-btn-icon" aria-hidden="true"><i className="fa-solid fa-magnifying-glass"></i></span>
+                <button type="button" className="custom-filterbar-btn" onClick={onSearch}>
+                    <span className="custom-filterbar-btn-icon" aria-hidden="true"><i className="fa-solid fa-magnifying-glass"></i></span>
                     <span>Search here</span>
                 </button>
             </div>

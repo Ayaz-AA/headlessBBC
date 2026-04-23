@@ -1,0 +1,9 @@
+:root {
+    color-scheme: light;
+    --primary-blue: rgba(7, 54, 92, 1);
+    --primary-orange: #f8770c;
+    --dark-orange: #d96200;
+    --badge-bg: rgba(255, 255, 255, 1);
+    --text-secondary: rgba(74, 85, 101, 1);
+    --deep-blue: rgba(16, 24, 40, 1);
+}

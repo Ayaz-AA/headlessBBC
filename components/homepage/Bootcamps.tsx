@@ -1,6 +1,5 @@
 'use client'
 
-import Image from 'next/image'
 import Link from 'next/link'
 import { HomepageFieldsGroup } from '@/lib/homepage'
 
@@ -9,131 +8,129 @@ interface BootcampsProps {
 }
 
 export default function Bootcamps({ data }: BootcampsProps) {
+  const section = data?.featuredBootcamp
+  if (!section) return null
+
+  const cards = [
+    {
+      title: section.bootcamp1Title,
+      industry: section.bootcamp1Industry,
+      duration: section.bootcamp1Duration,
+      schedule: section.bootcamp1Schedule,
+      link: section.bootcamp1Link?.nodes?.[0]?.uri,
+      image: section.bootcamp1Image?.node,
+    },
+    {
+      title: section.bootcamp2Title,
+      industry: section.bootcamp2Industry,
+      duration: section.bootcamp2Duration,
+      schedule: section.bootcamp2Schedule,
+      link: section.bootcamp2Link?.nodes?.[0]?.uri,
+      image: section.bootcamp2Image?.node,
+    },
+    {
+      title: section.bootcamp3Title,
+      industry: section.bootcamp3Industry,
+      duration: section.bootcamp3Duration,
+      schedule: section.bootcamp3Schedule,
+      link: section.bootcamp3Link?.nodes?.[0]?.uri,
+      image: section.bootcamp3Image?.node,
+    },
+  ].filter((card) => card.title)
+
+  if (!cards.length) return null
+
+  const viewAllHref = section.featuredMainButtonUrl?.nodes?.[0]?.uri || '/programs'
+
   return (
     <section className="bootcamps">
       <div className="bootcamps__container">
-        <div className="bootcamps__header scroll-animate scroll-animate--slide-up">
-          <div>
-            <h2 className="bootcamps__heading">Featured Bootcamps</h2>
-            <p className="bootcamps__subheading">Grow on your own time with flexible learning options</p>
+        {/* HEADER */}
+        <div className="bootcamps__header scroll-animate scroll-animate--slide-up d-flex flex-column flex-md-row align-items-start align-items-md-end justify-content-between gap-3">
+          <div className="w-100">
+            <h2 className="component-heading mb-2">{section.featuredSectionHeading}</h2>
+            <p className="regular-para mb-0">{section.featuredPara}</p>
           </div>
-          <Link href="#all-programs" className="btn btn--outline">
-            View All Programs
-            <Image src="/assets/icon-arrow-right.svg" alt="" className="btn__icon" width={16} height={16} aria-hidden="true" />
+
+          <Link
+            href={viewAllHref}
+            className="btn--secondary btn d-none d-md-inline-flex flex-shrink-0"
+          >
+            {section.featuredMainButton || 'View All Programs'}
+            <i className="fa-solid fa-arrow-right ms-2" />
           </Link>
         </div>
-        <div className="bootcamps__grid">
-          <div className="bootcamp-card scroll-animate scroll-animate--slide-up scroll-animate--delay-1">
-            <div className="bootcamp-card__image-wrapper">
-              <div className="bootcamp-card__image-placeholder"></div>
-              <span className="bootcamp-card__badge">Healthcare</span>
+
+        {/* GRID */}
+        <div className="row g-3 mt-1">
+          {cards.map((card, index) => (
+            <div
+              key={index}
+              className={`col-12 col-md-6 col-lg-4 scroll-animate scroll-animate--slide-up scroll-animate--delay-${index + 1}`}
+            >
+              <article className="bbc-card card h-100">
+                {/* IMAGE */}
+                <div className="bbc-card__media">
+                  {card.image?.sourceUrl ? (
+                    <img
+                      src={card.image.sourceUrl}
+                      alt={card.image.altText ?? card.title ?? ''}
+                      className="bbc-card__img"
+                    />
+                  ) : (
+                    <div className="bbc-card__placeholder">Program</div>
+                  )}
+
+                  {card.industry && (
+                    <div className="bbc-card__badges">
+                      <span className="bbc-card__badge">{card.industry}</span>
+                    </div>
+                  )}
+                </div>
+
+                {/* BODY */}
+                <div className="card-body bbc-card__body px-4 py-3">
+                  <h3 className="bbc-card__title">{card.title}</h3>
+
+                  <div className="bbc-card__meta">
+                    {card.duration && (
+                      <span className="bbc-card__meta-item">
+                        <i className="fa-regular fa-calendar" />
+                        <span>{card.duration}</span>
+                      </span>
+                    )}
+
+                    {card.schedule && (
+                      <span className="bbc-card__meta-item">
+                        <i className="fa-regular fa-clock" />
+                        <span>{card.schedule}</span>
+                      </span>
+                    )}
+                  </div>
+
+                  <div className="bbc-card__footer">
+                    <Link
+                      href={card.link || '/programs'}
+                      className="btn--secondary btn w-100"
+                    >
+                      <span>{section.featuredCardsButton || 'Learn More'}</span>
+                      <i className="fa-solid fa-arrow-right" />
+                    </Link>
+                  </div>
+                </div>
+              </article>
             </div>
-            <div className="bootcamp-card__content">
-              <h3 className="bootcamp-card__title">Surgical Technologist Bootcamp</h3>
-              <div className="bootcamp-card__meta">
-                <span className="bootcamp-card__meta-item">
-                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                    <rect x="2" y="3" width="12" height="11" rx="1.5" stroke="currentColor" strokeWidth="1.2" fill="none" />
-                    <path d="M2 6h12" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" />
-                    <path d="M5 2v4M11 2v4" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" />
-                    <circle cx="6" cy="9.5" r="0.8" fill="currentColor" />
-                    <circle cx="8" cy="9.5" r="0.8" fill="currentColor" />
-                    <circle cx="10" cy="9.5" r="0.8" fill="currentColor" />
-                    <circle cx="6" cy="12" r="0.8" fill="currentColor" />
-                    <circle cx="8" cy="12" r="0.8" fill="currentColor" />
-                    <circle cx="10" cy="12" r="0.8" fill="currentColor" />
-                  </svg>
-                  16 Weeks
-                </span>
-                <span className="bootcamp-card__meta-item">
-                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                    <circle cx="8" cy="8" r="6" stroke="currentColor" strokeWidth="1.2" fill="none" />
-                    <path d="M8 4v4l3 2" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
-                  </svg>
-                  Full-Time
-                </span>
-              </div>
-              <Link href="#learn-more" className="btn btn--outline btn--small">
-                Learn More
-                <Image src="/assets/icon-arrow-right.svg" alt="" className="btn__icon" width={14} height={14} aria-hidden="true" />
-              </Link>
-            </div>
-          </div>
-          <div className="bootcamp-card scroll-animate scroll-animate--slide-up scroll-animate--delay-2">
-            <div className="bootcamp-card__image-wrapper">
-              <div className="bootcamp-card__image-placeholder"></div>
-              <span className="bootcamp-card__badge">Business</span>
-            </div>
-            <div className="bootcamp-card__content">
-              <h3 className="bootcamp-card__title">UI/UX Design</h3>
-              <div className="bootcamp-card__meta">
-                <span className="bootcamp-card__meta-item">
-                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                    <rect x="2" y="3" width="12" height="11" rx="1.5" stroke="currentColor" strokeWidth="1.2" fill="none" />
-                    <path d="M2 6h12" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" />
-                    <path d="M5 2v4M11 2v4" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" />
-                    <circle cx="6" cy="9.5" r="0.8" fill="currentColor" />
-                    <circle cx="8" cy="9.5" r="0.8" fill="currentColor" />
-                    <circle cx="10" cy="9.5" r="0.8" fill="currentColor" />
-                    <circle cx="6" cy="12" r="0.8" fill="currentColor" />
-                    <circle cx="8" cy="12" r="0.8" fill="currentColor" />
-                    <circle cx="10" cy="12" r="0.8" fill="currentColor" />
-                  </svg>
-                  24 Weeks
-                </span>
-                <span className="bootcamp-card__meta-item">
-                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                    <circle cx="8" cy="8" r="6" stroke="currentColor" strokeWidth="1.2" fill="none" />
-                    <path d="M8 4v4l3 2" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
-                  </svg>
-                  Part-Time
-                </span>
-              </div>
-              <Link href="#learn-more" className="btn btn--outline btn--small">
-                Learn More
-                <Image src="/assets/icon-arrow-right.svg" alt="" className="btn__icon" width={14} height={14} aria-hidden="true" />
-              </Link>
-            </div>
-          </div>
-          <div className="bootcamp-card scroll-animate scroll-animate--slide-up scroll-animate--delay-3">
-            <div className="bootcamp-card__image-wrapper">
-              <div className="bootcamp-card__image-placeholder"></div>
-              <span className="bootcamp-card__badge">Technology</span>
-            </div>
-            <div className="bootcamp-card__content">
-              <h3 className="bootcamp-card__title">Full Stack Development</h3>
-              <div className="bootcamp-card__meta">
-                <span className="bootcamp-card__meta-item">
-                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                    <rect x="2" y="3" width="12" height="11" rx="1.5" stroke="currentColor" strokeWidth="1.2" fill="none" />
-                    <path d="M2 6h12" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" />
-                    <path d="M5 2v4M11 2v4" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" />
-                    <circle cx="6" cy="9.5" r="0.8" fill="currentColor" />
-                    <circle cx="8" cy="9.5" r="0.8" fill="currentColor" />
-                    <circle cx="10" cy="9.5" r="0.8" fill="currentColor" />
-                    <circle cx="6" cy="12" r="0.8" fill="currentColor" />
-                    <circle cx="8" cy="12" r="0.8" fill="currentColor" />
-                    <circle cx="10" cy="12" r="0.8" fill="currentColor" />
-                  </svg>
-                  20 Weeks
-                </span>
-                <span className="bootcamp-card__meta-item">
-                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                    <circle cx="8" cy="8" r="6" stroke="currentColor" strokeWidth="1.2" fill="none" />
-                    <path d="M8 4v4l3 2" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
-                  </svg>
-                  Full-Time
-                </span>
-              </div>
-              <Link href="#learn-more" className="btn btn--outline btn--small">
-                Learn More
-                <Image src="/assets/icon-arrow-right.svg" alt="" className="btn__icon" width={14} height={14} aria-hidden="true" />
-              </Link>
-            </div>
-          </div>
+          ))}
+        </div>
+
+        {/* MOBILE CTA */}
+        <div className="d-md-none text-center mt-3">
+          <Link href={viewAllHref} className="btn--secondary btn mx-auto">
+            {section.featuredMainButton || 'View All Programs'}
+            <i className="fa-solid fa-arrow-right ms-2" />
+          </Link>
         </div>
       </div>
     </section>
   )
 }
-

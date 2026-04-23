@@ -1,0 +1,57 @@
+.what-we-do {
+    background: url(../public/assets/what-we-do-gradient.png);
+    background-position: center center;
+    background-size: cover;
+}
+
+.what-we-do-card-heading {
+    font-size: 24px;
+    color: var(--primary-blue);
+}
+
+.commitment-wrapper {
+    background: url(../public/assets/our-commitment-bg.png);
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+
+}
+
+.editorial-sec {
+    background: linear-gradient(90deg, #A1C4FD 0%, #C2E9FB 50%, #E0EAFC 100%);
+    border: 14px solid rgba(245, 245, 246, 1);
+    border-radius: 8px;
+}
+
+.editorial-img-side {
+    background: url(../public/assets/bottom-section-circle-shadow.png);
+    background-position: right;
+    background-repeat: no-repeat;
+}
+
+.orange-sec-heading {
+    font-size: 48px;
+    color: var(--primary-orange);
+}
+
+.editorial-link-line {
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--text-secondary);
+}
+
+@media (max-width: 768px) {
+    .orange-sec-heading {
+        font-size: 32px;
+    }
+
+    .editorial-link-line {
+        font-size: 20px;
+    }
+}
+
+@media (max-width: 576px) {
+    .orange-sec-heading {
+        font-size: 28px;
+    }
+}

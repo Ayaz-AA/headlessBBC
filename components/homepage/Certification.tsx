@@ -8,45 +8,90 @@ interface CertificationProps {
 }
 
 export default function Certification({ data }: CertificationProps) {
+  const section = data?.certificationProgram
+  if (!section) return null
+
+  const features = [
+    {
+      title: section.certificationProgramCard1Heading,
+      para: section.certificationProgramCard1Para,
+    },
+    {
+      title: section.certificationProgramCard2Heading,
+      para: section.certificationProgramCard2Para,
+    },
+    {
+      title: section.certificationProgramCard3Heading,
+      para: section.certificationProgramCard3Para,
+    },
+  ].filter(f => f.title || f.para)
+
+  const buttonUrl =
+    section.certificationButtonLink?.nodes?.[0]?.uri || '#'
+
+  const icon = section.certificationProgramIcon?.node
+
   return (
-    <section className="certification">
-      <div className="certification__container">
-        <h2 className="certification__heading scroll-animate scroll-animate--slide-up">What is a Certification Program?</h2>
-        <p className="certification__description scroll-animate scroll-animate--slide-up scroll-animate--delay-1">
-          A certification is a formal recognition awarded to students who demonstrate specific skills or knowledge. Every certification we provide validates your expertise and provides you with a competitive edge in the industry.
-        </p>
-        <div className="certification__features">
-          <div className="certification__feature scroll-animate scroll-animate--slide-up scroll-animate--delay-1">
-            <div className="certification__feature-icon">
-              <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M12 20L18 26L28 14" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-              </svg>
+    <section className="certification-section py-5">
+      <div className="container text-center">
+
+        {section.certificationProgramHeading && (
+          <h2 className="component-heading mb-3 scroll-animate scroll-animate--slide-up">
+            {section.certificationProgramHeading}
+          </h2>
+        )}
+
+        {section.certificationProgramPara && (
+          <p className="regular-para home-cert-para scroll-animate scroll-animate--slide-up scroll-animate--delay-1">
+            {section.certificationProgramPara}
+          </p>
+        )}
+
+        <div className="row justify-content-center g-5 mb-5">
+          {features.map((feature, index) => (
+            <div
+              key={index}
+              className={`col-md-4 scroll-animate scroll-animate--slide-up scroll-animate--delay-${index + 1}`}
+            >
+              <div className="d-flex flex-column align-items-center">
+
+                {/* ✅ Same image method as other components */}
+                {icon?.sourceUrl && (
+                  <div className="certification-icon mb-4">
+                    <img
+                      src={icon.sourceUrl}
+                      alt={icon.altText || ''}
+                      className="img-fluid"
+                    />
+                  </div>
+                )}
+
+                {feature.title && (
+                  <h5 className="home-page-inner-points mb-3">
+                    {feature.title}
+                  </h5>
+                )}
+
+                {feature.para && (
+                  <p className="regular-para mb-0">
+                    {feature.para}
+                  </p>
+                )}
+              </div>
             </div>
-            <h3 className="certification__feature-title">Comprehensive Standards</h3>
-            <p className="certification__feature-description">We make sure you&apos;re acknowledged for your in-depth knowledge, not just your surface-level information. Our certifications equip active learners with both theoretical knowledge and practical applications.</p>
-          </div>
-          <div className="certification__feature scroll-animate scroll-animate--slide-up scroll-animate--delay-2">
-            <div className="certification__feature-icon">
-              <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M12 20L18 26L28 14" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-              </svg>
-            </div>
-            <h3 className="certification__feature-title">Rigorous Evaluation Process</h3>
-            <p className="certification__feature-description">Our certifications stand out due to the meticulous assessment. Backed by proficient examiners and a cohesive system of evaluation, each certification helps improve your earning power and sets you apart in employers&apos; eyes.</p>
-          </div>
-          <div className="certification__feature scroll-animate scroll-animate--slide-up scroll-animate--delay-3">
-            <div className="certification__feature-icon">
-              <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M12 20L18 26L28 14" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-              </svg>
-            </div>
-            <h3 className="certification__feature-title">Industry-Relevant Credentials</h3>
-            <p className="certification__feature-description">Ditch generic qualifications. Our certifications are tailored for today&apos;s market needs, ensuring that you are recognized as a specialist in your domain. You&apos;ll command respect for your specialized skill set in your profession.</p>
-          </div>
+          ))}
         </div>
-        <Link href="#all-certifications" className="btn btn--primary scroll-animate scroll-animate--slide-up scroll-animate--delay-4">View All Certifications</Link>
+
+        {section.certificationButtonText && (
+          <Link
+            href={buttonUrl}
+            className="btn btn--primary scroll-animate scroll-animate--slide-up scroll-animate--delay-4"
+          >
+            {section.certificationButtonText}
+          </Link>
+        )}
+
       </div>
     </section>
   )
 }
-

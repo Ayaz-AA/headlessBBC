@@ -1,0 +1,125 @@
+.team-section {
+    background-color: rgba(249, 249, 249, 1);
+    border-radius: 8px;
+}
+
+.team-intro {
+    width: 80%;
+    margin: auto;
+}
+
+.hero-bg {
+    background: url(../public/assets/bg.png);
+    background-position: center right;
+    background-size: cover;
+}
+
+/* .......team card....... */
+/* ---- TEAM CARD (EXACT DESIGN) ---- */
+
+.team-card {
+    width: 324px;
+    height: 590px;
+    margin: 0 auto;
+
+    background: #fff;
+    border: 1px solid rgba(229, 231, 235, 0.85);
+    border-radius: 999px;
+    box-shadow: 0px 18px 38px rgba(16, 24, 40, 0.08);
+
+    position: relative;
+    overflow: hidden;
+
+    /* content starts a bit lower because image is large */
+    padding: 340px 20px 90px;
+
+    text-align: center !important;
+}
+
+/* IMAGE (BIG + TOP) */
+.team-card__image-wrapper {
+    position: absolute;
+    top: 36px;
+    left: 50%;
+    transform: translateX(-50%);
+
+    width: 275px;
+    height: 275px;
+}
+
+.team-card__image {
+    /* width: 275px;
+  height: 275px; */
+
+    border-radius: 999px;
+    object-fit: cover;
+
+    /* thick white ring */
+    border: 8px solid #fff;
+
+    /* soft image shadow */
+    box-shadow: 0px 16px 30px rgba(16, 24, 40, 0.12);
+}
+
+/* LINKEDIN ICON (BOTTOM-CENTER) */
+.team-card__social-badge {
+    position: absolute;
+    left: 50%;
+    bottom: 42px;
+    transform: translateX(-50%);
+    color: white;
+    width: 44px;
+    height: 44px;
+    border-radius: 999px;
+
+    background: rgba(54, 65, 83, 1);
+}
+
+
+/* TEXT CONTENT */
+.team-card__body {
+    width: 100%;
+}
+
+.team-card__name {
+    font-size: 32px;
+    font-weight: 700;
+    color: var(--primary-blue);
+    margin: 0 0 6px;
+}
+
+.team-card__role {
+    font-size: 22px;
+    color: rgba(77, 77, 77, 1);
+    max-width: 250px;
+    margin: 0 auto;
+    line-height: 1.5;
+    text-align: center;
+}
+
+/* COMPANY LOGO */
+.team-card__company {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.team-card__company-logo {
+    max-height: 49px;
+    width: auto;
+    object-fit: contain;
+}
+
+@media (max-width: 768px) {
+    .team-card__name {
+        font-size: 24px;
+    }
+
+    .team-card__role {
+        font-size: 18px;
+    }
+
+    .team-intro {
+        width: 100%;
+    }
+}

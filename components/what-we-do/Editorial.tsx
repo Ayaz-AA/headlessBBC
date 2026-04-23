@@ -24,14 +24,14 @@ export default function Editorial({
             <div className="row align-items-center py-5 editorial-img-side">
                 <div className="col-lg-7 ">
                     {heading && <h2 className="orange-sec-heading">{heading}</h2>}
-                    {paragraph && <p className="mt-3 text-black">{paragraph}</p>}
-                    <div className="d-flex align-items-center fw-semibold ">
-                        <div className="text-muted"> {linkLine && <span>{linkLine}</span>}</div>
-                        <div>{linkText && (
-                            <a href="#" className="orange-clr ms-1">
+                    {paragraph && <p className="mt-3 regular-para text-black">{paragraph}</p>}
+                    <div className=" editorial-link-line ">
+                        <span className=""> {linkLine && <span>{linkLine}</span>}</span>
+                        <span>{linkText && (
+                            <a href="/our-editorial-policy" className="orange-clr ms-1">
                                 {linkText}
                             </a>
-                        )}</div></div>
+                        )}</span></div>
                 </div>
 
                 <div className="col-lg-4 offset-lg-1 text-lg-end mt-4 mt-lg-0 ">

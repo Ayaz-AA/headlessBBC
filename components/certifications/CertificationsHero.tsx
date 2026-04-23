@@ -40,18 +40,30 @@ export default function CertificationsHero({
     showAllIndustriesOption = true,
 }: Props) {
     return (
-        <section className="team-hero py-5 programs-hero">
+        <section className="team-hero py-5  hero-background">
             <div className="container text-center">
                 {/* CMS HERO */}
                 {hero?.heroLabel && (
-                    <div className="team-badge badge d-inline-flex align-items-center mb-3">
+                    <div className="  badge d-inline-flex align-items-center mb-3">
                         <img src="/assets/Icon-badge.png" alt="icon" className="me-2" />
                         <span>{hero.heroLabel}</span>
                     </div>
                 )}
 
-                {hero?.heroHeading && (
-                    <h1 className="team-hero__titles mb-3">{hero.heroHeading}</h1>
+                {(hero?.heroHeadingLine1 || hero?.heroHeadingLine2) && (
+                    <h1 className="hero__titles mb-3">
+                        {hero.heroHeadingLine1 && (
+                            <span className="hero__title-line1">
+                                {hero.heroHeadingLine1}{' '}
+                            </span>
+                        )}
+
+                        {hero.heroHeadingLine2 && (
+                            <span className="hero__title-line2">
+                                {hero.heroHeadingLine2}
+                            </span>
+                        )}
+                    </h1>
                 )}
 
                 {hero?.heroParagraph && (

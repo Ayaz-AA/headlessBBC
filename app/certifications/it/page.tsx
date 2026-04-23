@@ -3,13 +3,15 @@ import Footer from "@/components/global/Footer";
 import CertificationsPage from "@/components/certifications/CertificationsPage";
 import HashScroller from "@/components/certifications/HashScroller";
 import { getCertifications, getCertificationsHero } from "@/lib/certifications";
+import { getGlobalMatchMeCta } from "@/lib/globalCtas";
 
 export const revalidate = 300;
 
 export default async function CertificationsItPage() {
-    const [certs, hero] = await Promise.all([
+    const [certs, hero, matchMeCta] = await Promise.all([
         getCertifications(200),
         getCertificationsHero("it-certifications"),
+        getGlobalMatchMeCta(),
     ]);
 
     return (
@@ -25,6 +27,7 @@ export default async function CertificationsItPage() {
                 initialIndustrySlug="it"
                 lockedIndustry
                 showAllIndustriesOption={false}
+                matchMeCta={matchMeCta}
             />
 
             <Footer />

@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import BaseHero from "@/components/ui/BaseHero";
 import SelectDropdown, { SelectOption } from "@/components/programs/SelectDropdown";
 
 type HeroData = {
@@ -19,7 +20,6 @@ type Props = {
     overrideLabel?: string;
     overrideTitleLine2?: string;
 
-    // Filter props
     industries: SelectOption[];
     industrySlug: string;
     onIndustryChange: (v: string) => void;
@@ -46,106 +46,86 @@ export default function BlogHero({
     const ctaHref = hero.heroCtaHref || "#";
 
     return (
-        <section className="team-hero py-5 hero-bg programs-hero">
-            <div className="container d-flex flex-lg-row flex-column gap-4">
-                {/* Left content */}
-                <div className="col-lg-8 col-12">
-                    {(overrideLabel || hero.heroLabel) && (
-                        <div className="team-badge badge d-flex justify-content-between align-items-center mb-3">
-                            <div className="me-2">
-                                {/* eslint-disable-next-line @next/next/no-img-element */}
-                                <img src="/assets/Icon-badge.png" alt="icon" />
-                            </div>
-                            <span>{overrideLabel || hero.heroLabel}</span>
-                        </div>
-                    )}
-
-                    <h1 className="team-hero__titles mb-3">
-                        {hero.titleLine1 && (
-                            <div className="team-hero__title-line1">{hero.titleLine1}</div>
-                        )}
-                        {(overrideTitleLine2 || hero.titleLine2) && (
-                            <span className="team-hero__title-line2">
-                                {overrideTitleLine2 || hero.titleLine2}
-                            </span>
-                        )}
-                    </h1>
-
-                    {hero.heroDescription && (
-                        <p className="regular-para mb-4">{hero.heroDescription}</p>
-                    )}
-
-                    {hero.heroCtaLabel && hero.heroCtaHref && (
-                        <div className="mb-4">
-                            <Link href={ctaHref} className="btn plp-featuredCard__btn">
-                                {hero.heroCtaLabel}{" "}
-                                <i className="fa-solid fa-arrow-right" aria-hidden="true" />
-                            </Link>
-                        </div>
-                    )}
-
+        <BaseHero
+            label={overrideLabel || hero.heroLabel || ""}
+            titleLine1={hero.titleLine1 || ""}
+            titleLine2={overrideTitleLine2 || hero.titleLine2 || ""}
+            intro={hero.heroDescription || ""}
+            imageUrl={hero.heroImageUrl || ""}
+            imageAlt={hero.heroImageAlt || ""}
+            layout="8-4"
+            className=" hero-background"
+            actions={
+                hero.heroCtaLabel && hero.heroCtaHref ? (
+                    <Link href={ctaHref} className="btn btn--secondary hero-btn">
+                        {hero.heroCtaLabel}
+                        <i className="fa-solid fa-arrow-right ms-2" />
+                    </Link>
+                ) : null
+            }
+        >
+            {/* FILTER BAR */}
+            <div className="custom-filterbar-card mt-4">
+                <div className="custom-filterbar-head mb-0">
+                    <div className="custom-filterbar-icon">
+                        <img
+                            src="/assets/filter-icon.png"
+                            alt=""
+                            height="20"
+                            width="20"
+                        />
+                    </div>
                     <div>
-                        <div className="programs-filterbar-card">
-                            <div className="programs-filterbar-head mb-0">
-                                <div className="programs-filterbar-icon" aria-hidden="true">
-                                    <img src="/assets/filter-icon.png" alt="" height="20.41" width="19.5" />
-                                </div>
-                                <div>
-                                    <div className="programs-filterbar-title">Filter Blogs</div>
-                                    <div className="programs-filterbar-subtitle">I&apos;m looking for Blogs</div>
-                                </div>
-                            </div>
-
-                            <div className="programs-filterbar-controls pb-4">
-                                <div className="programs-filterbar-field">
-                                    <div className="programs-filterbar-label">Industry</div>
-                                    <SelectDropdown
-                                        label=""
-                                        value={industrySlug}
-                                        options={industries}
-                                        placeholder="All Industries"
-                                        onChange={(v) => {
-                                            onIndustryChange(v);
-                                            onTopicChange(""); // reset topic when industry changes
-                                        }}
-                                    />
-                                </div>
-
-                                <div className="programs-filterbar-field">
-                                    <div className="programs-filterbar-label">Topics</div>
-                                    <SelectDropdown
-                                        label=""
-                                        value={topicSlug}
-                                        options={topicOptions}
-                                        disabled={industrySlug === "all"}
-                                        placeholder="All Topics"
-                                        onChange={onTopicChange}
-                                    />
-                                </div>
-
-                                <button
-                                    type="button"
-                                    className="programs-filterbar-btn"
-                                    onClick={onSearch}
-                                >
-                                    <span className="programs-filterbar-btn-icon" aria-hidden="true">
-                                        <i className="fa-solid fa-magnifying-glass"></i>
-                                    </span>
-                                    <span>Search here</span>
-                                </button>
-                            </div>
+                        <div className="custom-filterbar-title">
+                            Filter Blogs
+                        </div>
+                        <div className="custom-filterbar-subtitle">
+                            I&apos;m looking for Blogs
                         </div>
                     </div>
                 </div>
 
-                {/* Right image */}
-                <div className="col-lg-4 col-12">
-                    {hero.heroImageUrl && (
-                        // eslint-disable-next-line @next/next/no-img-element
-                        <img src={hero.heroImageUrl} alt={hero.heroImageAlt || ""} />
-                    )}
+                <div className="custom-filterbar-controls pb-4">
+                    <div className="custom-filterbar-field">
+                        <div className="custom-filterbar-label">
+                            Industry
+                        </div>
+                        <SelectDropdown
+                            label=""
+                            value={industrySlug}
+                            options={industries}
+                            placeholder="All Industries"
+                            onChange={(v) => {
+                                onIndustryChange(v);
+                                onTopicChange("");
+                            }}
+                        />
+                    </div>
+
+                    <div className="custom-filterbar-field">
+                        <div className="custom-filterbar-label">
+                            Topics
+                        </div>
+                        <SelectDropdown
+                            label=""
+                            value={topicSlug}
+                            options={topicOptions}
+                            disabled={industrySlug === "all"}
+                            placeholder="All Topics"
+                            onChange={onTopicChange}
+                        />
+                    </div>
+
+                    <button
+                        type="button"
+                        className="custom-filterbar-btn"
+                        onClick={onSearch}
+                    >
+                        <i className="fa-solid fa-magnifying-glass me-2" />
+                        Search here
+                    </button>
                 </div>
             </div>
-        </section>
+        </BaseHero>
     );
 }

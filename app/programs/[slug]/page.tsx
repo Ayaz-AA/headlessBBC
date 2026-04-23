@@ -45,24 +45,24 @@ export default async function RolePlpPage({
 
             <main>
                 {/* HERO + FILTER BAR */}
-                <section className="hero programs-hero hero-bg">
-                    <div className="container text-center">
+                <section className="hero  hero-background ">
+                    <div className="container text-center py-5">
                         {vm.heroLabel ? (
-                            <div className="badge team-badge mx-auto">{vm.heroLabel}</div>
+                            <div className="badge   mx-auto">{vm.heroLabel}</div>
                         ) : null}
 
-                        <h1 className="team-hero__titles">
-                            <span className="team-hero__title-line1">{vm.heroTitleLine1 ?? vm.name}</span>{" "}
+                        <h1 className="hero__titles">
+                            <span className="hero__title-line1">{vm.heroTitleLine1 ?? vm.name}</span>{" "}
                             {vm.heroTitleLine2 ? (
-                                <span className="team-hero__title-line2">{vm.heroTitleLine2}</span>
+                                <span className="hero__title-line2">{vm.heroTitleLine2}</span>
                             ) : null}{" "}
                             {vm.heroTitleLine3 ? (
-                                <span className="team-hero__title-line1">{vm.heroTitleLine3}</span>
+                                <span className="hero__title-line1">{vm.heroTitleLine3}</span>
                             ) : null}
                         </h1>
 
                         {vm.heroDescription ? (
-                            <p className="team-hero__intro mx-auto">{vm.heroDescription}</p>
+                            <p className="hero__intro mx-auto">{vm.heroDescription}</p>
                         ) : null}
 
                         <div className="row justify-content-center mt-4">
@@ -82,9 +82,9 @@ export default async function RolePlpPage({
                 <section className="container py-5">
                     {/* Body heading/para centered like design */}
                     <div className="text-center plp-bodyIntro">
-                        <div className="badge team-badge mx-auto">Programs</div>
+                        <div className="badge   mx-auto">Programs</div>
 
-                        {vm.bodyHeading ? <h2 className="team-intro-heading mt-3">{vm.bodyHeading}</h2> : null}
+                        {vm.bodyHeading ? <h2 className="component-heading mt-3">{vm.bodyHeading}</h2> : null}
                         {vm.bodyPara ? (
                             <p className="regular-para mt-2 mx-auto plp-bodyIntro__para">{vm.bodyPara}</p>
                         ) : null}
@@ -92,8 +92,8 @@ export default async function RolePlpPage({
 
                     {/* Featured Programs section */}
                     <div className="text-center mt-5">
-                        <div className="badge team-badge mx-auto">Featured Programs</div>
-                        <h2 className="plp-featuredTitle mt-3">Featured Programs</h2>
+                        <div className="badge   mx-auto">Featured Programs</div>
+                        <h2 className="component-heading mt-3">Featured Programs</h2>
                     </div>
 
                     {/* ✅ ONLY THIS PART CHANGES */}

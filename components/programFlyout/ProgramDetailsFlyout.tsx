@@ -125,7 +125,25 @@ export default function ProgramDetailsFlyout({
 
                             {/* Intro paragraph */}
                             {intro ? <p className="flyout-intro">{intro}</p> : null}
-
+                            {/* ✅ MOBILE FORM (only visible on mobile) */}
+                            <div className="d-block d-lg-none my-4">
+                                <div className="pdp-sidebar">
+                                    <div className="pdp-enroll">
+                                        <div className="pdp-enroll__body">
+                                            <HubSpotForm
+                                                portalId={HUBSPOT.portalId}
+                                                formId={HUBSPOT.formId}
+                                                region={HUBSPOT.region}
+                                                portfolio={program.providerName ?? ""}
+                                                learningInterest={program.programTitle ?? ""}
+                                                portfolioFieldName="portfolio"
+                                                learningInterestFieldName="learning_interest"
+                                                instanceId="flyout-mobile"
+                                            />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                             {/* Accordions - NONE open by default */}
                             <div className="flyout-accordionList">
                                 {/* ABOUT */}
@@ -430,7 +448,7 @@ export default function ProgramDetailsFlyout({
                         </div>
 
                         {/* RIGHT SIDEBAR (HubSpot form instead of placeholder) */}
-                        <aside className="flyout-sidebar">
+                        <aside className="flyout-sidebar d-none d-lg-block">
                             <div className="pdp-sidebar">
                                 <div className="pdp-enroll">
                                     <div className="pdp-enroll__body">

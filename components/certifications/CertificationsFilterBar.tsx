@@ -47,22 +47,22 @@ export default function CertificationsFilterBar({
         ];
 
     return (
-        <div className="programs-filterbar-card">
+        <div className="custom-filterbar-card">
             {/* top header row */}
-            <div className="programs-filterbar-head mb-0">
-                <div className="programs-filterbar-icon" aria-hidden="true">
+            <div className="custom-filterbar-head mb-0">
+                <div className="custom-filterbar-icon" aria-hidden="true">
                     <img src="/assets/filter-icon.png" alt="" height="20.41" width="19.5" />
                 </div>
                 <div>
-                    <div className="programs-filterbar-title text-start">Filter Certifications</div>
-                    <div className="programs-filterbar-subtitle">I’m looking for Certifications</div>
+                    <div className="custom-filterbar-title text-start">Filter Certifications</div>
+                    <div className="custom-filterbar-subtitle">I’m looking for Certifications</div>
                 </div>
             </div>
 
             {/* controls */}
-            <div className="programs-filterbar-controls pb-4">
-                <div className="programs-filterbar-field">
-                    <div className="programs-filterbar-label">Industry</div>
+            <div className="custom-filterbar-controls pb-4">
+                <div className="custom-filterbar-field">
+                    <div className="custom-filterbar-label">Industry</div>
                     <SelectDropdown
                         label=""
                         value={industrySlug}
@@ -76,8 +76,8 @@ export default function CertificationsFilterBar({
                     />
                 </div>
 
-                <div className="programs-filterbar-field">
-                    <div className="programs-filterbar-label">Certifications</div>
+                <div className="custom-filterbar-field">
+                    <div className="custom-filterbar-label">Certifications</div>
                     <SelectDropdown
                         label=""
                         value={certificationSlug}
@@ -88,8 +88,8 @@ export default function CertificationsFilterBar({
                     />
                 </div>
 
-                <button type="button" className="programs-filterbar-btn" onClick={onSearch}>
-                    <span className="programs-filterbar-btn-icon" aria-hidden="true">
+                <button type="button" className="custom-filterbar-btn" onClick={onSearch}>
+                    <span className="custom-filterbar-btn-icon" aria-hidden="true">
                         <i className="fa-solid fa-magnifying-glass"></i>
                     </span>
                     <span>Search here</span>

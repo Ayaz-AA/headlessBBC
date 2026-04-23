@@ -17,7 +17,7 @@ export default function CoreValues({ mainHeading, blocks }: CoreValuesProps) {
 
     return (
         <section className="container">
-            {mainHeading && <h2 className="mb-4 team-intro-heading">{mainHeading}</h2>}
+            {mainHeading && <h2 className="mb-4 component-heading">{mainHeading}</h2>}
 
             {blocks.map((block, idx) => {
                 // idx = 0 → section 1, idx = 1 → section 2, etc.
@@ -53,7 +53,7 @@ export default function CoreValues({ mainHeading, blocks }: CoreValuesProps) {
                                 (isEvenSection ? 'order-lg-2' : 'order-lg-1')
                             }
                         >
-                            {block.heading && <h3 className="h4 text-muted">{block.heading}</h3>}
+                            {block.heading && <h3 className="mt-3 mt-lg-0 core-values-heading">{block.heading}</h3>}
                             {block.para && <p className="mt-2 mb-0 regular-para ">{block.para}</p>}
                         </div>
                     </div>

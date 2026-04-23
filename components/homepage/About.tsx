@@ -22,20 +22,20 @@ export default function About({ data }: AboutProps) {
   const imageAlt = about?.aboutUsImage?.node?.altText || 'About Us'
 
   return (
-    <section className="about py-5">
-      <div className="container">
+    <section className="my-5">
+      <div className="container  py-5">
         <div className="row align-items-center g-4">
           {/* LEFT */}
           <div className="col-12 col-lg-7">
 
-            <div className=" badge d-flex justify-content-between align-items-center mb-3 aboutus-badge">
+            <div className=" badge d-flex justify-content-between align-items-center mb-3 colored-badge">
               <div className="me-2">
                 <img src="/assets/Icon-badge.png" alt="icon" />
               </div>
               <span>About Us</span>
             </div>
 
-            <h2 className="team-intro-heading mb-3">{heading}</h2>
+            <h2 className="component-heading mb-3">{heading}</h2>
 
             <div className="regular-para">
               {paragraphs.map((p, idx) => (
@@ -46,7 +46,7 @@ export default function About({ data }: AboutProps) {
           </div>
 
           {/* RIGHT */}
-          <div className="col-12 col-lg-5">
+          {/* <div className="col-12 col-lg-5 text-end d-flex justify-content-end">
 
 
             <img
@@ -56,6 +56,18 @@ export default function About({ data }: AboutProps) {
               loading="lazy"
               style={{ height: 'auto' }}
             />
+          </div> */}
+          <div className="col-12 col-lg-5 d-flex justify-content-lg-end justify-content-center ">
+            <div className="about-image-wrapper mt-0 mt-md-5">
+              <div className="about-glow"></div>
+
+              <img
+                src={imageUrl}
+                alt={imageAlt}
+                className="img-fluid about-image"
+                loading="lazy"
+              />
+            </div>
           </div>
         </div>
       </div>

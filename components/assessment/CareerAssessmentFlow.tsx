@@ -75,35 +75,35 @@ function MatchCard({ program }: { program: ProgramVM }) {
     const providerAlt = program.provider?.logoAlt ?? program.provider?.name ?? program.title;
 
     return (
-        <article className="program-card card h-100">
+        <article className="bbc-card card h-100">
             {/* ✅ Provider logo instead of program image */}
-            <div className="program-card__providerHeader">
+            <div className="bbc-card__providerHeader">
                 {providerLogo ? (
                     <img
                         src={providerLogo}
                         alt={providerAlt}
-                        className="program-card__providerLogo"
+                        className="bbc-card__providerLogo"
                         loading="lazy"
                     />
                 ) : (
-                    <div className="program-card__providerFallback">
+                    <div className="bbc-card__providerFallback">
                         {program.provider?.name ?? "Provider"}
                     </div>
                 )}
             </div>
 
-            <div className="card-body program-card__body">
-                <h3 className="program-card__title">{program.title}</h3>
+            <div className="card-body bbc-card__body">
+                <h3 className="bbc-card__title">{program.title}</h3>
 
-                <div className="program-card__meta">
+                <div className="bbc-card__meta">
                     {program.programLength && (
-                        <span className="program-card__meta-item">
+                        <span className="bbc-card__meta-item">
                             <i className="fa-regular fa-calendar" aria-hidden="true" />
                             <span>{program.programLength}</span>
                         </span>
                     )}
                     {program.programType && (
-                        <span className="program-card__meta-item">
+                        <span className="bbc-card__meta-item">
                             <i className="fa-regular fa-clock" aria-hidden="true" />
                             <span>{program.programType}</span>
                         </span>
@@ -112,13 +112,13 @@ function MatchCard({ program }: { program: ProgramVM }) {
 
                 {/* ✅ PDP hero short description */}
                 {program.heroShortDescription ? (
-                    <p className="program-card__desc">{program.heroShortDescription}</p>
+                    <p className="bbc-card__desc">{program.heroShortDescription}</p>
                 ) : null}
 
-                <div className="program-card__footer">
+                <div className="bbc-card__footer">
                     <Link
                         href={`/program/${program.slug}`}
-                        className="program-card__btn btn btn-outline-primary w-100"
+                        className="btn--secondary btn btn-outline-primary w-100"
                     >
                         <span>Learn More</span>
                         <i className="fa-solid fa-arrow-right" aria-hidden="true" />
@@ -277,7 +277,7 @@ export default function CareerAssessmentFlow({ programs, industries, copy }: Pro
                         <ProgressBars step={1} />
 
                         {!!copy?.step1Heading && <h1 className="bb-assess-title">{copy.step1Heading}</h1>}
-                        {!!copy?.step1Paragraph && <p className="regular-para text-center mb-5">{copy.step1Paragraph}</p>}
+                        {!!copy?.step1Paragraph && <p className="bb-assess-desc text-center mb-5">{copy.step1Paragraph}</p>}
 
                         <div className="bb-assess-list">
                             {industries.map((ind) => {
@@ -331,7 +331,7 @@ export default function CareerAssessmentFlow({ programs, industries, copy }: Pro
                         <ProgressBars step={2} />
 
                         {!!copy?.step2Heading && <h2 className="bb-assess-title">{copy.step2Heading}</h2>}
-                        {!!copy?.step2Paragraph && <p className="regular-para text-center mb-5">{copy.step2Paragraph}</p>}
+                        {!!copy?.step2Paragraph && <p className="bb-assess-desc text-center mb-5">{copy.step2Paragraph}</p>}
 
                         <div className="bb-assess-chipsWrap">
                             {roleOptions.map((role) => {
@@ -388,7 +388,7 @@ export default function CareerAssessmentFlow({ programs, industries, copy }: Pro
                         <ProgressBars step={3} />
 
                         {!!copy?.step3Heading && <h2 className="bb-assess-title">{copy.step3Heading}</h2>}
-                        {!!copy?.step3Paragraph && <p className="regular-para text-center mb-5">{copy.step3Paragraph}</p>}
+                        {!!copy?.step3Paragraph && <p className="bb-assess-desc text-center mb-5">{copy.step3Paragraph}</p>}
 
                         <div className="bb-assess-list">
                             {paceOptions.map((opt) => {
@@ -424,7 +424,7 @@ export default function CareerAssessmentFlow({ programs, industries, copy }: Pro
                         <ProgressBars step={4} />
 
                         {!!copy?.step4Heading && <h2 className="bb-assess-title">{copy.step4Heading}</h2>}
-                        {!!copy?.step4Paragraph && <p className="regular-para text-center mb-5">{copy.step4Paragraph}</p>}
+                        {!!copy?.step4Paragraph && <p className="bb-assess-desc text-center mb-5">{copy.step4Paragraph}</p>}
 
                         <div className="bb-assess-list">
                             {/* YES */}
@@ -486,7 +486,7 @@ export default function CareerAssessmentFlow({ programs, industries, copy }: Pro
                         <ProgressBars step={5} />
 
                         {!!copy?.step5Heading && <h2 className="bb-assess-title">{copy.step5Heading}</h2>}
-                        {!!copy?.step5Paragraph && <p className="regular-para text-center mb-3">{copy.step5Paragraph}</p>}
+                        {!!copy?.step5Paragraph && <p className="bb-assess-desc text-center mb-3">{copy.step5Paragraph}</p>}
 
                         {/* ✅ small privacy note (your styled version) */}
                         <div className="bb-assess-note mb-3">
@@ -542,7 +542,7 @@ export default function CareerAssessmentFlow({ programs, industries, copy }: Pro
                         {!submitted ? (
                             <>
                                 {!!copy?.step6Heading && <h2 className="bb-assess-title">{copy.step6Heading}</h2>}
-                                {!!copy?.step6Paragraph && <p className="regular-para text-center mb-3">{copy.step6Paragraph}</p>}
+                                {!!copy?.step6Paragraph && <p className="bb-assess-desc text-center mb-3">{copy.step6Paragraph}</p>}
 
                                 {/* ✅ reuse the same privacy note styling */}
                                 <div className="bb-assess-note mb-3">

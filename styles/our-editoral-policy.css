@@ -1,0 +1,205 @@
+/* .crucial-wrapper {
+    background: url(../public/assets/crucial-wrapper.png);
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    border-radius: 27px;
+    border: 7px solid white;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.crucial-heading {
+    font-size: 32px;
+    width: 75%;
+}
+
+.crucial-section-desktop {
+    border-radius: 20px;
+    background: linear-gradient(90deg, rgba(255, 81, 47, 0.81) 0%, rgba(240, 152, 25, 0.81) 100%);
+    width: 704px;
+    height: 267px;
+} */
+.editorial-hero {
+    background: rgba(241, 246, 255, 1) !important;
+    border-radius: 8px;
+}
+
+.reviewer-network-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 0.75rem 1rem;
+    margin: 1.5rem 0;
+}
+
+.reviewer-network-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1rem;
+    border-radius: 999px;
+    background: #f7f3f2;
+    color: #2a2a2a;
+    font-weight: 400;
+    font-size: 14px;
+}
+
+.reviewer-network-dot {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: #2563eb;
+    flex-shrink: 0;
+}
+
+.highlighted-para {
+    background: linear-gradient(135deg, #EFF6FF 0%, #FFFFFF 100%);
+    border: 0.89px solid rgba(219, 234, 254, 1);
+    border-radius: 20px;
+}
+
+
+
+
+.connect-strip {
+    margin-top: 3rem;
+    padding: 2.5rem 0;
+    background: linear-gradient(90deg, #ff512f 0%, #f09819 100%);
+}
+
+.connect-strip__inner {
+    border-radius: 8px;
+    padding: 1.75rem 2.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+}
+
+.connect-strip__heading {
+    margin: 0;
+    color: #ffffff;
+    font-size: 40px;
+    font-weight: 700;
+}
+
+.connect-strip__divider {
+    width: 1px;
+    height: 48px;
+    background-color: rgba(255, 255, 255, 0.6);
+}
+
+.connect-strip__icons {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.connect-strip__icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background-color: #023659;
+    transition: transform 0.15s ease-out, box-shadow 0.15s ease-out, background-color 0.15s ease-out;
+}
+
+.connect-strip__icon img {
+    width: 20px;
+    height: 20px;
+}
+
+.connect-strip__icon:hover {
+    background-color: #035183;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+}
+
+.crucial-wrapper {
+    background: url(../public/assets/crucial-wrapper.png);
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    border-radius: 27px;
+    border: 7px solid white;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+
+    display: flex;
+    align-items: center;
+    min-height: 420px;
+}
+
+.crucial-heading {
+    font-size: 32px;
+    width: 75%;
+}
+
+.crucial-section-desktop {
+    border-radius: 20px;
+    background: linear-gradient(90deg, rgba(255, 81, 47, 0.81) 0%, rgba(240, 152, 25, 0.81) 100%);
+    width: 100%;
+    max-width: 704px;
+    min-height: 267px;
+}
+
+.core-values-heading {
+    font-size: 32px;
+    font-weight: 700;
+    color: rgba(77, 77, 77, 1);
+}
+
+@media (max-width: 768px) {
+    .crucial-wrapper {
+        min-height: 0;
+        border-width: 4px;
+        border-radius: 20px;
+        padding: 16px !important;
+        align-items: flex-start;
+    }
+
+    .crucial-section-desktop {
+        width: 100%;
+        max-width: none;
+        min-height: auto;
+        border-radius: 18px;
+    }
+
+    .crucial-heading {
+        width: 100%;
+    }
+
+    .core-values-heading {
+        font-size: 24px;
+    }
+
+    .connect-strip__heading {
+        font-size: 32px;
+    }
+}
+
+@media (max-width: 576px) {
+    .core-values-heading {
+        font-size: 18px;
+    }
+
+    .connect-strip__heading {
+        font-size: 20px;
+    }
+}
+
+@media (max-width: 768px) {
+    .connect-strip__inner {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .connect-strip__heading {
+        font-size: 28px;
+        margin-bottom: 0.75rem;
+    }
+
+    .connect-strip__divider {
+        display: none;
+    }
+}

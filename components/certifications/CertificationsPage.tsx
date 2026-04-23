@@ -4,6 +4,7 @@ import { useEffect, useMemo, useState } from "react";
 import type { CertificationVM, CertificationsHeroVM } from "@/lib/certifications";
 import CertificationsHero from "./CertificationsHero";
 import CertificationsGrid from "./CertificationsGrid";
+import MatchMeCta from "../global/MatchMeCta";
 
 type Props = {
     hero?: CertificationsHeroVM | null;
@@ -12,6 +13,7 @@ type Props = {
     initialIndustrySlug?: string; // "healthcare" | "it"
     showAllIndustriesOption?: boolean; // default true
     lockedIndustry?: boolean; // default false
+    matchMeCta?: any;
 };
 
 const PAGE_SIZE = 9;
@@ -22,6 +24,7 @@ export default function CertificationsPage({
     initialIndustrySlug,
     showAllIndustriesOption = true,
     lockedIndustry = false,
+    matchMeCta,
 }: Props) {
     // UI state
     const [industrySlug, setIndustrySlug] = useState<string>(initialIndustrySlug ?? "all");
@@ -199,7 +202,7 @@ export default function CertificationsPage({
                     <div className="text-center mt-4">
                         <button
                             type="button"
-                            className="btn btn-outline-primary"
+                            className="btn btn--primary"
                             onClick={() => setVisibleCount((n) => n + PAGE_SIZE)}
                         >
                             Load More
@@ -207,6 +210,16 @@ export default function CertificationsPage({
                     </div>
                 )}
             </div>
+            {matchMeCta?.enabled && (
+                <MatchMeCta
+                    title={matchMeCta.title}
+                    description={matchMeCta.description}
+                    ctaLabel={matchMeCta.buttonLabel}
+                    ctaHref={matchMeCta.buttonHref}
+                    imageSrc={matchMeCta.imageUrl}
+                    imageAlt={matchMeCta.imageAlt}
+                />
+            )}
         </main>
     );
 }

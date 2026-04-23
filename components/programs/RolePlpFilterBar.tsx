@@ -41,20 +41,20 @@ export default function RolePlpFilterBar({
     }, [roles, industrySlug]);
 
     return (
-        <div className="programs-filterbar-card">
-            <div className="programs-filterbar-head mb-0">
-                <div className="programs-filterbar-icon" aria-hidden="true">
+        <div className="custom-filterbar-card">
+            <div className="custom-filterbar-head mb-0">
+                <div className="custom-filterbar-icon" aria-hidden="true">
                     <img src="/assets/filter-icon.png" alt="" height="20.41" width="19.5" />
                 </div>
                 <div>
-                    <div className="programs-filterbar-title">Filter Programs</div>
-                    <div className="programs-filterbar-subtitle">I’m looking for Programs</div>
+                    <div className="custom-filterbar-title">Filter Programs</div>
+                    <div className="custom-filterbar-subtitle">I’m looking for Programs</div>
                 </div>
             </div>
 
-            <div className="programs-filterbar-controls pb-4">
-                <div className="programs-filterbar-field">
-                    <div className="programs-filterbar-label">Industry</div>
+            <div className="custom-filterbar-controls pb-4">
+                <div className="custom-filterbar-field">
+                    <div className="custom-filterbar-label">Industry</div>
                     <SelectDropdown
                         label=""
                         value={industrySlug}
@@ -67,8 +67,8 @@ export default function RolePlpFilterBar({
                     />
                 </div>
 
-                <div className="programs-filterbar-field">
-                    <div className="programs-filterbar-label">Programs</div>
+                <div className="custom-filterbar-field">
+                    <div className="custom-filterbar-label">Programs</div>
                     <SelectDropdown
                         label=""
                         value={roleSlug}
@@ -87,14 +87,14 @@ export default function RolePlpFilterBar({
 
                 <button
                     type="button"
-                    className="programs-filterbar-btn"
+                    className="custom-filterbar-btn"
                     disabled={!industrySlug || !roleSlug}
                     onClick={() => {
                         if (!roleSlug) return;
                         router.push(`/programs/${roleSlug}`);
                     }}
                 >
-                    <span className="programs-filterbar-btn-icon" aria-hidden="true">
+                    <span className="custom-filterbar-btn-icon" aria-hidden="true">
                         <i className="fa-solid fa-magnifying-glass"></i>
                     </span>
                     <span>Search Programs</span>

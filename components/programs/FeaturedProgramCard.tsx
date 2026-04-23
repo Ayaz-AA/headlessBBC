@@ -31,7 +31,7 @@ export default function FeaturedProgramCard({
                 {hasCert ? (
                     <div className="plp-featuredCard__certPill">
                         <span className="plp-featuredCard__certIcon" aria-hidden="true">
-                            <i className="fa-solid fa-certificate" />
+                            <i className="fa-solid fa-award"></i>
                         </span>
 
                         <span className="plp-featuredCard__certText">
@@ -46,10 +46,10 @@ export default function FeaturedProgramCard({
                     {program.programType ? (
                         <div className="plp-featuredCard__chip">
                             <span className="plp-featuredCard__chipIcon" aria-hidden="true">
-                                <i className="fa-solid fa-globe" />
+                                <i className="fa-solid fa-wifi"></i>
                             </span>
                             <span>
-                                <span className="plp-featuredCard__chipLabel">Program</span>
+                                <span className="plp-featuredCard__chipLabel">Learning Type</span>
                                 <span className="plp-featuredCard__chipValue">{program.programType}</span>
                             </span>
                         </div>
@@ -71,7 +71,7 @@ export default function FeaturedProgramCard({
                 {/* ✅ NO URL change */}
                 <button
                     type="button"
-                    className="plp-featuredCard__btn"
+                    className="btn--secondary px-5"
                     onClick={() => onLearnMore(program)}
                 >
                     Learn More <i className="fa-solid fa-arrow-right" aria-hidden="true" />

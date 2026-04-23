@@ -27,39 +27,39 @@ export const GET_GUIDES = gql`
 `;
 
 export async function getGuides() {
-    return client.request(GET_GUIDES);
+  return client.request(GET_GUIDES);
 }
 
 export type GuideVM = {
-    id: string;
-    title: string;
-    slug: string;
-    excerpt?: string;
-    imageUrl?: string;
-    imageAlt?: string;
-    industrySlugs: string[];
-    industryNames: string[];
+  id: string;
+  title: string;
+  slug: string;
+  excerpt?: string;
+  imageUrl?: string;
+  imageAlt?: string;
+  industrySlugs: string[];
+  industryNames: string[];
 };
 
 function stripHtml(html?: string): string {
-    if (!html) return "";
-    return html.replace(/<[^>]*>/g, "").replace(/\s+/g, " ").trim();
+  if (!html) return "";
+  return html.replace(/<[^>]*>/g, "").replace(/\s+/g, " ").trim();
 }
 
 export function mapGuideNodeToVM(node: any): GuideVM {
-    const industryNodes = node?.industries?.nodes ?? [];
-    const imgNode = node?.featuredImage?.node;
+  const industryNodes = node?.industries?.nodes ?? [];
+  const imgNode = node?.featuredImage?.node;
 
-    return {
-        id: node?.id,
-        title: node?.title ?? "",
-        slug: node?.slug ?? "",
-        excerpt: stripHtml(node?.excerpt ?? ""),
-        imageUrl: imgNode?.sourceUrl ?? undefined,
-        imageAlt: imgNode?.altText ?? undefined,
-        industrySlugs: industryNodes.map((x: any) => x.slug),
-        industryNames: industryNodes.map((x: any) => x.name),
-    };
+  return {
+    id: node?.id,
+    title: node?.title ?? "",
+    slug: node?.slug ?? "",
+    excerpt: stripHtml(node?.excerpt ?? ""),
+    imageUrl: imgNode?.sourceUrl ?? undefined,
+    imageAlt: imgNode?.altText ?? undefined,
+    industrySlugs: industryNodes.map((x: any) => x.slug),
+    industryNames: industryNodes.map((x: any) => x.name),
+  };
 }
 // detail page hero 
 export const GUIDE_BY_SLUG_QUERY = gql`
@@ -69,29 +69,13 @@ export const GUIDE_BY_SLUG_QUERY = gql`
       slug
       title
       content
-
-      guideDetailPage {
-        guideHero {
-          heroLabel: herolabel
-          heroTitleLine1: herotitleline1
-          heroTitleLine2: herotitleline2
-          heroDescription: herodescription
-
-          heroImage: heroimage {
-            node {
-              sourceUrl
-              altText
-            }
-          }
-        }
-      }
-
-      featuredImage {
-        node {
-          sourceUrl
-          altText
-        }
-      }
+ industries {
+    nodes {
+      slug
+      name
+    }
+  }
+   
       guideDetailPage {
   guideHero {
     heroLabel: herolabel
@@ -107,14 +91,50 @@ export const GUIDE_BY_SLUG_QUERY = gql`
     bottomdescription
     rightlist
   }
+
+   careerOverviewSection {
+          title
+          description
+          responsibilitiesIntro
+          responsibilitiesList
+        }
+          salarySection {
+          heading
+          description
+          medianSalary
+          medianSalaryLink {
+            url
+            title
+            target
+          }
+          tableTitle
+          topRow
+          salaryRows
+          tableSource
+        }
+          programPromoSection {
+           heading 
+  description
+}
+  faqSection {
+  heading
+  faq1Question
+  faq1Answer
+  faq2Question
+  faq2Answer
+  faq3Question
+  faq3Answer
+  faq4Question
+  faq4Answer
+}
 }  
     }
   }
 `;
 
 export async function getGuideBySlug(slug: string) {
-    if (!slug) throw new Error("getGuideBySlug: slug is required");
-    return client.request(GUIDE_BY_SLUG_QUERY, { slug });
+  if (!slug) throw new Error("getGuideBySlug: slug is required");
+  return client.request(GUIDE_BY_SLUG_QUERY, { slug });
 }
 export const GUIDES_FOR_FILTER_QUERY = gql`
   query GuidesForFilter {
@@ -134,5 +154,5 @@ export const GUIDES_FOR_FILTER_QUERY = gql`
 `;
 
 export async function getGuidesForFilter() {
-    return client.request(GUIDES_FOR_FILTER_QUERY);
+  return client.request(GUIDES_FOR_FILTER_QUERY);
 }

@@ -1,8 +1,10 @@
 // src/components/programPdp/ProgramPdpPage.tsx
+"use client";
 import PdpTabs from "./PdpTabs";
 import HubSpotForm from "@/components/hubspot/HubSpotForm";
 import type { ProgramPdpVM } from "@/lib/programPdp";
 import { HUBSPOT } from "@/lib/hubspotConfig";
+import { useState } from "react";
 
 function TitleStyled({ title }: { title: string }) {
     const parts = title.trim().split(/\s+/);
@@ -32,7 +34,7 @@ export default function ProgramPdpPage({ program }: { program: ProgramPdpVM }) {
         { id: "career", label: "Career Outlook" },
         { id: "faq", label: "FAQ" },
     ];
-
+    const [showAllCerts, setShowAllCerts] = useState(false);
     //const portalId = process.env.NEXT_PUBLIC_HUBSPOT_PORTAL_ID ?? "";
     //const formId = process.env.NEXT_PUBLIC_HUBSPOT_FORM_ID ?? "";
 
@@ -131,7 +133,7 @@ export default function ProgramPdpPage({ program }: { program: ProgramPdpVM }) {
                     </h1>
 
                     {program.heroShortDescription && (
-                        <p className="pdp-subtitle">{program.heroShortDescription}</p>
+                        <p className="hero__intro my-3">{program.heroShortDescription}</p>
                     )}
 
                     {/* Image card ONLY (white border is only around image) */}
@@ -147,15 +149,29 @@ export default function ProgramPdpPage({ program }: { program: ProgramPdpVM }) {
                     <div className="pdp-hero__meta">
                         <div
                             className="pdp-metrics pdp-metrics--hero"
-                            style={{ gridTemplateColumns: `repeat(${metrics.length}, 1fr)` }}
+                            style={
+                                metrics.length <= 1
+                                    ? undefined
+                                    : { gridTemplateColumns: `repeat(${metrics.length}, 1fr)` }
+                            }
                         >
                             {metrics.map((m) => (
+                                // <div className={`pdp-metric pdp-metric--${m.key}`} key={m.key}>
+                                //     <div className="d-flex align-items-center"> {m.icon && <div className="pdp-metric__icon">{m.icon}</div>}
+
+                                //         <div className="ms-2 pdp-metric__label">{m.label}</div></div>
+                                //     <div> {m.render}</div>
+
+                                // </div>
                                 <div className={`pdp-metric pdp-metric--${m.key}`} key={m.key}>
-                                    <div className="d-flex align-items-center"> {m.icon && <div className="pdp-metric__icon">{m.icon}</div>}
+                                    <div className="pdp-metric__top">
+                                        {m.icon && <div className="pdp-metric__icon">{m.icon}</div>}
+                                        <span className="pdp-metric__label">{m.label}</span>
+                                    </div>
 
-                                        <div className="ms-2 pdp-metric__label">{m.label}</div></div>
-                                    <div> {m.render}</div>
-
+                                    <div className="pdp-metric__bottom">
+                                        {m.render}
+                                    </div>
                                 </div>
                             ))}
                         </div>
@@ -323,46 +339,55 @@ export default function ProgramPdpPage({ program }: { program: ProgramPdpVM }) {
                                 <h2 className="pdp-section__title">{program.skillsHeading ?? "Skills You'll Gain"}</h2>
                                 <HtmlBlock html={program.skillsListHtml} className="pdp-wysiwyg pdp-skills" />
                             </section>
-
                             {/* CERTIFICATIONS */}
-                            {(program.certificationsName ||
-                                program.certificationsIntro ||
-                                program.certificationsImageUrl) && (
-                                    <section className="pdp-section">
-                                        <h2 className="pdp-section__title">
-                                            {program.certificationsHeading ?? "Certifications"}
-                                        </h2>
+                            {program.certifications && program.certifications.length > 0 && (
+                                <section className="pdp-section">
+                                    <h2 className="pdp-section__title">
+                                        {program.certificationsHeading ?? "Certifications"}
+                                    </h2>
 
-                                        <div className="pdp-certCard">
-                                            {program.certificationsImageUrl && (
-                                                <img
-                                                    src={program.certificationsImageUrl}
-                                                    alt={
-                                                        program.certificationsImageAlt ??
-                                                        program.certificationsName ??
-                                                        "Certification"
-                                                    }
-                                                    className="pdp-certCard__img"
-                                                />
-                                            )}
+                                    <div className="pdp-certGrid">
+                                        {(showAllCerts
+                                            ? program.certifications
+                                            : program.certifications.slice(0, 4)
+                                        ).map((cert, idx) => (
+                                            <div className="pdp-certCard mb-3" key={`${cert.name}-${idx}`}>
 
-                                            <div>
-                                                {program.certificationsName && (
-                                                    <div className="pdp-certCard__name">
-                                                        {program.certificationsName}
-                                                    </div>
+                                                {cert.imageUrl && (
+                                                    <img
+                                                        src={cert.imageUrl}
+                                                        alt={cert.imageAlt || cert.name || "Certification"}
+                                                        className="pdp-certCard__img"
+                                                    />
                                                 )}
 
-                                                {program.certificationsIntro && (
-                                                    <div className="pdp-certCard__desc">
-                                                        {program.certificationsIntro}
-                                                    </div>
-                                                )}
+                                                <div className="pdp-certCard__content">
+                                                    {cert.name && (
+                                                        <div className="pdp-certCard__name">{cert.name}</div>
+                                                    )}
+
+                                                    {cert.intro && (
+                                                        <div className="pdp-certCard__desc">{cert.intro}</div>
+                                                    )}
+                                                </div>
+
                                             </div>
-                                        </div>
-                                    </section>
-                                )}
+                                        ))}
+                                    </div>
 
+                                    {/* BUTTON */}
+                                    {program.certifications.length > 4 && (
+                                        <div className=" mt-4">
+                                            <button
+                                                className="btn btn--primary py-3 px-4"
+                                                onClick={() => setShowAllCerts(!showAllCerts)}
+                                            >
+                                                {showAllCerts ? "Show less" : "Show all certifications"}
+                                            </button>
+                                        </div>
+                                    )}
+                                </section>
+                            )}
                             {/* FAQ */}
                             <section id="faq" className="pdp-section">
                                 <h2 className="pdp-section__title">

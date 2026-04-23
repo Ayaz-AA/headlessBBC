@@ -1,0 +1,127 @@
+.certifications-filterbar {
+    width: 80%;
+    margin: 0 auto;
+}
+
+@media screen and (max-width: 768px) {
+    .certifications-filterbar {
+        width: 100%;
+    }
+}
+
+.cert-list-card {
+    background: #fff;
+    border: 1px solid rgba(11, 43, 59, 0.08);
+    border-radius: 14px;
+    overflow: hidden;
+
+    display: grid;
+    grid-template-columns: 207px 1fr 192px;
+    align-items: center;
+    gap: 0;
+}
+
+/* Left panel (light gradient like design) */
+.cert-list-card__media {
+    height: 100%;
+    padding: 9px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #EFF6FF 0%, #FAF5FF 50%, #FFF7ED 100%);
+    border-right: 1px solid rgba(11, 43, 59, 0.06);
+}
+
+/* Logo */
+.cert-list-card__logo {
+    width: 100%;
+    max-width: 173px;
+    height: 153px;
+    object-fit: contain;
+}
+
+/* .cert-list-card__logo--placeholder {
+  width: 86px;
+  height: 86px;
+  border-radius: 12px;
+  background: rgba(11, 43, 59, 0.06);
+} */
+
+/* Body */
+.cert-list-card__body {
+    padding: 18px 30px;
+    min-width: 0;
+}
+
+.cert-list-card__title {
+    font-size: 24px;
+    font-weight: 400;
+    margin: 0 0 6px;
+    color: var(--deep-blue);
+}
+
+.cert-description {
+    font-size: 14px;
+    font-weight: 400;
+    color: var(--text-secondary);
+}
+
+.cert-list-card__meta {
+    display: flex;
+    gap: 14px;
+    color: rgba(106, 114, 130, 1);
+    font-size: 12px;
+}
+
+.cert-list-card__metaItem {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.cert-list-card__metaItem i {
+    font-size: 14px;
+}
+
+.clock-icon {
+    color: rgba(43, 127, 255, 1);
+}
+
+.price-icon {
+    color: rgba(173, 70, 255, 1);
+}
+
+/* Right CTA column */
+.cert-list-card__cta {
+    padding: 18px 18px;
+    display: flex;
+    justify-content: center;
+    border-left: 1px solid rgba(11, 43, 59, 0.06);
+}
+
+/* Mobile: stacks like your mobile screenshot */
+@media (max-width: 768px) {
+    .cert-list-card {
+        grid-template-columns: 1fr;
+    }
+
+    .cert-list-card__media {
+        border-right: none;
+        border-bottom: 1px solid rgba(11, 43, 59, 0.06);
+    }
+
+    .cert-list-card__cta {
+        border-left: none;
+        border-top: 1px solid rgba(11, 43, 59, 0.06);
+        justify-content: flex-start;
+    }
+
+    .cert-list-card__btn {
+        width: 100%;
+    }
+}
+
+.cert-list-card {
+    scroll-margin-top: 140px;
+    /* bump this up a bit */
+}

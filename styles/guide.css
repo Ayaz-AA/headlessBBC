@@ -1,0 +1,368 @@
+.guides-wrapper {
+    padding-top: 10px;
+}
+
+/* horizontal card */
+.guide-card {
+    border: 1px solid #e5e7eb;
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(15, 23, 42, 0.06);
+    background: #fff;
+    display: flex;
+    min-height: 170px;
+}
+
+.guide-card:hover {
+    box-shadow: 0 16px 40px rgba(15, 23, 42, 0.12);
+}
+
+.guide-card__media {
+    position: relative;
+    flex: 0 0 42%;
+    max-width: 42%;
+    background: #0b1220;
+}
+
+.guide-card__img {
+    width: 100%;
+    height: 100%;
+    min-height: 170px;
+    object-fit: cover;
+    display: block;
+}
+
+.guide-card__placeholder {
+    height: 100%;
+    min-height: 170px;
+    display: grid;
+    place-items: center;
+    color: #cbd5e1;
+    font-weight: 600;
+}
+
+.guide-card__badge {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    background: rgba(255, 255, 255, 0.92);
+    color: var(--primary-blue);
+    font-size: 12px;
+    font-weight: 700;
+    padding: 7px 12px;
+    border-radius: 4px;
+
+    box-shadow: 0 4px 10px rgba(15, 23, 42, 0.08);
+}
+
+.guide-card__body {
+    flex: 1;
+    padding: 18px 18px 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.guide-card__title {
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--deep-blue);
+    margin: 0;
+    line-height: 1.2;
+}
+
+.guide-card__excerpt {
+    color: var(--text-secondary);
+    font-size: 12px;
+    line-height: 1.6;
+    margin: 0;
+}
+
+.guide-card__link {
+    margin-top: auto;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 600;
+    font-size: 13px;
+    color: rgba(54, 65, 83, 1);
+}
+
+.guide-card__link:hover {
+    color: var(--primary-orange);
+}
+
+/* orange center button */
+.guides-loadmore-btn {
+    height: 44px;
+    border: 0;
+    border-radius: 8px;
+    background: var(--dark-orange);
+    color: #fff;
+    font-weight: 500;
+    padding: 0 22px;
+    font-size: 14px;
+}
+
+/* mobile: stack card like screenshot */
+@media (max-width: 767px) {
+    .guide-card {
+        flex-direction: column;
+    }
+
+    .guide-card__media {
+        flex: 0 0 auto;
+        max-width: 100%;
+    }
+
+    .guide-card__img,
+    .guide-card__placeholder {
+        min-height: 190px;
+    }
+
+    .guide-card__title {
+        font-size: 20px;
+    }
+}
+
+.guide-intro__rightlist {
+    margin: 0;
+    background-color: rgba(243, 243, 244, 0.5);
+    border-radius: 8px;
+    font-size: 16px;
+    color: var(--text-secondary);
+}
+
+.guide-intro__rightlist ul {
+    padding: 10px;
+}
+
+li>strong,
+li::marker {
+    color: var(--deep-blue);
+    font-weight: 400;
+}
+
+
+/* new */
+/* =========================
+   SALARY TABLE (CLEAN DESIGN)
+========================= */
+.median-salary {
+    color: var(--dark-orange);
+    text-decoration: underline;
+}
+
+.salary-table-wrapper {
+    border: 1px solid rgba(243, 244, 246, 1);
+    border-radius: 12px;
+    overflow: hidden;
+    background: #fff;
+    width: 80%;
+    margin: auto;
+}
+
+.salary-table {
+    table-layout: fixed;
+    width: 100%;
+    border-collapse: collapse;
+}
+
+/* Equal columns */
+.salary-table th,
+.salary-table td {
+    width: 50%;
+}
+
+/* 🔥 CENTER VERTICAL BORDER */
+.salary-table th:first-child,
+.salary-table td:first-child {
+    border-right: 0.89px solid rgba(243, 244, 246, 1);
+}
+
+/* Top title bar */
+.salary-table-title {
+    background: var(--dark-orange);
+    padding: 14px 18px;
+    font-size: 14px;
+    font-weight: 700;
+    color: rgba(255, 255, 255, 1);
+    letter-spacing: 1;
+    text-align: center;
+    text-transform: uppercase;
+}
+
+/* Column header row */
+.salary-table thead th {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--deep-blue);
+    padding: 14px 18px;
+    border-bottom: 0.89px solid rgba(243, 244, 246, 1);
+}
+
+/* Body rows */
+.salary-table tbody td {
+    padding: 14px 18px;
+    font-size: 16px;
+    font-weight: 400;
+    color: var(--deep-blue);
+    border-bottom: 0.89px solid rgba(243, 244, 246, 1)
+}
+
+
+/* Source row */
+.salary-source-row td {
+    background-color: rgba(249, 250, 251, 1);
+    font-size: 14px;
+    color: rgba(74, 85, 101, 1);
+    font-weight: 400;
+}
+
+.salary-source {
+    display: block;
+    padding: 7px 0;
+}
+
+@media (max-width: 768px) {
+    .salary-table-wrapper {
+        width: 100%;
+    }
+
+    .salary-table-title,
+    .salary-table tbody td,
+    .salary-table tbody td,
+    .salary-table thead th {
+        font-size: 12px;
+    }
+}
+
+/* =========================
+   PROMO SECTION
+========================= */
+
+/* CARD */
+.promo-card {
+    max-width: 1200px;
+    background: rgba(243, 244, 246, 1);
+    border-radius: 16px;
+    overflow: hidden;
+}
+
+/* LEFT SIDE */
+.promo-left {
+    flex: 0 0 45%;
+}
+
+.promo-bg {
+    position: relative;
+    height: 100%;
+    min-height: 240px;
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* LOGO — anchor point for the button */
+.promo-logo {
+    position: relative;
+    background: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* 🔥 THIS FIXES IT */
+
+    text-align: center;
+}
+
+.promo-logo img {
+    max-width: 265px;
+    max-height: 75px;
+    display: block;
+}
+
+/* VIEW SITE BUTTON — anchored to logo, never shifts */
+.promo-view-btn {
+    position: absolute;
+    bottom: -16px;
+    left: 50%;
+    transform: translateX(-50%);
+
+    background: rgba(217, 98, 0, 1);
+    color: rgba(255, 255, 255, 1);
+    font-size: 14px;
+    padding: 6px 16px;
+    border-radius: 999px;
+    text-decoration: none;
+    font-weight: 500;
+    white-space: nowrap;
+    border: 1px solid rgba(209, 213, 220, 1);
+    box-shadow: 0 6px 14px rgba(0, 0, 0, 0.15);
+}
+
+/* RIGHT SIDE */
+.promo-right {
+    flex: 0 0 55%;
+    padding: 40px 30px;
+}
+
+/* TITLE */
+.promo-title {
+    font-size: 30px;
+    font-weight: 700;
+    color: var(--primary-blue);
+    margin-bottom: 12px;
+}
+
+/* DESCRIPTION */
+.promo-desc {
+    max-width: 420px;
+    margin: 0 auto;
+}
+
+/* LEARN MORE BUTTON */
+.promo-learn-btn {
+    margin-top: 20px;
+    display: inline-block;
+    background: var(--deep-blue);
+    color: #fff;
+    padding: 12px 28px;
+    border-radius: 10px;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.accordion-body>p>a {
+    color: var(--primary-orange);
+    text-decoration: underline;
+}
+
+/* MOBILE */
+@media (max-width: 768px) {
+    .promo-card {
+        flex-direction: column;
+    }
+
+    .promo-left,
+    .promo-right {
+        flex: 100%;
+    }
+
+    .promo-bg {
+        min-height: 220px;
+    }
+
+    .promo-right {
+        padding: 24px;
+    }
+
+    .promo-logo img {
+        width: 200px;
+    }
+}

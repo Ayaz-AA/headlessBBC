@@ -35,7 +35,7 @@ export default function ReviewerNetwork({
 
     return (
         <section className="container py-5">
-            {heading && <h2 className="mb-3 team-intro-heading">{heading}</h2>}
+            {heading && <h2 className="mb-3 component-heading">{heading}</h2>}
             {para && <p className="mb-2 regular-para ">{para}</p>}
             <div className="reviewer-network-grid" aria-label="Reviewer network expertise areas">
                 {reviewerExpertise.map((expertise) => (

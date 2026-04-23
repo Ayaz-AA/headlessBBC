@@ -108,8 +108,8 @@ export default function FinanceOptionsGrid({ finance }: { finance: FinanceOption
 
     return (
         <section className="container py-5 text-center">
-            {finance?.mainHeading && <h2 className="mb-2">{finance.mainHeading}</h2>}
-            {finance?.mainPara && <p className="mb-5 text-muted">{finance.mainPara}</p>}
+            {finance?.mainHeading && <h2 className="mb-2 component-heading">{finance.mainHeading}</h2>}
+            {finance?.mainPara && <p className="mb-5 regular-para">{finance.mainPara}</p>}
 
             <div className="row g-4">
                 {/* Card 1 */}

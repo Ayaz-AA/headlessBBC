@@ -23,7 +23,7 @@ export default async function Home() {
   // Get the first page (homepage) from the pages query
   const homepage = homepageData?.pages?.nodes?.[0]
   const homepageFields = homepage?.homepageFields?.homepageFields
-
+  // console.log("homepageFields:", homepageFields)
   return (
     <>
       <Header />

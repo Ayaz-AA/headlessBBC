@@ -11,7 +11,7 @@ export default function Feedback({ heading, para }: FeedbackProps) {
     return (
         <>
             <section className="container mb-3">
-                {heading && <h2 className="mb-3 team-intro-heading">{heading}</h2>}
+                {heading && <h2 className="mb-3 component-heading">{heading}</h2>}
                 {para && <p className="mb-0 regular-para">{para}</p>}
             </section>
 
